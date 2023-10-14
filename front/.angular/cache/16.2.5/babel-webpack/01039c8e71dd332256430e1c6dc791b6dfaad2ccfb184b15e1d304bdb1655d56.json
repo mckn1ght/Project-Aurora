@@ -1,0 +1,1 @@
+{"ast":null,"code":"export let APPLICATION_STATE = '';","map":{"version":3,"names":["APPLICATION_STATE"],"sources":["/Users/robertcostache/ProjectAurora/front/src/app/globals.ts"],"sourcesContent":["export let APPLICATION_STATE: string = '';\n"],"mappings":"AAAA,OAAO,IAAIA,iBAAiB,GAAW,EAAE"},"metadata":{},"sourceType":"module","externalDependencies":[]}

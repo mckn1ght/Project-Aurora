@@ -1,40 +1,49 @@
-/* .content {
-  text-align: center;
-} */
+/* minimalist-page.component.css */
 
-body {
-  font-family: Arial, sans-serif;
+/* ... Previous CSS ... */
+
+.top-menu {
+  background-color: #f5f2f2d5;
+  padding: 1px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  flex-grow: 1;
+  font-size: 1;
+}
+
+.logo h1 {
   margin: 0;
+  font-size: 20px;
+}
+
+.top-menu nav ul {
+  list-style: none;
   padding: 0;
-  background-color: #ffffff;
 }
 
-.nav-link {
-  text-decoration: none;
-  color: #fff;
-  font-weight: bold;
-}
-
-.hero {
-  text-align: center;
-  padding: 100px 0;
-}
-
-.hero-title {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.cta-button {
+.top-menu nav li {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #14047c;
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  border-radius: 5px;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 14px;
 }
 
-.cta-button:hover {
-  background-color: #0a07e8;
+.top-menu nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 1px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from './service/book.service';
+// import { APPLICATION_STATE } from './globals';
 
 @Component({
   selector: 'app-root',
