@@ -1,0 +1,49 @@
+/* minimalist-page.component.css */
+
+/* ... Previous CSS ... */
+
+.top-menu {
+  background-color: #f5f2f2d5;
+  padding: 1px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  flex-grow: 1;
+  font-size: 1;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.top-menu nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-menu nav li {
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.top-menu nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 1px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

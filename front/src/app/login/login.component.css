@@ -1,0 +1,68 @@
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/images/loginBackground.jpg"); /* Adjust the path to your image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.5; /* Optional: Adjust the opacity if needed */
+  z-index: -1;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  background-color: #f9f9f9;
+  position: relative;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 10px;
+  margin-right: 9%;
+  margin-left: 10px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 5px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 85px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 1px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

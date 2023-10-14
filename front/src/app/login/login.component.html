@@ -1,0 +1,31 @@
+<div id="login-container">
+  <div class="background"></div>
+  <div class="login-container">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
+<footer>
+  <p>&copy; 2023 Project Aurora. All rights reserved.</p>
+</footer>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/book")
 public class BookController {
     @Autowired
     private BookServiceImpl bookServiceImpl;
@@ -30,7 +30,7 @@ public class BookController {
     public ResponseEntity<BookDto> getById(@PathVariable Long id){
         return ResponseEntity.ok(bookServiceImpl.getById(id));
     }
-    
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all")
     public List<BookDto> getAll(){

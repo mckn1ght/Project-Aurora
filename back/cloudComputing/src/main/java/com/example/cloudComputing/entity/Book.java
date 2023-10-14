@@ -7,12 +7,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Data
 @Builder
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 public class Book {
 
     @Id
