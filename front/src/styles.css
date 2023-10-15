@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  /* font-family: "Merriweather_Sans";
+  src: url("./assets/fonts/Merriweather_Sans/MerriweatherSans-VariableFont_wght.ttf"); */
+
+  font-family: "IBMPlexSans-Light";
+  src: url("./assets/fonts/IBM_Plex_Sans/IBMPlexSans-Light.ttf")
+    format("truetype");
+
+  /* font-family: "IBMPlexSans-Italic";
+  src: url("./assets/fonts/IBM_Plex_Sans/IBMPlexSans-Italic.ttf"); */
+}
+
+body {
+  /* font-family: "Merriweather_Sans", sans-serif; */
+
+  font-family: "IBMPlexSans-Light";
+}

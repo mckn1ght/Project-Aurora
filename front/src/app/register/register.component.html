@@ -1,0 +1,53 @@
+<div class="register-form">
+  <div class="background"></div>
+  <h2 class="registerLabel">Register</h2>
+  <div class="login-container">
+    <form id="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="user.username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="user.password"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          [(ngModel)]="user.confirmPassword"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="user.email"
+          required
+          email=""
+        />
+      </div>
+      <button type="submit" disabled="registerForm">Register</button>
+    </form>
+  </div>
+</div>
+<footer>
+  <p>&copy; 2023 Project Aurora. All rights reserved.</p>
+</footer>

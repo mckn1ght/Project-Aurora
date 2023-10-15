@@ -27,12 +27,8 @@
 
 .form-group {
   margin-bottom: 10px;
-  margin-right: 9%;
+  margin-right: 10%;
   margin-left: 10px;
-}
-
-label {
-  font-weight: bold;
 }
 
 input {
@@ -42,7 +38,7 @@ input {
   border-radius: 4px;
 }
 
-button {
+.button {
   padding: 5px 20px;
   background-color: #007bff;
   color: #fff;
@@ -50,10 +46,29 @@ button {
   border-radius: 4px;
   cursor: pointer;
   margin-left: 85px;
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 button:hover {
   background-color: #0056b3;
+}
+
+.register,
+.register:visited {
+  margin-left: 24%;
+  font-size: 12px;
+  text-decoration: none;
+  color: rgb(109, 109, 109);
+}
+
+.register:hover {
+  color: rgb(162, 162, 162);
+}
+.errorLabel {
+  font-weight: bold;
+  color: rgb(239, 35, 35);
+  margin-left: 30px;
 }
 
 footer {
