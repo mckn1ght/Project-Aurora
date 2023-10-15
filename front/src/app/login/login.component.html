@@ -8,7 +8,9 @@
           type="text"
           id="username"
           name="username"
-          [(ngModel)]="username"
+          minlength="5"
+          maxlength="15"
+          [(ngModel)]="formData.username"
           required
         />
       </div>
@@ -18,11 +20,18 @@
           type="password"
           id="password"
           name="password"
-          [(ngModel)]="password"
+          [(ngModel)]="formData.password"
           required
+          minlength="5"
+          maxlength="15"
         />
       </div>
-      <button type="submit">Login</button>
+      <label class="errorLabel" [textContent]="error"></label>
+      <div></div>
+      <button class="button" type="submit">Login</button>
+      <div>
+        <a class="register" href="/register"> Don't have an account? </a>
+      </div>
     </form>
   </div>
 </div>
