@@ -1,12 +1,14 @@
 package com.example.cloudComputing.controller;
 
 import com.example.cloudComputing.dto.UserDto;
+import com.example.cloudComputing.exception.user.UserUsernameNotFoundException;
 import com.example.cloudComputing.mapper.UserMapper;
 import com.example.cloudComputing.serviceImpl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class UserController {
     return ResponseEntity.ok(userServiceImpl.getById(id));
   }
 
-//  @CrossOrigin(origins = "http://localhost:4200")
+  //  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/all")
   public List<UserDto> getAll() {
     return userServiceImpl.getAll();
@@ -60,12 +62,22 @@ public class UserController {
   @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping("/login")
   public ResponseEntity<String> login(@RequestBody UserDto userDto) {
-    boolean isAuthenticated = userServiceImpl.authenticate(userDto.getUsername(), userDto.getPassword());
-    if (isAuthenticated) {
-      return ResponseEntity.ok("{\"message\": \"Authentication successful\"}");
-    } else {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"error\": \"Invalid credentials\"}");
-    }
+    try {
+      UserDto user = userServiceImpl.getByUsername(userDto.getUsername());
 
+      boolean isAuthenticated = userServiceImpl.authenticate(user.getUsername(), userDto.getPassword());
+
+      if (isAuthenticated) {
+        return ResponseEntity.ok("{\"message\": \"Authentication successful\"}");
+      } else {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\": \"Invalid credentials\"}");
+      }
+    } catch (UserUsernameNotFoundException e) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\": \"" + e.getMessage() + "\"}");
+    }
   }
+
 }
+
+
+
