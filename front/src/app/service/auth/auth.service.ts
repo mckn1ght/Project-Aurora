@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { BACKEND_API_URL, userEndpoint, userLogin } from 'src/app/constants';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +11,12 @@ export class AuthService {
 
   authenticate(
     formData: any,
+
     onSuccess: () => void,
     onError: (error: any) => void
   ): void {
     this.http
-      .post('http://localhost:8080/user/login', formData, {
+      .post(BACKEND_API_URL + userEndpoint + userLogin, formData, {
         observe: 'response',
       })
       .subscribe(

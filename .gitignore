@@ -30,6 +30,7 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+/front/.angular/cache/
 .sass-cache/
 /connect.lock
 /coverage
@@ -40,3 +41,11 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+*.pack
+front/.angular/cache/16.2.5/babel-webpack/c96b36bba6dcc3adb06f6dbe845da64a443a5746e1e42d51090e513469b8e050.json
+*.pack
+front/.angular/cache/16.2.5/angular-webpack/e0651b98a2a5a3fec2a52f876198f0370934eeb0/19.pack
+*.pack
+*.pack
+*.pack
+*.pack

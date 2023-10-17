@@ -66,17 +66,22 @@ button:hover {
   color: rgb(162, 162, 162);
 }
 .errorLabel {
-  font-weight: bold;
   color: rgb(239, 35, 35);
-  margin-left: 30px;
+  /* margin-left: 30px;
+  font-size: small; */
+  margin: auto; /* Add this line to center the element horizontally */
+  text-align: center; /* Add this line to center the text within the element */
+  font-size: small;
+  width: fit-content; /* This limits the width of the element to its content */
 }
 
 footer {
   text-align: center;
   background-color: #f5f2f2d5;
   color: #0c0101;
-  padding: 1px;
+  padding: 0px;
   position: fixed;
+  font-size: 11px;
   left: 0;
   right: 0;
   bottom: 0;

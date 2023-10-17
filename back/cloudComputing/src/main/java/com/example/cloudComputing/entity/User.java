@@ -43,7 +43,7 @@ public class User {
   private double credit;
 
   @Column(name = "permissions")
-  private String permissions;
+  private int permissions;
 
   // Created Date will be set before the entity is first saved to the database
   @PrePersist
