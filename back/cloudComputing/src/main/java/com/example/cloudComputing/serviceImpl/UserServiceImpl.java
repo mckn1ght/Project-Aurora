@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  public List<UserDto> getAllByPermissions(String permission) {
+  public List<UserDto> getAllByPermissions(int permission) {
     List<UserDto> userDto = userRepository.getAllByPermissions(permission).stream()
       .map(user -> userMapper.mapToUserDto(user)).collect(Collectors.toList());
     if (userDto.isEmpty()) {

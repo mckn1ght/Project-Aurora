@@ -3,6 +3,7 @@ package com.example.cloudComputing.repository;
 import com.example.cloudComputing.dto.UserDto;
 import com.example.cloudComputing.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   User getByUsername(String username);
 
-  List<User> getAllByPermissions(String permission);
+  List<User> getAllByPermissions(int permission);
 
   List<User> getAllByCreditAfter(double credit);
 

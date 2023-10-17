@@ -4,14 +4,18 @@ import com.example.cloudComputing.dto.UserDto;
 import com.example.cloudComputing.exception.user.UserUsernameNotFoundException;
 import com.example.cloudComputing.mapper.UserMapper;
 import com.example.cloudComputing.serviceImpl.UserServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
+
+@Validated
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -23,7 +27,7 @@ public class UserController {
 
   @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping("/add")
-  public ResponseEntity<UserDto> adduser(@RequestBody UserDto userDto) {
+  public ResponseEntity<UserDto> adduser(@Valid @RequestBody UserDto userDto) {
     return ResponseEntity.ok(userServiceImpl.add(userDto));
   }
 
@@ -32,7 +36,6 @@ public class UserController {
     return ResponseEntity.ok(userServiceImpl.getById(id));
   }
 
-  //  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/all")
   public List<UserDto> getAll() {
     return userServiceImpl.getAll();
@@ -44,7 +47,7 @@ public class UserController {
   }
 
   @GetMapping("/permissions/{permissions}")
-  public ResponseEntity<List<UserDto>> getAllByPermissions(@PathVariable String permissions) {
+  public ResponseEntity<List<UserDto>> getAllByPermissions(@PathVariable int permissions) {
     return ResponseEntity.ok(userServiceImpl.getAllByPermissions(permissions));
   }
 
