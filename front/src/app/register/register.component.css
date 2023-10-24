@@ -50,6 +50,16 @@ button:hover {
   background-color: #0056b3;
 }
 
+.errorLabel {
+  color: rgb(239, 35, 35);
+  /* margin-left: 30px;
+  font-size: small; */
+  margin: auto; /* Add this line to center the element horizontally */
+  text-align: center; /* Add this line to center the text within the element */
+  font-size: small;
+  width: fit-content; /* This limits the width of the element to its content */
+}
+
 .background {
   position: absolute;
   top: 0;

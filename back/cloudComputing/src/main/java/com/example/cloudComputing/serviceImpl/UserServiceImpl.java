@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.cloudComputing.constants.Constants.*;
@@ -31,6 +32,13 @@ public class UserServiceImpl implements UserService {
     return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
   }
 
+  public boolean existsUserByUsername(String username) {
+    return userRepository.existsUserByUsername(username);
+  }
+
+  public boolean existsUserByEmail(String email){
+    return  userRepository.existsUserByEmail(email);
+  }
 
   public List<UserDto> getAll() {
     List<UserDto> userDtos = userRepository.findAll().stream().map(user -> userMapper.mapToUserDto(user)).collect(Collectors.toList());
@@ -90,6 +98,8 @@ public class UserServiceImpl implements UserService {
 
   public boolean authenticate(String username, String storedHashedPassword) {
     User user = userRepository.getByUsername(username);
+    System.out.println(storedHashedPassword + " @@@@ " + user.getPassword());
+    System.out.println(passwordEncoder.matches(storedHashedPassword, user.getPassword()));
     return user != null && passwordEncoder.matches(storedHashedPassword, user.getPassword());
 
   }

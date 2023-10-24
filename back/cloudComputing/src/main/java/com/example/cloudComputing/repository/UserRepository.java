@@ -23,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
   List<User> getAllByCreditAfter(double credit);
 
   List<User> getAllByCreditBefore(double credit);
+
+  Boolean existsUserByUsername(String username);
+  Boolean existsUserByEmail(String email);
 }

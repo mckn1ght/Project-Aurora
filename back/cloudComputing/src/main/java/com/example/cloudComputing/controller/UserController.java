@@ -27,8 +27,17 @@ public class UserController {
 
   @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping("/add")
-  public ResponseEntity<UserDto> adduser(@Valid @RequestBody UserDto userDto) {
-    return ResponseEntity.ok(userServiceImpl.add(userDto));
+  public ResponseEntity<String> adduser(@Valid @RequestBody UserDto userDto) {
+    if (userServiceImpl.existsUserByUsername(userDto.getUsername())) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken.");
+    }
+    else if(userServiceImpl.existsUserByEmail(userDto.getEmail())){
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken.");
+    }
+    else {
+      ResponseEntity.ok(userServiceImpl.add(userDto));
+      return ResponseEntity.ok("{\"message\": \"Account registered successful\"}");
+    }
   }
 
   @RequestMapping("/getById/{id}")

@@ -19,10 +19,10 @@ public class UserDto {
 
   private Long id;
 
-  
+
   @NotNull(message = "Username is mandatory!")
   private String username;
-  @Password()
+//  @Password() commented because the password is hashed in frontend
   private String password;
   private String address;
   @Email()
