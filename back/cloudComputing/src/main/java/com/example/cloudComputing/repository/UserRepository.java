@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   User getByUsername(String username);
 
-  List<User> getAllByPermissions(int permission);
+  List<User> getAllByPermission(int permission);
 
   List<User> getAllByCreditAfter(double credit);
 

@@ -55,9 +55,9 @@ public class UserController {
     return ResponseEntity.ok(userServiceImpl.getByUsername(username));
   }
 
-  @GetMapping("/permissions/{permissions}")
-  public ResponseEntity<List<UserDto>> getAllByPermissions(@PathVariable int permissions) {
-    return ResponseEntity.ok(userServiceImpl.getAllByPermissions(permissions));
+  @GetMapping("/permission/{permission}")
+  public ResponseEntity<List<UserDto>> getAllByPermission(@PathVariable int permission) {
+    return ResponseEntity.ok(userServiceImpl.getAllByPermission(permission));
   }
 
   @GetMapping("/creditHigher/{value}")

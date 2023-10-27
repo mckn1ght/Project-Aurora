@@ -67,8 +67,8 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  public List<UserDto> getAllByPermissions(int permission) {
-    List<UserDto> userDto = userRepository.getAllByPermissions(permission).stream()
+  public List<UserDto> getAllByPermission(int permission) {
+    List<UserDto> userDto = userRepository.getAllByPermission(permission).stream()
       .map(user -> userMapper.mapToUserDto(user)).collect(Collectors.toList());
     if (userDto.isEmpty()) {
 
@@ -98,7 +98,6 @@ public class UserServiceImpl implements UserService {
 
   public boolean authenticate(String username, String storedHashedPassword) {
     User user = userRepository.getByUsername(username);
-    System.out.println(storedHashedPassword + " @@@@ " + user.getPassword());
     System.out.println(passwordEncoder.matches(storedHashedPassword, user.getPassword()));
     return user != null && passwordEncoder.matches(storedHashedPassword, user.getPassword());
 

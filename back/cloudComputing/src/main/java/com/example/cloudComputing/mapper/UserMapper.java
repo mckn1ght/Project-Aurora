@@ -16,7 +16,7 @@ public class UserMapper {
       .created(userDto.getCreated())
       .last_updated(userDto.getLast_updated())
       .credit(userDto.getCredit())
-      .permissions(userDto.getPermissions())
+      .permission(userDto.getPermission())
       .build();
   }
 
@@ -30,7 +30,7 @@ public class UserMapper {
       .created(user.getCreated())
       .last_updated(user.getLast_updated())
       .credit(user.getCredit())
-      .permissions(user.getPermissions())
+      .permission(user.getPermission())
       .build();
   }
 }

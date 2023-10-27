@@ -57,7 +57,11 @@ button:hover {
   margin: auto; /* Add this line to center the element horizontally */
   text-align: center; /* Add this line to center the text within the element */
   font-size: small;
+  margin-top: 5px;
   width: fit-content; /* This limits the width of the element to its content */
+}
+.error-border {
+  border-color: red;
 }
 
 .background {

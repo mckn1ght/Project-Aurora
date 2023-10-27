@@ -13,7 +13,7 @@ public interface UserService {
 
   UserDto getByUsername(String username);
 
-  List<UserDto> getAllByPermissions(int permission);
+  List<UserDto> getAllByPermission(int permission);
 
   List<UserDto> getAllByCreditAfter(double credit);
 

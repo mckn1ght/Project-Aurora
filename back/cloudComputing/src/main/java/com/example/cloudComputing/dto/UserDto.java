@@ -1,11 +1,8 @@
 package com.example.cloudComputing.dto;
 
 import com.example.cloudComputing.validator.Email;
-import com.example.cloudComputing.validator.Password;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.Date;
 
@@ -30,6 +27,6 @@ public class UserDto {
   private Date created;
   private Date last_updated;
   private double credit;
-  private int permissions;
+  private int permission;
 
 }
