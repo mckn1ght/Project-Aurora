@@ -11,6 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NoSpaceDirective } from './directive/no-space.directive';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
+    NoSpaceDirective,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -8,4 +8,5 @@ V0.0.2
 &emsp;&emsp;&emsp;-Phone number  
 &emsp;&emsp;&emsp;-Only Letters  
 &emsp;&emsp;&emsp;-Email  
-&emsp;&emsp;&emsp;-Password (minimum eight characters, at least one letter and one number)  
+&emsp;&emsp;&emsp;-Password (minimum eight characters, at least one letter and one number)    
+&emsp;&emsp;-Added register page logic  

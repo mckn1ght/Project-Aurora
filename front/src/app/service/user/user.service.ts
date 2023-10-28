@@ -16,7 +16,6 @@ export class UserService {
 
   register(user: any) {
     user.password = bcrypt.hashSync(user.password, 10);
-    // console.log(BACKEND_API_URL + userEndpoint + addUserEndpoint, user);
     return this.http.post(
       BACKEND_API_URL + userEndpoint + addUserEndpoint,
       user

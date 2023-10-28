@@ -31,6 +31,13 @@ public class UserServiceImpl implements UserService {
     return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
   }
 
+  public boolean existsUserByUsername(String username) {
+    return userRepository.existsUserByUsername(username);
+  }
+
+  public boolean existsUserByEmail(String email) {
+    return userRepository.existsUserByEmail(email);
+  }
 
   public List<UserDto> getAll() {
     List<UserDto> userDtos = userRepository.findAll().stream().map(user -> userMapper.mapToUserDto(user)).collect(Collectors.toList());
@@ -59,8 +66,8 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  public List<UserDto> getAllByPermissions(int permission) {
-    List<UserDto> userDto = userRepository.getAllByPermissions(permission).stream()
+  public List<UserDto> getAllByPermission(int permission) {
+    List<UserDto> userDto = userRepository.getAllByPermission(permission).stream()
       .map(user -> userMapper.mapToUserDto(user)).collect(Collectors.toList());
     if (userDto.isEmpty()) {
 
@@ -91,7 +98,6 @@ public class UserServiceImpl implements UserService {
   public boolean authenticate(String username, String storedHashedPassword) {
     User user = userRepository.getByUsername(username);
     return user != null && passwordEncoder.matches(storedHashedPassword, user.getPassword());
-
   }
 
 

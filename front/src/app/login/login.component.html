@@ -9,7 +9,6 @@
           id="username"
           name="username"
           minlength="5"
-          maxlength="15"
           [(ngModel)]="formData.username"
           required
         />
@@ -23,7 +22,6 @@
           [(ngModel)]="formData.password"
           required
           minlength="5"
-          maxlength="15"
         />
       </div>
       <div *ngIf="error" class="errorLabel">{{ error }}</div>
