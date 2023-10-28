@@ -84,7 +84,3 @@ export class RegisterComponent {
     );
   }
 }
-
-// function noEmptySpacesValidator(): any | string {
-//   throw new Error('Function not implemented.');
-// }

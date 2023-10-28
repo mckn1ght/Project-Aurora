@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +28,10 @@ public class UserController {
   @PostMapping("/add")
   public ResponseEntity<String> adduser(@Valid @RequestBody UserDto userDto) {
     if (userServiceImpl.existsUserByUsername(userDto.getUsername())) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username is already taken.");
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken.");
     }
     else if(userServiceImpl.existsUserByEmail(userDto.getEmail())){
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email is already taken.");
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already taken.");
     }
     else {
       ResponseEntity.ok(userServiceImpl.add(userDto));
@@ -82,10 +81,10 @@ public class UserController {
       if (isAuthenticated) {
         return ResponseEntity.ok("{\"message\": \"Authentication successful\"}");
       } else {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\": \"Invalid credentials\"}");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"Invalid credentials\"}");
       }
     } catch (UserUsernameNotFoundException e) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"message\": \"" + e.getMessage() + "\"}");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"" + e.getMessage() + "\"}");
     }
   }
 
