@@ -25,12 +25,20 @@ public class User {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "firstName")
+  private String firstName;
+
+  @Column(name = "lastName")
+  private String lastName;
+
   @Column(name = "address")
   private String address;
 
   @Column(name = "email")
   private String email;
 
+  @Column(name = "phoneNumber")
+  private String phoneNumber;
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created")
   private Date created;

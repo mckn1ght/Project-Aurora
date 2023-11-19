@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../service/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import * as bcrypt from 'bcryptjs';
+import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,9 @@ export class LoginComponent {
   };
 
   error: string = '';
+
+  appEnvironment: String = APPLICATION_ENVIRONMENT;
+  appVersion: String = APPLICATION_VERSION;
 
   constructor(private authService: AuthService, private router: Router) {}
 

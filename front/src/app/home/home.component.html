@@ -1,18 +1,60 @@
 <div class="homepage">
   <header class="top-menu">
     <div class="logo">
-      <h1>Project Aurora</h1>
+      <img
+        class="logoImage"
+        src="../../assets/icons/fossil.shell@2x.png"
+        alt="Logo"
+        style="display: inline-block"
+      />
+      <h1 style="display: inline-block">Project Aurora</h1>
     </div>
     <nav>
       <ul>
         <li><a href="/home">Home</a></li>
         <li><a href="/landing">Landing</a></li>
-        <li><a href="/books">Books</a></li>
         <li><a href="/login">Logout</a></li>
       </ul>
     </nav>
   </header>
+
+  <div class="container">
+    <header>
+      <h1>Bine ai venit la Servicii Rapide!</h1>
+      <p>Solutii rapide pentru problemele tale de renovare si instalatii.</p>
+    </header>
+
+    <section class="services">
+      <div class="service">
+        <h2>Renovari</h2>
+        <p>Specialisti in renovari pentru a transforma locuinta ta.</p>
+        <button routerLink="/servicii/renovari">Vezi Detalii</button>
+      </div>
+
+      <div class="service">
+        <h2>Instalatii</h2>
+        <p>Servicii rapide pentru orice problema legata de instalatii.</p>
+        <button routerLink="/servicii/instalatii">Vezi Detalii</button>
+      </div>
+
+      <div class="service">
+        <h2>Spatiu Electric</h2>
+        <p>Specialisti electricieni pentru rezolvarea problemelor.</p>
+        <button routerLink="/servicii/electricieni">Vezi Detalii</button>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Ai nevoie de ajutor rapid?</h2>
+      <p>Contacteaza-ne acum pentru a gasi solutia potrivita.</p>
+      <button routerLink="/contact">Contacteaza-ne</button>
+    </section>
+  </div>
+
   <footer>
-    <p>&copy; 2023 Project Aurora. All rights reserved.</p>
+    <p>
+      &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+      {{ appVersion }}
+    </p>
   </footer>
 </div>

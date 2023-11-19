@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from './service/book/book.service';
 // import { APPLICATION_STATE } from './globals';
 
 @Component({
@@ -8,7 +7,7 @@ import { BookService } from './service/book/book.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private bookService: BookService) {}
+  constructor() {}
   title = 'ProjectAurora';
 
   ngOnInit() {

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../service/user/user.service';
 import { Router } from '@angular/router';
+import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 
 @Component({
   selector: 'app-register',
@@ -13,18 +14,27 @@ export class RegisterComponent {
   user = {
     username: '',
     password: '',
+    firstName: '',
+    lastName: '',
     confirmPassword: '',
     email: '',
+    phoneNumber: '',
   };
 
   userAfterValidation = {
     username: '',
     password: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    phoneNumber: '',
   };
 
   error = '';
   registerForm: FormGroup;
+
+  appEnvironment: String = APPLICATION_ENVIRONMENT;
+  appVersion: String = APPLICATION_VERSION;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +51,22 @@ export class RegisterComponent {
         ],
       ],
       confirmPassword: ['', Validators.required],
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.pattern(/^[a-zA-Z]*$/),
+        ],
+      ],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.pattern(/^[a-zA-Z]*$/),
+        ],
+      ],
       email: [
         '',
         [
@@ -48,6 +74,7 @@ export class RegisterComponent {
           Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
         ],
       ],
+      phoneNumber: ['', [Validators.required]],
     });
   }
 
@@ -56,20 +83,23 @@ export class RegisterComponent {
     if (this.registerForm.valid && this.passwordsMatch()) {
       this.userAfterValidation.username = this.user.username;
       this.userAfterValidation.password = this.user.password;
+      this.userAfterValidation.firstName = this.user.firstName;
+      this.userAfterValidation.lastName = this.user.lastName;
       this.userAfterValidation.email = this.user.email;
+      this.userAfterValidation.phoneNumber = this.user.phoneNumber;
       this.userService.register(this.userAfterValidation).subscribe(
         (response) => {
           console.log('Form submitted:', response);
           this.router.navigate(['/login']);
         },
         (error) => {
-          console.error('Registration failed1:', error.error);
+          console.error('Registration failed:', error.error);
 
           this.error = error.error;
         }
       );
     } else {
-      console.error('Registration failed2:', Error);
+      console.error('Registration failed. Problem during API call:', Error);
     }
   }
 
