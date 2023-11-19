@@ -33,6 +33,9 @@ public class UserController {
     else if(userServiceImpl.existsUserByEmail(userDto.getEmail())){
       return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already taken.");
     }
+    else if(userServiceImpl.existsUserByPhoneNumber(userDto.getPhoneNumber())){
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("The phone number is already in use.");
+    }
     else {
       ResponseEntity.ok(userServiceImpl.add(userDto));
       return ResponseEntity.ok("{\"message\": \"Account registered successful\"}");

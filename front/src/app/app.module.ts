@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { BooksComponent } from './books/books.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +16,6 @@ import { NoSpaceDirective } from './directive/no-space.directive';
 @NgModule({
   declarations: [
     AppComponent,
-    BooksComponent,
     LandingComponent,
     LoginComponent,
     HomeComponent,

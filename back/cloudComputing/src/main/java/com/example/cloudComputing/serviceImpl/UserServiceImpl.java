@@ -39,6 +39,8 @@ public class UserServiceImpl implements UserService {
     return userRepository.existsUserByEmail(email);
   }
 
+  public boolean existsUserByPhoneNumber(String phoneNumber){ return userRepository.existsUserByPhoneNumber(phoneNumber); }
+
   public List<UserDto> getAll() {
     List<UserDto> userDtos = userRepository.findAll().stream().map(user -> userMapper.mapToUserDto(user)).collect(Collectors.toList());
     if (userDtos.isEmpty()) {

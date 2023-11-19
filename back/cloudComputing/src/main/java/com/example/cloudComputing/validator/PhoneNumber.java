@@ -15,11 +15,11 @@ import java.lang.annotation.Target;
 public @interface PhoneNumber {
 
     String message() default "The phone number can have the following formats:\n" +
-            "123-456-7890\n" +
-            "(123) 456-7890\n" +
-            "123 456 7890\n" +
-            "123.456.7890\n" +
-            "+91 (123) 456-7890\n";
+            "123-456-7890,\n" +
+            "(123) 456-7890,\n" +
+            "123 456 7890,\n" +
+            "123.456.7890,\n" +
+            "+91 (123) 456-7890,\n";
 
     //represents group of constraints
     Class<?>[] groups() default {};

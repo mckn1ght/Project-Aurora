@@ -38,6 +38,91 @@
         </div>
       </div>
       <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          pattern="^[a-zA-Z]*$"
+          formControlName="firstName"
+          [(ngModel)]="user.firstName"
+          [ngClass]="{
+            'error-border':
+              registerForm.get('firstName')?.invalid &&
+              registerForm.get('firstName')?.touched
+          }"
+        />
+
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('firstName')?.hasError('required') &&
+            registerForm.get('firstName')?.touched
+          "
+        >
+          First Name is required.
+        </div>
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('firstName')?.hasError('minlength') &&
+            registerForm.get('firstName')?.touched
+          "
+        >
+          First Name must have at least 5 characters.
+        </div>
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('firstName')?.hasError('pattern') &&
+            registerForm.get('firstName')?.touched
+          "
+        >
+          First Name must not contain special characters or numbers.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          pattern="^[a-zA-Z]*$"
+          formControlName="lastName"
+          [(ngModel)]="user.lastName"
+          [ngClass]="{
+            'error-border':
+              registerForm.get('lastName')?.invalid &&
+              registerForm.get('lastName')?.touched
+          }"
+        />
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('lastName')?.hasError('required') &&
+            registerForm.get('lastName')?.touched
+          "
+        >
+          Last Name is required.
+        </div>
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('lastName')?.hasError('minlength') &&
+            registerForm.get('lastName')?.touched
+          "
+        >
+          Last Name must have at least 5 characters.
+        </div>
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('lastName')?.hasError('pattern') &&
+            registerForm.get('lastName')?.touched
+          "
+        >
+          Last Name must not contain special characters or numbers.
+        </div>
+      </div>
+      <div class="form-group">
         <label for="password">Password</label>
         <input
           type="password"
@@ -133,8 +218,47 @@
           Please enter a valid email address.
         </div>
       </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input
+          type="phoneNumber"
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          [(ngModel)]="user.phoneNumber"
+          appNoSpace
+          [ngClass]="{
+            'error-border':
+              registerForm.get('phoneNumber')?.invalid &&
+              registerForm.get('phoneNumber')?.touched
+          }"
+        />
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('phoneNumber')?.hasError('required') &&
+            registerForm.get('phoneNumber')?.touched
+          "
+        >
+          Phone Number is required.
+        </div>
+        <div
+          class="errorLabel"
+          *ngIf="
+            registerForm.get('phoneNumber')?.hasError('pattern') &&
+            registerForm.get('phoneNumber')?.touched
+          "
+        >
+          Please enter a valid phonenumber.
+        </div>
+      </div>
       <div *ngIf="error" class="errorLabel">{{ error }}</div>
       <button type="submit" [disabled]="!registerForm.valid">Register</button>
     </form>
   </div>
 </div>
+<footer>
+  <p>
+    &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+    {{ appVersion }}
+  </p>
+</footer>
