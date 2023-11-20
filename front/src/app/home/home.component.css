@@ -1,23 +1,21 @@
-/* minimalist-page.component.css */
-
-/* ... Previous CSS ... */
-
 .top-menu {
   background-color: #f5f2f2d5;
-  padding: 1px 0;
+  padding: 1px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .logo {
-  flex-grow: 1;
   font-size: 1;
+  display: flex;
+  align-items: center;
 }
 
 .logo h1 {
   margin: 0;
   font-size: 20px;
+  margin-left: 10px;
 }
 
 .top-menu nav ul {
@@ -60,22 +58,77 @@ header {
   margin-bottom: 20px;
 }
 
+.services {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: center; /* Distribute items evenly */
+  background-color: hsla(0, 0%, 98%, 0.5);
+  margin-top: 25px;
+}
+
 .service {
-  border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 20px;
+  width: calc(20% - 20px);
+  margin: 0 10px 20px;
   text-align: center;
+  box-sizing: border-box;
+  border: 1px solid #a9a9a9;
+  padding: 10px;
+  border-radius: 10px; /* Add border-radius for rounded corners */
+}
+
+.service button {
+  width: 100%; /* Make the button take up the full width of the .service container */
+  height: 100%; /* Make the button take up the full height of the .service container */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+}
+.service h2 {
+  /* Style for the text within the button */
+  margin-bottom: 0px;
+}
+.domain-icon {
+  /* Style for the domain icon */
+  margin-bottom: 5px; /* Add some spacing between the icon and text */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+  .service {
+    width: calc(50% - 20px);
+  }
 }
 
 button {
   padding: 10px 20px;
-  background-color: #4caf50;
+  background-color: #429dff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
+button:hover {
+  background-color: #6baff8;
+}
+
 .cta {
   text-align: center;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/images/home_background4.jpg");
+  background-size: cover;
+  opacity: 0.6;
+  background-repeat: no-repeat;
+
+  z-index: -1;
 }

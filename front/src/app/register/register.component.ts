@@ -56,7 +56,7 @@ export class RegisterComponent {
         [
           Validators.required,
           Validators.minLength(5),
-          Validators.pattern(/^[a-zA-Z]*$/),
+          Validators.pattern('^[a-zA-Z]+(?: [a-zA-Z]+)?$'), //Accepts a space in the middle of the string because the user can have 2 names.
         ],
       ],
       lastName: [
@@ -64,7 +64,7 @@ export class RegisterComponent {
         [
           Validators.required,
           Validators.minLength(5),
-          Validators.pattern(/^[a-zA-Z]*$/),
+          Validators.pattern('^[a-zA-Z]*$'),
         ],
       ],
       email: [

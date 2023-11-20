@@ -1,4 +1,5 @@
 <div class="homepage">
+  <div class="background"></div>
   <header class="top-menu">
     <div class="logo">
       <img
@@ -25,29 +26,21 @@
     </header>
 
     <section class="services">
-      <div class="service">
-        <h2>Renovari</h2>
-        <p>Specialisti in renovari pentru a transforma locuinta ta.</p>
-        <button routerLink="/servicii/renovari">Vezi Detalii</button>
-      </div>
-
-      <div class="service">
-        <h2>Instalatii</h2>
-        <p>Servicii rapide pentru orice problema legata de instalatii.</p>
-        <button routerLink="/servicii/instalatii">Vezi Detalii</button>
-      </div>
-
-      <div class="service">
-        <h2>Spatiu Electric</h2>
-        <p>Specialisti electricieni pentru rezolvarea problemelor.</p>
-        <button routerLink="/servicii/electricieni">Vezi Detalii</button>
-      </div>
-    </section>
-
-    <section class="cta">
-      <h2>Ai nevoie de ajutor rapid?</h2>
-      <p>Contacteaza-ne acum pentru a gasi solutia potrivita.</p>
-      <button routerLink="/contact">Contacteaza-ne</button>
+      <section class="services">
+        <div class="service" *ngFor="let domain of domains">
+          <button [routerLink]="'/servicii/' + domain.route">
+            <div class="domain-icon">
+              <!-- Add an icon for each domain (you may need to replace the [icon] attribute) -->
+              <img
+                [src]="'/assets/icons/' + domain.icon + '.png'"
+                alt="{{ domain.name }} Icon"
+              />
+            </div>
+            <h2>{{ domain.name }}</h2>
+            <p>{{ domain.description }}</p>
+          </button>
+        </div>
+      </section>
     </section>
   </div>
 

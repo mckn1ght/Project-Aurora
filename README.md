@@ -10,3 +10,8 @@ V0.0.2
 &emsp;&emsp;&emsp;-Email  
 &emsp;&emsp;&emsp;-Password (minimum eight characters, at least one letter and one number)    
 &emsp;&emsp;-Added register page logic  
+
+V0.1.0-SHAPSHOT   
+&emsp;&emsp;-Home page design   
+&emsp;&emsp;-Added multiple landing page videos that are cycled through on init      
+&emsp;&emsp;-Added the following tables in the database:categories, job, permission, review, specialOffer, user, user_categories, user_job, user_review.     
