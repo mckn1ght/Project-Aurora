@@ -6,5 +6,5 @@ export const addUserEndpoint = '/add';
 export const userLogin = '/login';
 
 export const MAX_LOGIN_ATTEMPTS = 3;
-export const APPLICATION_VERSION = '0.0.2-SHAPSHOT';
+export const APPLICATION_VERSION = '0.1.0-SHAPSHOT';
 export const APPLICATION_ENVIRONMENT = 'DEVELOPMENT';

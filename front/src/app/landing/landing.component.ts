@@ -63,11 +63,6 @@ export class LandingComponent implements OnInit {
 
       this.currentVideoIndex = newIndex;
 
-      // Check if we are at the last video, then reset to the first one
-      if (this.currentVideoIndex === this.videoSources.length - 1) {
-        this.currentVideoIndex = 0;
-      }
-
       this.videoElement.nativeElement.load();
       this.videoElement.nativeElement.play();
     }
