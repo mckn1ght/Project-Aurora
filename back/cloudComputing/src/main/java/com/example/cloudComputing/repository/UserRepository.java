@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   User getByUsername(String username);
 
-  List<User> getAllByPermission(int permission);
+  List<User> getAllByIsAdmin(boolean isAdmin);
 
   List<User> getAllByCreditAfter(double credit);
 
@@ -28,4 +28,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Boolean existsUserByEmail(String email);
 
   Boolean existsUserByPhoneNumber(String phoneNumber);
+  User getBySpecialistId(int id);
 }

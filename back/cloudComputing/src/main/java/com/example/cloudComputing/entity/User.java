@@ -50,8 +50,12 @@ public class User {
   @Column(name = "credit")
   private double credit;
 
-  @Column(name = "permission")
-  private int permission;
+  @Column(name = "isAdmin")
+  private boolean isAdmin;
+
+  @Column(name = "specialistId", nullable = true)
+  private Integer specialistId;
+
 
   // Created Date will be set before the entity is first saved to the database
   @PrePersist

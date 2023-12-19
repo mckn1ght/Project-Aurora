@@ -42,6 +42,7 @@ public class UserDto {
   private Date created;
   private Date last_updated;
   private double credit;
-  private int permission;
+  private boolean isAdmin;
+  private Integer specialistId;
 
 }

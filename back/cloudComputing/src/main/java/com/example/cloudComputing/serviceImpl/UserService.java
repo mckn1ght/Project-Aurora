@@ -13,9 +13,10 @@ public interface UserService {
 
   UserDto getByUsername(String username);
 
-  List<UserDto> getAllByPermission(int permission);
+  List<UserDto> getAllByIsAdmin(boolean isAdmin);
 
   List<UserDto> getAllByCreditAfter(double credit);
 
   List<UserDto> getAllByCreditBefore(double credit);
+  UserDto getBySpecialistId(int id);
 }

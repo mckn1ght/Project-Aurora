@@ -14,4 +14,5 @@ V0.0.2
 V0.1.0-SHAPSHOT   
 &emsp;&emsp;-Home page design   
 &emsp;&emsp;-Added multiple landing page videos that are cycled through on init      
-&emsp;&emsp;-Added the following tables in the database:categories, job, permission, review, specialOffer, user, user_categories, user_job, user_review.     
+&emsp;&emsp;-Added the following tables in the database: expertiseArea, job, job_expertiseArea, review,  specialist, specialist_expertiseArea, user    
+&emsp;&emsp;-Created the database schema and the relationships    

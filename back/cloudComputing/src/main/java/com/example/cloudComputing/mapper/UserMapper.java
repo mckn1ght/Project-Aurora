@@ -19,7 +19,8 @@ public class UserMapper {
       .created(userDto.getCreated())
       .last_updated(userDto.getLast_updated())
       .credit(userDto.getCredit())
-      .permission(userDto.getPermission())
+      .isAdmin(userDto.isAdmin())
+      .specialistId(userDto.getSpecialistId())
       .build();
   }
 
@@ -36,7 +37,8 @@ public class UserMapper {
       .created(user.getCreated())
       .last_updated(user.getLast_updated())
       .credit(user.getCredit())
-      .permission(user.getPermission())
+      .isAdmin(user.isAdmin())
+      .specialistId((user.getSpecialistId()))
       .build();
   }
 }

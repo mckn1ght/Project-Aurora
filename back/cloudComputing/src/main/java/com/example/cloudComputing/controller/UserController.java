@@ -57,9 +57,9 @@ public class UserController {
     return ResponseEntity.ok(userServiceImpl.getByUsername(username));
   }
 
-  @GetMapping("/permission/{permission}")
-  public ResponseEntity<List<UserDto>> getAllByPermission(@PathVariable int permission) {
-    return ResponseEntity.ok(userServiceImpl.getAllByPermission(permission));
+  @GetMapping("/isAdmin/{isAdmin}")
+  public ResponseEntity<List<UserDto>> getAllByPermission(@PathVariable boolean isAdmin) {
+    return ResponseEntity.ok(userServiceImpl.getAllByIsAdmin(isAdmin));
   }
 
   @GetMapping("/creditHigher/{value}")
@@ -91,6 +91,10 @@ public class UserController {
     }
   }
 
+  @RequestMapping("/getBySpecialistId/{id}")
+  public ResponseEntity<UserDto> getBySpecialistId(@PathVariable int id) {
+    return ResponseEntity.ok(userServiceImpl.getBySpecialistId(id));
+  }
 }
 
 

@@ -68,12 +68,12 @@ public class UserServiceImpl implements UserService {
 
   }
 
-  public List<UserDto> getAllByPermission(int permission) {
-    List<UserDto> userDto = userRepository.getAllByPermission(permission).stream()
+  public List<UserDto> getAllByIsAdmin(boolean isAdmin) {
+    List<UserDto> userDto = userRepository.getAllByIsAdmin(isAdmin).stream()
       .map(user -> userMapper.mapToUserDto(user)).collect(Collectors.toList());
     if (userDto.isEmpty()) {
 
-      throw new NoUserPermissionFoundException(String.format(NO_USER_PERMISSION_FOUND, permission));
+      throw new NoUserIsAdminFoundException(String.format(NO_USER_ISADMIN_FOUND, isAdmin));
     }
     return userDto;
 
@@ -100,6 +100,15 @@ public class UserServiceImpl implements UserService {
   public boolean authenticate(String username, String storedHashedPassword) {
     User user = userRepository.getByUsername(username);
     return user != null && passwordEncoder.matches(storedHashedPassword, user.getPassword());
+  }
+
+  public UserDto getBySpecialistId(int id) {
+    User user = userRepository.getBySpecialistId(id);
+    if (user == null) {
+      throw new UserIdNotFoundException(String.format(NO_USER_SPECIALIST_ID_FOUND, id));
+    }
+    return userMapper.mapToUserDto(user);
+
   }
 
 

@@ -12,7 +12,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @ControllerAdvice
 public class ExceptionControllerAdvice {
   @ExceptionHandler({NoCreditHigherFoundException.class, NoCreditLowerFoundException.class, NoUserFoundException.class,
-    NoUserPermissionFoundException.class, UserIdNotFoundException.class, UserUsernameNotFoundException.class,
+    NoUserIsAdminFoundException.class, UserIdNotFoundException.class, UserUsernameNotFoundException.class,
     SQLIntegrityConstraintViolationException.class
   })
   public ResponseEntity<String> handleControllerExceptions(Exception exception) {
