@@ -49,14 +49,12 @@ public class UserServiceImpl implements UserService {
     return userDtos;
   }
 
-
   public UserDto getById(Long id) {
     User user = userRepository.getById(id);
     if (user == null) {
       throw new UserIdNotFoundException(String.format(NO_USER_ID_FOUND, id));
     }
     return userMapper.mapToUserDto(user);
-
   }
 
   public UserDto getByUsername(String username) {
@@ -65,7 +63,6 @@ public class UserServiceImpl implements UserService {
       throw new UserUsernameNotFoundException(String.format(NO_USER_USERNAME_FOUND, username));
     }
     return userMapper.mapToUserDto(user);
-
   }
 
   public List<UserDto> getAllByIsAdmin(boolean isAdmin) {
@@ -108,7 +105,6 @@ public class UserServiceImpl implements UserService {
       throw new UserIdNotFoundException(String.format(NO_USER_SPECIALIST_ID_FOUND, id));
     }
     return userMapper.mapToUserDto(user);
-
   }
 
 
