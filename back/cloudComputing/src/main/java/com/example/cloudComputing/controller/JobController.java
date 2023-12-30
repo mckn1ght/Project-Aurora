@@ -33,7 +33,7 @@ public class JobController {
   @Autowired
   JobMapper jobMapper;
 
-//  @CrossOrigin(origins = "http://localhost:4200")
+  @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping("/add")
   public ResponseEntity<String> addjob(@Valid @RequestBody JobDto jobDto) {
     ResponseEntity.ok(jobServiceImpl.add(jobDto));

@@ -20,6 +20,10 @@ public class ExpertiseArea {
   @Column(name = "name")
   private String name;
 
+  @Column(name = "iconName")
+  private String iconName;
+
+
 }
 
 

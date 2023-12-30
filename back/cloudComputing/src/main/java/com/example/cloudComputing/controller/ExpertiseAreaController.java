@@ -39,6 +39,7 @@ public class ExpertiseAreaController {
     return ResponseEntity.ok(expertiseAreaServiceImpl.getReferenceById(id));
   }
 
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/all")
   public List<ExpertiseAreaDto> getAll() {
     return expertiseAreaServiceImpl.getAll();

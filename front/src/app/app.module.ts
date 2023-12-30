@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoSpaceDirective } from './directive/no-space.directive';
+import { NewJobComponent } from './new-job/new-job.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NoSpaceDirective } from './directive/no-space.directive';
     HomeComponent,
     RegisterComponent,
     NoSpaceDirective,
+    NewJobComponent,
   ],
   imports: [
     BrowserModule,

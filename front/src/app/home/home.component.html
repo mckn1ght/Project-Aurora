@@ -15,6 +15,9 @@
         <li><a href="/home">Home</a></li>
         <li><a href="/landing">Landing</a></li>
         <li><a href="/login">Logout</a></li>
+        <button class="add-request-button" (click)="navigateToNewJob()">
+          Publica un anunt
+        </button>
       </ul>
     </nav>
   </header>
@@ -24,20 +27,28 @@
       <h1>Bine ai venit la Servicii Rapide!</h1>
       <p>Solutii rapide pentru problemele tale de renovare si instalatii.</p>
     </header>
-
+    <div class="search-bar">
+      <input
+        class="search-input"
+        type="text"
+        [(ngModel)]="searchInput"
+        placeholder="Joburi, domenii, locatii..."
+      />
+      <button class="search-button">Cauta</button>
+    </div>
     <section class="services">
       <section class="services">
-        <div class="service" *ngFor="let domain of domains">
-          <button [routerLink]="'/servicii/' + domain.route">
+        <div class="service" *ngFor="let expertiseArea of expertiseAreasList">
+          <button [routerLink]="'/servicii/' + expertiseArea.name">
             <div class="domain-icon">
               <!-- Add an icon for each domain (you may need to replace the [icon] attribute) -->
               <img
-                [src]="'/assets/icons/' + domain.icon + '.png'"
-                alt="{{ domain.name }} Icon"
+                [src]="'/assets/icons/' + expertiseArea.iconName + '.png'"
+                alt="{{ expertiseArea.name }} Icon"
               />
             </div>
-            <h2>{{ domain.name }}</h2>
-            <p>{{ domain.description }}</p>
+            <h2>{{ expertiseArea.name }}</h2>
+            <p>{{ expertiseArea.description }}</p>
           </button>
         </div>
       </section>

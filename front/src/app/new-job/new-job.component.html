@@ -1,0 +1,83 @@
+<!-- other.component.html -->
+
+<div class="container">
+  <div class="card">
+    <div class="form-group">
+      <label for="title">Titlu:</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        [(ngModel)]="newJob.title"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="expertiseArea">Domeniu de activitate:</label>
+      <select
+        id="expertiseArea"
+        name="expertiseArea"
+        [(ngModel)]="newJob.expertiseArea"
+        required
+      >
+        <option value="" disabled>Selectati un domeniu de activitate</option>
+        <!-- Add options dynamically based on retrieved expertise areas -->
+        <option *ngFor="let area of expertiseAreasList" [value]="area.id">
+          {{ area.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label for="details">Detalii:</label>
+      <textarea
+        id="details"
+        name="details"
+        [(ngModel)]="newJob.description"
+        required
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label for="location">Locatie:</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        [(ngModel)]="newJob.location"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label for="phoneNumber">Numar de contact:</label>
+      <input
+        type="tel"
+        id="phoneNumber"
+        name="phoneNumber"
+        [(ngModel)]="newJob.phoneNumber"
+        required
+      />
+    </div>
+  </div>
+  <div>
+    <div class="form-group">
+      <label for="dueDate">Due Date:</label>
+      <input
+        type="date"
+        id="dueDate"
+        name="dueDate"
+        [(ngModel)]="newJob.dueDate"
+        required
+      />
+    </div>
+  </div>
+  <button type="submit" (click)="addJob()">Publica Solicitare</button>
+</div>

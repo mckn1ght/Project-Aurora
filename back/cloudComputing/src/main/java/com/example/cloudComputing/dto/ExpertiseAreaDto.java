@@ -16,4 +16,5 @@ public class ExpertiseAreaDto {
   @NotNull(message = "Expertise area name is mandatory!")
   private String name;
 
+  private String iconName;
 }

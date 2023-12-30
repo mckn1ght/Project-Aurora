@@ -16,6 +16,7 @@ import java.util.List;
 
 @Validated
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
 public class UserController {
   @Autowired
@@ -42,6 +43,7 @@ public class UserController {
     }
   }
 
+  @CrossOrigin(origins = "http://localhost:4200")
   @RequestMapping("/getById/{id}")
   public ResponseEntity<UserDto> getById(@PathVariable Long id) {
     return ResponseEntity.ok(userServiceImpl.getById(id));
@@ -52,6 +54,7 @@ public class UserController {
     return userServiceImpl.getAll();
   }
 
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/username/{username}")
   public ResponseEntity<UserDto> getByUsername(@PathVariable String username) {
     return ResponseEntity.ok(userServiceImpl.getByUsername(username));

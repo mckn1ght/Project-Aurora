@@ -27,7 +27,7 @@
   display: inline-block;
   margin: 0 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .top-menu nav a {
@@ -56,6 +56,61 @@ footer {
 header {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.add-request-button {
+  background-color: #186fc7;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  /* transition: background-color 0.3s ease-in-out; */
+  font-size: 16px;
+}
+
+.add-request-button:hover {
+  background-color: #337fe1;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: calc(
+    5 * 20% - 10px
+  ); /* Adjusted width to fit the button, considering margins */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease-in-out;
+  height: 40px;
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  outline: none;
+  height: 100%;
+  font-size: 16px;
+}
+
+.search-button {
+  /* Adjusted button styles */
+  background-color: #186fc7;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  height: 80px;
+  width: 140px;
+  font-size: 18px;
+}
+
+.search-button:hover {
+  background-color: #337fe1;
 }
 
 .services {

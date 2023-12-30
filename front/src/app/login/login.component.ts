@@ -4,6 +4,8 @@ import { AuthService } from '../service/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import * as bcrypt from 'bcryptjs';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -38,10 +40,5 @@ export class LoginComponent {
         else this.error = error.error.message;
       }
     );
-  }
-
-  showError(error: string): string {
-    this.error = error;
-    return error;
   }
 }

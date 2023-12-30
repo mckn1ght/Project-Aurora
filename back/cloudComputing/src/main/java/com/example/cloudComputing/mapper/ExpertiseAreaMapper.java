@@ -11,6 +11,7 @@ public class ExpertiseAreaMapper {
     return ExpertiseArea.builder()
       .id(expertiseAreaDto.getId())
       .name(expertiseAreaDto.getName())
+      .iconName(expertiseAreaDto.getIconName())
       .build();
   }
 
@@ -18,6 +19,7 @@ public class ExpertiseAreaMapper {
     return ExpertiseAreaDto.builder()
       .id(expertiseArea.getId())
       .name(expertiseArea.getName())
+      .iconName(expertiseArea.getIconName())
       .build();
   }
 }

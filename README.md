@@ -16,5 +16,7 @@ V0.1.0-SHAPSHOT
 &emsp;&emsp;-Added multiple landing page videos that are cycled through on init      
 &emsp;&emsp;-Added the following tables in the database: expertiseArea, job, job_expertiseArea, review,  specialist, specialist_expertiseArea, user    
 &emsp;&emsp;-Created the database schema and the relationships  
-&emsp;&emsp;-Created the CRUD, backend and exceptions for all the database entities  
-        
+&emsp;&emsp;-Created the CRUD, backend and exceptions for all the database entities 
+
+V0.1.5-SHAPSHOT      
+&emsp;&emsp;-Added a new page for adding new jobs and all the logic behind it     
