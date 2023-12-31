@@ -1,4 +1,62 @@
-/* other.component.css */
+.top-menu {
+  background-color: #f5f2f2d5;
+  padding: 1px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.top-menu nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-menu nav li {
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.top-menu nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 0px;
+  position: fixed;
+  font-size: 11px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
 .container {
   max-width: 1200px;
@@ -50,15 +108,30 @@ select {
 }
 
 button {
-  background-color: #3498db;
+  background-color: #186fc7;
   color: #fff;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 7px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  /* transition: background-color 0.3s ease-in-out; */
+  font-size: 16px;
 }
 
 button:hover {
   background-color: #2980b9;
+}
+
+.errorLabel {
+  color: rgb(239, 35, 35);
+  /* margin-left: 30px;
+  font-size: small; */
+  margin: auto; /* Add this line to center the element horizontally */
+  text-align: center; /* Add this line to center the text within the element */
+  font-size: small;
+  margin-top: 5px;
+  width: fit-content; /* This limits the width of the element to its content */
+}
+.error-border {
+  border-color: red !important;
 }

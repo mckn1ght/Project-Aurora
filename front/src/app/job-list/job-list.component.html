@@ -1,0 +1,43 @@
+<div class="homepage">
+  <div class="background"></div>
+  <header class="top-menu">
+    <div class="logo">
+      <img
+        class="logoImage"
+        src="../../assets/icons/fossil.shell@2x.png"
+        alt="Logo"
+        style="display: inline-block"
+      />
+      <h1 style="display: inline-block">Project Aurora</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/landing">Landing</a></li>
+        <li><a href="/login">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="job-listing-container">
+    <h2>Job Listing</h2>
+    <ul class="job-list">
+      <li *ngFor="let job of activeJobs" (click)="navigateToJobDetails(job.id)">
+        <div class="job-item">
+          <div class="job-title">{{ job.title }}</div>
+          <div class="job-description">{{ job.description }}</div>
+          <div class="job-expertise">{{ job.expertiseArea }}</div>
+          <div class="job-due-date">Due Date: {{ job.dueDate | date }}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div>
+  <footer>
+    <p>
+      &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+      {{ appVersion }}
+    </p>
+  </footer>
+</div>

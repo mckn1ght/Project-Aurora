@@ -1,83 +1,227 @@
-<!-- other.component.html -->
-
-<div class="container">
-  <div class="card">
-    <div class="form-group">
-      <label for="title">Titlu:</label>
-      <input
-        type="text"
-        id="title"
-        name="title"
-        [(ngModel)]="newJob.title"
-        required
+<div class="homepage">
+  <div class="background"></div>
+  <header class="top-menu">
+    <div class="logo">
+      <img
+        class="logoImage"
+        src="../../assets/icons/fossil.shell@2x.png"
+        alt="Logo"
+        style="display: inline-block"
       />
+      <h1 style="display: inline-block">Project Aurora</h1>
     </div>
+    <nav>
+      <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/landing">Landing</a></li>
+        <li><a href="/login">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="form-group">
-      <label for="expertiseArea">Domeniu de activitate:</label>
-      <select
-        id="expertiseArea"
-        name="expertiseArea"
-        [(ngModel)]="newJob.expertiseArea"
-        required
-      >
-        <option value="" disabled>Selectati un domeniu de activitate</option>
-        <!-- Add options dynamically based on retrieved expertise areas -->
-        <option *ngFor="let area of expertiseAreasList" [value]="area.id">
-          {{ area.name }}
-        </option>
-      </select>
-    </div>
-  </div>
+  <div class="container">
+    <form [formGroup]="newJobForm" (ngSubmit)="addJob()">
+      <div class="card">
+        <div class="form-group">
+          <label for="title">Titlu:</label>
+          <input
+            type="text"
+            formControlName="title"
+            id="title"
+            name="title"
+            [(ngModel)]="newJob.title"
+            required
+            [ngClass]="{
+              'error-border':
+                newJobForm.get('title')?.invalid &&
+                newJobForm.get('title')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              newJobForm.get('title')?.hasError('required') &&
+              newJobForm.get('title')?.touched
+            "
+            class="errorLabel"
+          >
+            Titlul este obligatoriu
+          </div>
+          <div
+            *ngIf="
+              newJobForm.get('title')?.hasError('minlength') &&
+              newJobForm.get('title')?.touched
+            "
+            class="errorLabel"
+          >
+            Titlul trebuie să aibă cel puțin 10 caractere
+          </div>
+        </div>
 
-  <div class="card">
-    <div class="form-group">
-      <label for="details">Detalii:</label>
-      <textarea
-        id="details"
-        name="details"
-        [(ngModel)]="newJob.description"
-        required
-      ></textarea>
-    </div>
-  </div>
+        <div class="form-group">
+          <label for="expertiseArea">Domeniu de activitate:</label>
+          <select
+            id="expertiseArea"
+            name="expertiseArea"
+            [(ngModel)]="newJob.expertiseArea"
+            required
+            formControlName="expertiseArea"
+            [ngClass]="{
+              'error-border':
+                newJobForm.get('expertiseArea')?.invalid &&
+                newJobForm.get('expertiseArea')?.touched
+            }"
+          >
+            <option value="" disabled>
+              Selectati un domeniu de activitate
+            </option>
+            <option *ngFor="let area of expertiseAreasList" [value]="area.id">
+              {{ area.name }}
+            </option>
+          </select>
+        </div>
+        <div
+          class="errorLabel"
+          *ngIf="
+            newJobForm.get('expertiseArea')?.hasError('required') &&
+            newJobForm.get('expertiseArea')?.touched
+          "
+        >
+          Trebuie sa alegeti un domeniu de activitate
+        </div>
+      </div>
 
-  <div class="card">
-    <div class="form-group">
-      <label for="location">Locatie:</label>
-      <input
-        type="text"
-        id="location"
-        name="location"
-        [(ngModel)]="newJob.location"
-        required
-      />
-    </div>
-  </div>
+      <div class="card">
+        <div class="form-group">
+          <label for="description">Detalii:</label>
+          <textarea
+            id="description"
+            name="description"
+            formControlName="description"
+            required
+            [(ngModel)]="newJob.description"
+            [ngClass]="{
+              'error-border':
+                newJobForm.get('description')?.invalid &&
+                newJobForm.get('description')?.touched
+            }"
+          ></textarea>
+          <div
+            class="errorLabel"
+            *ngIf="
+              newJobForm.get('description')?.hasError('required') &&
+              newJobForm.get('description')?.touched
+            "
+          >
+            Introduceti detaliile anuntului
+          </div>
+          <div
+            *ngIf="
+              newJobForm.get('description')?.hasError('minlength') &&
+              newJobForm.get('description')?.touched
+            "
+            class="errorLabel"
+          >
+            Descrierea trebuie să aibă cel puțin 25 caractere
+          </div>
+        </div>
+      </div>
 
-  <div class="card">
-    <div class="form-group">
-      <label for="phoneNumber">Numar de contact:</label>
-      <input
-        type="tel"
-        id="phoneNumber"
-        name="phoneNumber"
-        [(ngModel)]="newJob.phoneNumber"
-        required
-      />
-    </div>
+      <div class="card">
+        <div class="form-group">
+          <label for="location">Locatie:</label>
+          <input
+            type="text"
+            id="location"
+            formControlName="location"
+            name="location"
+            [(ngModel)]="newJob.location"
+            required
+            [ngClass]="{
+              'error-border':
+                newJobForm.get('location')?.invalid &&
+                newJobForm.get('location')?.touched
+            }"
+          />
+          <div
+            class="errorLabel"
+            *ngIf="
+              newJobForm.get('location')?.hasError('required') &&
+              newJobForm.get('location')?.touched
+            "
+          >
+            Va rog introduceti o locatie
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="card">
+      <div class="form-group">
+        <label for="phoneNumber">Numar de contact:</label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          formControlName="phoneNumber"
+          [(ngModel)]="newJob.phoneNumber"
+          required
+          [ngClass]="{
+            'error-border':
+              newJobForm.get('phoneNumber')?.invalid &&
+              newJobForm.get('phoneNumber')?.touched
+          }"
+        />
+        <div
+          class="errorLabel"
+          *ngIf="
+            newJobForm.get('phoneNumber')?.hasError('required') &&
+            newJobForm.get('phoneNumber')?.touched
+          "
+        >
+          Va rog introduceti un numar de telefon de contact
+        </div>
+      </div>
+    </div> -->
+      <div>
+        <div class="form-group">
+          <label for="dueDate">Data dorita de rezolvare a solicitarii:</label>
+          <input
+            type="date"
+            id="dueDate"
+            name="dueDate"
+            formControlName="dueDate"
+            [(ngModel)]="newJob.dueDate"
+            required
+            [min]="minDate"
+            [ngClass]="{
+              'error-border':
+                newJobForm.get('dueDate')?.invalid &&
+                newJobForm.get('dueDate')?.touched
+            }"
+          />
+          <div
+            class="errorLabel"
+            *ngIf="
+              newJobForm.get('dueDate')?.hasError('required') &&
+              newJobForm.get('dueDate')?.touched
+            "
+          >
+            Selectati data pana la care doriti sa fie realizata cererea
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="!newJobForm.valid">
+        Publica Anunt
+      </button>
+    </form>
   </div>
-  <div>
-    <div class="form-group">
-      <label for="dueDate">Due Date:</label>
-      <input
-        type="date"
-        id="dueDate"
-        name="dueDate"
-        [(ngModel)]="newJob.dueDate"
-        required
-      />
-    </div>
-  </div>
-  <button type="submit" (click)="addJob()">Publica Solicitare</button>
+</div>
+
+<div>
+  <footer>
+    <p>
+      &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+      {{ appVersion }}
+    </p>
+  </footer>
 </div>

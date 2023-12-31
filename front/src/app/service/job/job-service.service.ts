@@ -3,7 +3,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BACKEND_API_URL, addEnpoint, jobEndpoint } from 'src/app/constants';
+import {
+  BACKEND_API_URL,
+  addEnpoint,
+  jobEndpoint,
+  allJobsInWorkflow,
+} from 'src/app/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +18,11 @@ export class JobService {
 
   addJob(job: any): Observable<any> {
     return this.http.post(BACKEND_API_URL + jobEndpoint + addEnpoint, job);
+  }
+
+  getAllNewJobs(): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + jobEndpoint + allJobsInWorkflow + 'New'
+    );
   }
 }

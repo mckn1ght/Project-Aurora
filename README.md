@@ -20,3 +20,5 @@ V0.1.0-SHAPSHOT
 
 V0.1.5-SHAPSHOT      
 &emsp;&emsp;-Added a new page for adding new jobs and all the logic behind it     
+&emsp;&emsp;-Added validations for new jobs page  
+&emsp;&emsp;-Added a new page that lists all the jobs in the New workflow step  

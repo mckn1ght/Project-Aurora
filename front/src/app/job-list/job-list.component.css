@@ -1,0 +1,104 @@
+.top-menu {
+  background-color: #f5f2f2d5;
+  padding: 1px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.top-menu nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-menu nav li {
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.top-menu nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 0px;
+  position: fixed;
+  font-size: 11px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.job-listing-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.job-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.job-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.job-item:hover {
+  background-color: #d7d2d2;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.job-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.job-description {
+  margin-bottom: 10px;
+}
+
+.job-expertise {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.job-due-date {
+  color: #d63f19; /* Adjust the color as needed */
+  font-weight: bold;
+}

@@ -63,18 +63,15 @@ export class AuthService {
       .subscribe(
         (userData) => {
           this.setLoggedInUser(userData);
-          console.log('User data fetched successfully');
           onSuccess();
         },
         (error) => {
-          console.error('User data fetch error', error);
           onError(error);
         }
       );
   }
 
   setLoggedInUser(user: User): void {
-    console.log('Setting logged-in user:', user);
     this.loggedInUserSubject.next(user);
   }
 

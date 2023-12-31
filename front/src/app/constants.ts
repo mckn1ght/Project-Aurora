@@ -13,6 +13,7 @@ export const expertiseAreaEndpoint = '/expertiseArea';
 
 //Job
 export const jobEndpoint = '/job';
+export const allJobsInWorkflow = '/inWorkflowStep/';
 
 export const MAX_LOGIN_ATTEMPTS = 3;
 export const APPLICATION_VERSION = '0.1.5-SHAPSHOT ';

@@ -37,4 +37,8 @@ export class HomeComponent {
   navigateToNewJob() {
     this.router.navigate(['/new-job']);
   }
+
+  navigateToJobSearch() {
+    this.router.navigate(['/job-list']);
+  }
 }
