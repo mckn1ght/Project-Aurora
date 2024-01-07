@@ -1,0 +1,90 @@
+<div class="homepage">
+  <div class="background"></div>
+  <header class="top-menu">
+    <div class="logo">
+      <img
+        class="logoImage"
+        src="../../assets/icons/fossil.shell@2x.png"
+        alt="Logo"
+        style="display: inline-block"
+      />
+      <h1 style="display: inline-block">Project Aurora</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/landing">Landing</a></li>
+        <li><a href="/login">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="job-details" *ngIf="job">
+    <h2 class="title">{{ job.title }}</h2>
+    <div class="details-section">
+      <p class="label">Descriere:</p>
+      <p class="value">{{ job.description }}</p>
+    </div>
+    <div class="details-section">
+      <p class="label">Locatie:</p>
+      <p class="value">{{ job.location }}</p>
+    </div>
+    <div class="details-section">
+      <p class="label">Creat de:</p>
+      <p class="value">{{ job.createdByUser }}</p>
+    </div>
+    <div class="details-section">
+      <p class="label">Preluat de specialist:</p>
+      <p class="value">
+        {{
+          job.assignedToSpecialist === 1
+            ? "Nepreluat"
+            : job.assignedToSpecialist
+        }}
+      </p>
+    </div>
+    <div class="dates">
+      <div class="details-section">
+        <p class="label">Data crearii:</p>
+        <p class="value">{{ job.creationDate | date }}</p>
+      </div>
+      <div class="details-section">
+        <p class="label">Data dorita pentru finalizare:</p>
+        <p class="value">{{ job.dueDate | date }}</p>
+      </div>
+      <div class="details-section">
+        <p class="label">Ultima actualizare:</p>
+        <p class="value">{{ job.lastUpdated | date }}</p>
+      </div>
+    </div>
+    <div class="details-section">
+      <p class="label">Etapa:</p>
+      <p class="value">{{ job.currentWorkflowStep }}</p>
+    </div>
+    <!-- job-details.component.html -->
+
+    <div class="job-details" *ngIf="job">
+      <!-- ... existing details ... -->
+
+      <!-- Show the "Assign to Me" button for specialists other than 1 -->
+
+      <button
+        *ngIf="
+          loggedInUser &&
+          loggedInUser.specialistId !== null &&
+          job.assignedToSpecialist == 1
+        "
+        class="button"
+        (click)="assignToMe(job.id!, loggedInUser.specialistId!)"
+      >
+        Preiau!
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+      {{ appVersion }}
+    </p>
+  </footer>
+</div>

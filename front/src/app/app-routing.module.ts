@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { NewJobComponent } from './new-job/new-job.component';
 import { JobListComponent } from './job-list/job-list.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'new-job', component: NewJobComponent },
   { path: 'job-list', component: JobListComponent },
+  { path: 'job-details/:id', component: JobDetailsComponent },
   { path: '**', redirectTo: '/landing', pathMatch: 'full' },
 ];
 

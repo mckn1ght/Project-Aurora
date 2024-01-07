@@ -7,17 +7,21 @@ import com.example.cloudComputing.exception.job.*;
 import com.example.cloudComputing.exception.review.NoReviewIdFoundException;
 import com.example.cloudComputing.mapper.JobMapper;
 import com.example.cloudComputing.repository.JobRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.example.cloudComputing.constants.Constants.*;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class JobServiceImpl implements JobService {
@@ -45,7 +49,7 @@ public class JobServiceImpl implements JobService {
       Job job = jobRepository.getReferenceById(id);
       return jobMapper.mapToJobDto(job);
     }catch(Exception e){
-      throw new NoReviewIdFoundException(String.format(NO_JOB_ID_FOUND, id));
+      throw new NoJobFoundException(String.format(NO_JOB_ID_FOUND, id));
     }
   }
 
@@ -184,4 +188,23 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
+  @Transactional
+  public void assignJobToSpecialist(long jobId, int specialistId) {
+    Job job = jobRepository.findById(jobId).orElse(null);
+    if (job != null) {
+      if (isJobAvailableForTaking(jobId)) {
+        job.setAssignedToSpecialist(specialistId);
+        jobRepository.save(job);
+      } else {
+        throw new IllegalStateException("Job is already assigned to a specialist.");
+      }
+    } else {
+        throw new NoJobFoundException(String.format(NO_JOB_ID_FOUND, jobId));
+      }
+  }
+
+  public boolean isJobAvailableForTaking(long jobId){
+    Job job = jobRepository.getById(jobId);
+    return job.getAssignedToSpecialist() == 1;
+  }
 }

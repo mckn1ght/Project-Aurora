@@ -125,6 +125,18 @@ public class JobController {
   public ResponseEntity<List<JobDto>> getAllByCurrentWorkflowStep(@PathVariable String step) {
     return ResponseEntity.ok(jobServiceImpl.getAllByCurrentWorkflowStep(step));
   }
+
+  @CrossOrigin(origins = "http://localhost:4200")
+  @PostMapping("/{jobId}/assign/{specialistId}")
+  public ResponseEntity<String> assignJobToSpecialist(@PathVariable long jobId, @PathVariable int specialistId) {
+    if (jobServiceImpl.isJobAvailableForTaking(jobId)) {
+      jobServiceImpl.assignJobToSpecialist(jobId, specialistId);
+      return ResponseEntity.ok("Job assigned to specialist successfully.");
+    } else {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body("Job is already assigned.");
+    }
+  }
+
 }
 
 

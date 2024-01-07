@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoSpaceDirective } from './directive/no-space.directive';
 import { NewJobComponent } from './new-job/new-job.component';
 import { JobListComponent } from './job-list/job-list.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { JobListComponent } from './job-list/job-list.component';
     NoSpaceDirective,
     NewJobComponent,
     JobListComponent,
+    JobDetailsComponent,
   ],
   imports: [
     BrowserModule,
