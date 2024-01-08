@@ -94,6 +94,7 @@ public class UserController {
     }
   }
 
+  @CrossOrigin(origins = "http://localhost:4200")
   @RequestMapping("/getBySpecialistId/{id}")
   public ResponseEntity<UserDto> getBySpecialistId(@PathVariable int id) {
     return ResponseEntity.ok(userServiceImpl.getBySpecialistId(id));

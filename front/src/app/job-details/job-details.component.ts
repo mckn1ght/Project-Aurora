@@ -6,6 +6,9 @@ import { AuthService } from '../service/auth/auth.service';
 import { User } from '../models/user';
 import { isObservable } from 'rxjs';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
+import { UserService } from '../service/user/user.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -13,13 +16,19 @@ import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 })
 export class JobDetailsComponent implements OnInit {
   job: Job | undefined;
+  creatorUser: string = '';
   loggedInUser: User | undefined;
   appEnvironment: String = APPLICATION_ENVIRONMENT;
   appVersion: String = APPLICATION_VERSION;
+  createdByUser: String = '';
+  assignedToSpecialist: String = '';
+
   constructor(
     private route: ActivatedRoute,
     private jobService: JobService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -39,6 +48,8 @@ export class JobDetailsComponent implements OnInit {
         this.loggedInUser = loggedInUser;
         this.jobService.getJobDetails(jobId).subscribe((details) => {
           this.job = details;
+          this.getCreatorUserName();
+          this.getSpecialistName();
         });
       }
     });
@@ -48,60 +59,20 @@ export class JobDetailsComponent implements OnInit {
     // );
   }
 
-  // assignToMe(jobId: number, specialistId: number) {
-  //   this.jobService.assignJobToSpecialist(jobId, specialistId).subscribe(
-  //     () => {
-  //       console.log('Job assigned successfully.');
-  //       // Handle success, e.g., refresh job list
-  //     },
-  //     (error) => {
-  //       console.error('Error assigning job:', error);
-  //     }
-  //   );
-  // }
-
-  // assignToMe(jobId: number, specialistId: number) {
-  //   this.jobService.assignJobToSpecialist(jobId, specialistId).subscribe(
-  //     () => {
-  //       console.log('Job assigned successfully.');
-  //       // Handle success, e.g., refresh job list
-  //     },
-  //     (error) => {
-  //       console.error('Error assigning job:', error);
-
-  //       // Check if the error is due to the job being already assigned
-  //       if (error.includes('already assigned')) {
-  //         // Display a specific error message to the user or handle it accordingly
-  //         // For example, you might want to notify the user that the job is already assigned
-  //         // and provide instructions on what to do next.
-  //         // You can use a notification service or show an alert/modal.
-  //         // For simplicity, let's log a message to the console here.
-  //         console.error('The job is already assigned.');
-  //       } else {
-  //         // Handle other errors if needed
-  //         console.error(
-  //           'An unexpected error occurred while assigning the job.'
-  //         );
-  //       }
-  //     }
-  //   );
-  // }
-
   assignToMe(jobId: number, specialistId: number) {
     this.jobService.assignJobToSpecialist(jobId, specialistId).subscribe(
       (response) => {
         console.log('Job assigned successfully.', response);
+        this.router.navigate(['/job-list']);
       },
       (error) => {
         console.error('Error assigning job:', error);
-        console.error('Backend Error:', error);
       }
     );
   }
 
   showAssignToMeButton(): boolean {
     let loggedInUser: User | null = null;
-
     const subscription = this.authService
       .getLoggedInUser()
       .subscribe((user) => {
@@ -110,5 +81,39 @@ export class JobDetailsComponent implements OnInit {
       });
 
     return loggedInUser !== null && loggedInUser !== 1;
+  }
+
+  getCreatorUserName() {
+    if (this.job?.createdByUser) {
+      this.userService.getById(this.job.createdByUser).subscribe(
+        (response: User) => {
+          this.creatorUser = response.firstName! + ' ' + response.lastName!;
+        },
+        (error) => {
+          console.error('Error fetching creator user:', error.message);
+        }
+      );
+    }
+  }
+
+  getSpecialistName() {
+    if (this.job?.createdByUser) {
+      if (
+        this.job?.assignedToSpecialist != 1 &&
+        this.job?.assignedToSpecialist != null
+      ) {
+        this.userService
+          .getSpecialistName(this.job.assignedToSpecialist)
+          .subscribe(
+            (response: User) => {
+              this.assignedToSpecialist =
+                response.firstName! + ' ' + response.lastName!;
+            },
+            (error) => {
+              console.log('creatorUser error ' + error.message);
+            }
+          );
+      }
+    }
   }
 }

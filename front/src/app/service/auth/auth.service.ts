@@ -78,7 +78,4 @@ export class AuthService {
   getLoggedInUser(): Observable<User | null> {
     return this.loggedInUserSubject.asObservable();
   }
-
-  // getLoggedInUserFirstName(): Observable<User | null> {
-  // }
 }

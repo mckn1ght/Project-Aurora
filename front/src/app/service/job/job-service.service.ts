@@ -10,6 +10,7 @@ import {
   allJobsInWorkflow,
   getById,
   assignJobToSpecialist,
+  allJobsAssignedToSpecialist,
 } from 'src/app/constants';
 
 @Injectable({
@@ -28,50 +29,29 @@ export class JobService {
     );
   }
 
+  getAllAssignedToSpecialist(id: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + jobEndpoint + allJobsAssignedToSpecialist + id
+    );
+  }
+
   getJobDetails(id: number): Observable<any> {
     return this.http.get(BACKEND_API_URL + jobEndpoint + getById + id);
   }
 
-  // assignJobToSpecialist(jobId: number, specialistId: number) {
-  //   return this.http.post(
-  //     BACKEND_API_URL +
-  //       jobEndpoint +
-  //       '/' +
-  //       jobId +
-  //       assignJobToSpecialist +
-  //       specialistId,
-  //     {},
-  //     { responseType: 'text' }
-  //   );
-  // }
-  assignJobToSpecialist(jobId: number, specialistId: number) {
-    return this.http.post<string>(
+  assignJobToSpecialist(
+    jobId: number,
+    specialistId: number
+  ): Observable<string> {
+    return this.http.post(
       BACKEND_API_URL +
         jobEndpoint +
         '/' +
         jobId +
         assignJobToSpecialist +
         specialistId,
-      {}
-    );
+      {},
+      { responseType: 'text' }
+    ) as Observable<string>;
   }
-
-  // assignJobToSpecialist(
-  //   jobId: number,
-  //   specialistId: number
-  // ): Observable<string> {
-  //   const url = `${BACKEND_API_URL}${jobEndpoint}/${jobId}${assignJobToSpecialist}${specialistId}`;
-
-  //   return this.http.post(url, {}, { responseType: 'text' }).pipe(
-  //     catchError((error: HttpErrorResponse) => {
-  //       if (error.status === 400) {
-  //         // The job is already assigned, extract the error message
-  //         const errorMessage = error.error;
-  //         return throwError(errorMessage);
-  //       }
-  //       // Handle other errors if needed
-  //       return throwError('An error occurred while assigning the job.');
-  //     })
-  //   );
-  // }
 }

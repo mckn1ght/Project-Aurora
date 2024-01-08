@@ -194,6 +194,7 @@ public class JobServiceImpl implements JobService {
     if (job != null) {
       if (isJobAvailableForTaking(jobId)) {
         job.setAssignedToSpecialist(specialistId);
+        job.setCurrentWorkflowStep("Preluat");
         jobRepository.save(job);
       } else {
         throw new IllegalStateException("Job is already assigned to a specialist.");

@@ -30,15 +30,13 @@
     </div>
     <div class="details-section">
       <p class="label">Creat de:</p>
-      <p class="value">{{ job.createdByUser }}</p>
+      <p class="value">{{ creatorUser }}</p>
     </div>
     <div class="details-section">
       <p class="label">Preluat de specialist:</p>
       <p class="value">
         {{
-          job.assignedToSpecialist === 1
-            ? "Nepreluat"
-            : job.assignedToSpecialist
+          job.assignedToSpecialist === 1 ? "Nepreluat" : assignedToSpecialist
         }}
       </p>
     </div>
