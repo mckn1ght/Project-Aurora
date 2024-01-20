@@ -2,7 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, of, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   BACKEND_API_URL,
   addEnpoint,
@@ -11,7 +12,11 @@ import {
   getById,
   assignJobToSpecialist,
   allJobsAssignedToSpecialist,
+  getAllByLocationContaining,
+  getAllByDescriptionContaining,
+  getAllByTitleContaining,
 } from 'src/app/constants';
+import { Job } from 'src/app/models/job';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +32,114 @@ export class JobService {
     return this.http.get(
       BACKEND_API_URL + jobEndpoint + allJobsInWorkflow + 'New'
     );
+  }
+
+  getAllJobsByKeyword(searchInput: string): Observable<Job[]> {
+    const title$ = this.getAllJobsByTitle(searchInput);
+    const description$ = this.getAllJobsByDescription(searchInput);
+    const location$ = this.getAllJobsByLocation(searchInput);
+
+    return forkJoin([title$, description$, location$]).pipe(
+      map(([titleResults, descriptionResults, locationResults]) => {
+        const combinedResults: (Job | undefined)[] = [
+          ...(titleResults || []),
+          ...(descriptionResults || []),
+          ...(locationResults || []),
+        ];
+
+        // Filter out undefined values
+        const filteredResults = combinedResults.filter(
+          (result) =>
+            result !== undefined && result.currentWorkflowStep == 'New'
+        ) as Job[];
+
+        // Remove duplicates
+        const uniqueResults = Array.from(
+          new Set(filteredResults.map((job) => job.id))
+        ).map((id) => filteredResults.find((job) => job.id === id)) as Job[];
+
+        return uniqueResults;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          console.warn('No jobs found for the given search criteria.');
+          return of([]);
+        } else {
+          console.error(
+            'Error in forkJoin:',
+            error.error?.message || 'Unknown error'
+          );
+          return throwError(error.error?.message || 'Unknown error');
+        }
+      })
+    );
+  }
+
+  getAllJobsByTitle(title: string): Observable<Job[]> {
+    return this.http
+      .get<Job[]>(
+        BACKEND_API_URL + jobEndpoint + getAllByTitleContaining + title
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            console.warn(`No jobs found by title '${title}'.`);
+            return of([]);
+          } else {
+            console.error(
+              `Error fetching jobs by title '${title}':`,
+              error.error?.message || 'Unknown error'
+            );
+            return throwError(error.error?.message || 'Unknown error');
+          }
+        })
+      );
+  }
+  getAllJobsByDescription(description: string): Observable<Job[]> {
+    return this.http
+      .get<Job[]>(
+        BACKEND_API_URL +
+          jobEndpoint +
+          getAllByDescriptionContaining +
+          description
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            console.warn(`No jobs found by description '${description}'.`);
+            return of([]);
+          } else {
+            console.error(
+              `Error fetching jobs by description '${description}':`,
+              error.error?.message || 'Unknown error'
+            );
+            return throwError(error.error?.message || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  getAllJobsByExperiseArea(expertiseArea: string) {}
+
+  getAllJobsByLocation(location: string): Observable<Job[]> {
+    return this.http
+      .get<Job[]>(
+        BACKEND_API_URL + jobEndpoint + getAllByLocationContaining + location
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            console.warn(`No jobs found by location '${location}'.`);
+            return of([]);
+          } else {
+            console.error(
+              `Error fetching jobs by location '${location}':`,
+              error.error?.message || 'Unknown error'
+            );
+            return throwError(error.error?.message || 'Unknown error');
+          }
+        })
+      );
   }
 
   getAllAssignedToSpecialist(id: number): Observable<any> {

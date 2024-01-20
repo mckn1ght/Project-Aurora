@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { JobService } from '../service/job/job-service.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 
 @Component({
@@ -12,10 +12,23 @@ export class JobListComponent {
   appEnvironment: String = APPLICATION_ENVIRONMENT;
   appVersion: String = APPLICATION_VERSION;
   activeJobs: any[] = [];
-  constructor(private jobService: JobService, private router: Router) {}
+
+  searchInput: string = '';
+  constructor(
+    private jobService: JobService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.getAllNewJobs();
+    this.route.queryParams.subscribe((params) => {
+      this.searchInput = params['searchInput'] || '';
+      console.log('this.searchInput: ' + this.searchInput);
+      if (this.searchInput != '') this.getAllJobsByKeyword(this.searchInput);
+      else {
+        this.getAllNewJobs();
+      }
+    });
   }
 
   getAllNewJobs(): void {
@@ -25,6 +38,66 @@ export class JobListComponent {
       },
       (error) => {
         console.error('Error fetching active jobs:', error);
+      }
+    );
+  }
+
+  getAllJobsByLocation(searchInput: string): void {
+    this.jobService.getAllJobsByLocation(searchInput).subscribe(
+      (jobs) => {
+        if (Array.isArray(jobs)) {
+          this.activeJobs = jobs;
+        } else {
+          console.error('Unexpected response format:', jobs);
+        }
+      },
+      (error) => {
+        console.error('Error fetching jobs by location:', error.error);
+      }
+    );
+  }
+
+  getAllJobsByKeyword(searchInput: string): void {
+    this.jobService.getAllJobsByKeyword(searchInput).subscribe(
+      (jobs) => {
+        if (Array.isArray(jobs)) {
+          this.activeJobs = jobs;
+        } else {
+          console.error('Unexpected response format:', jobs);
+        }
+      },
+      (error) => {
+        console.error('Error fetching jobs: ', error.error);
+      }
+    );
+  }
+
+  getAllJobsByTitle(searchInput: string): void {
+    this.jobService.getAllJobsByTitle(searchInput).subscribe(
+      (jobs) => {
+        if (Array.isArray(jobs)) {
+          this.activeJobs = jobs;
+        } else {
+          console.error('Unexpected response format:', jobs);
+        }
+      },
+      (error) => {
+        console.error('Error fetching jobs by title:', error.error);
+      }
+    );
+  }
+
+  getAllJobsByDescription(searchInput: string): void {
+    this.jobService.getAllJobsByDescription(searchInput).subscribe(
+      (jobs) => {
+        if (Array.isArray(jobs)) {
+          this.activeJobs = jobs;
+        } else {
+          console.error('Unexpected response format:', jobs);
+        }
+      },
+      (error) => {
+        console.error('Error fetching jobs by Description:', error.error);
       }
     );
   }

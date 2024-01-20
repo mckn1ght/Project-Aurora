@@ -39,6 +39,9 @@ export class HomeComponent {
   }
 
   navigateToJobSearch() {
-    this.router.navigate(['/job-list']);
+    console.log('searchInput: ' + this.searchInput);
+    this.router.navigate(['/job-list'], {
+      queryParams: { searchInput: this.searchInput },
+    });
   }
 }

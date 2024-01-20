@@ -24,3 +24,6 @@ V0.1.5-SHAPSHOT
 &emsp;&emsp;-Added a new page that lists all the jobs in the New workflow step  
 &emsp;&emsp;-Added a new page that displays job details  
 &emsp;&emsp;-Specialists can now assign jobs to themselves  
+&emsp;&emsp;-Added the functionality to search for jobs  
+&emsp;&emsp;-Added Kubernetes and Dockerfiles  
+  

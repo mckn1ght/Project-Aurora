@@ -51,16 +51,18 @@ public class JobController {
     return jobServiceImpl.getAll();
   }
 
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/title/{title}")
   public ResponseEntity<List<JobDto>> getAllByTitleContainingIgnoreCase(@PathVariable String title) {
     return ResponseEntity.ok(jobServiceImpl.getAllByTitleContainingIgnoreCase(title));
   }
-
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/description/{description}")
   public ResponseEntity<List<JobDto>> getAllByDescriptionContainingIgnoreCase(@PathVariable String description) {
     return ResponseEntity.ok(jobServiceImpl.getAllByDescriptionContainingIgnoreCase(description));
   }
 
+  @CrossOrigin(origins = "http://localhost:4200")
   @GetMapping("/location/{location}")
   public ResponseEntity<List<JobDto>> getAllByLocationContainingIgnoreCase(@PathVariable String location) {
     return ResponseEntity.ok(jobServiceImpl.getAllByLocationContainingIgnoreCase(location));

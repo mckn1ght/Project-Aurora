@@ -10,6 +10,7 @@
       />
       <h1 style="display: inline-block">Project Aurora</h1>
     </div>
+
     <nav>
       <ul>
         <li><a href="/home">Home</a></li>
@@ -61,10 +62,6 @@
     <!-- job-details.component.html -->
 
     <div class="job-details" *ngIf="job">
-      <!-- ... existing details ... -->
-
-      <!-- Show the "Assign to Me" button for specialists other than 1 -->
-
       <button
         *ngIf="
           loggedInUser &&

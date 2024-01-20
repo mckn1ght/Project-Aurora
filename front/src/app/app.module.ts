@@ -15,6 +15,8 @@ import { NoSpaceDirective } from './directive/no-space.directive';
 import { NewJobComponent } from './new-job/new-job.component';
 import { JobListComponent } from './job-list/job-list.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     NewJobComponent,
     JobListComponent,
     JobDetailsComponent,
+    PasswordResetComponent,
   ],
   imports: [
     BrowserModule,
