@@ -2,16 +2,10 @@
 FROM openjdk:17-oracle
 
 # Set the working directory to /back
-WORKDIR /back
+WORKDIR /back/cloudComputing
 
-# Copy only the necessary files into the container
-COPY ../../.mvn .mvn
-COPY ../../pom.xml .
-COPY ../../src src
-COPY ../../mvnw .
-
-# Set execute permission for the mvnw script
-RUN chmod +x mvnw
+# Copy the project files into the container
+COPY . .
 
 # Build the application
 RUN ./mvnw clean install -DskipTests
