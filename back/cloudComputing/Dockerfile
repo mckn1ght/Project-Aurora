@@ -4,8 +4,13 @@ FROM openjdk:17-oracle
 # Set the working directory to /back
 WORKDIR /back
 
-# Copy the project files into the container
-COPY . .
+# Copy only the necessary files into the container
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Copy the rest of the project files
+COPY src src
 
 # Build the application
 RUN ./mvnw clean install -DskipTests
