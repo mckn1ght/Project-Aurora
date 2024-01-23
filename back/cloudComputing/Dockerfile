@@ -8,7 +8,7 @@ WORKDIR /back/cloudComputing
 COPY . .
 
 # Build the application
-RUN ./mvnw clean install -DskipTests
+RUN ./back/cloudComputing/mvnw clean install -DskipTests
 
 # Expose the port on which the application runs
 EXPOSE 8080
