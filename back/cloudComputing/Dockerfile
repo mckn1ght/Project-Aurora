@@ -5,10 +5,10 @@ FROM openjdk:17-oracle
 WORKDIR /back
 
 # Copy only the necessary files into the container
-COPY ../.mvn .mvn
-COPY ../pom.xml .
-COPY ../src src
-COPY ../mvnw .
+COPY ../../.mvn .mvn
+COPY ../../pom.xml .
+COPY ../../src src
+COPY ../../mvnw .
 
 # Set execute permission for the mvnw script
 RUN chmod +x mvnw
