@@ -2,7 +2,7 @@
 FROM openjdk:17-oracle
 
 # Set the working directory to /back
-WORKDIR /back
+WORKDIR /back/cloudComputing
 
 # Copy the project files into the container
 COPY . .
