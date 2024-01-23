@@ -14,4 +14,4 @@ RUN ./back/cloudComputing/mvnw clean install -DskipTests
 EXPOSE 8080
 
 # Define the command to run the application
-CMD ["java", "-jar", "target/cloudComputing-0.1.5-SNAPSHOT.jar"]
+CMD ["java", "-jar", "./back/cloudComputing/target/cloudComputing-0.1.5-SNAPSHOT.jar"]
