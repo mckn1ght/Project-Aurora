@@ -2,7 +2,7 @@
 FROM openjdk:17-oracle
 
 # Set the working directory to /back
-WORKDIR /back
+WORKDIR /back/cloudComputing
 
 # Copy only the necessary files into the container
 COPY .mvn .mvn
