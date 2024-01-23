@@ -8,7 +8,7 @@ WORKDIR /back/cloudComputing
 COPY . .
 
 # Build the application
-RUN ./back/cloudComputing/mvnw - f ("./back/cloudComputing/pom.xml") clean install -DskipTests
+RUN ./back/cloudComputing/mvnw -f "./back/cloudComputing/pom.xml" clean install -DskipTests
 
 # Expose the port on which the application runs
 EXPOSE 8080
