@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+
+    environment {
+    KUBE_CONFIG_FILE = credentials('your-kubeconfig-secret-id')
+    KUBE_CONFIG = '/path/to/your/kube/config'
+    KUBE_NAMESPACE = 'your-namespace'
+}
+
+    stages {
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Set kubectl config
+                    withCredentials([file(credentialsId: 'kube-config', variable: 'KUBE_CONFIG_FILE')]) {
+                        sh "cp ${KUBE_CONFIG_FILE} ${KUBE_CONFIG}"
+                    }
+
+                    // Set kubectl namespace
+                    sh "kubectl config set-context --current --namespace=${KUBE_NAMESPACE}"
+
+                    // Deploy backend
+                    sh "kubectl apply -f backend-deployment.yaml"
+                    sh "kubectl apply -f backend-service.yaml"
+
+                    // Deploy frontend
+                    sh "kubectl apply -f frontend-deployment.yaml"
+                    sh "kubectl apply -f frontend-service.yaml"
+
+                    // Deploy MySQL
+                    sh "kubectl apply -f mysql-deployment.yaml"
+                    sh "kubectl apply -f mysql-service.yaml"
+
+                    // Deploy Kubernetes Dashboard
+                    sh "kubectl apply -f dashboard.yaml"
+                }
+            }
+        }
+
+        stage('Upload to Kubernetes Dashboard') {
+            steps {
+                script {
+                    // Install krew (Kubectl Plugin Manager)
+                    sh 'kubectl krew install kubectl-snap'
+
+                    // Take a snapshot of the deployed resources
+                    def snapshotName = "deploy-snapshot-${BUILD_NUMBER}"
+                    sh "kubectl snap create ${snapshotName} --include-resources=deploy,svc -o yaml > snapshot.yaml"
+
+                    // Upload snapshot to Kubernetes Dashboard
+                    sh 'kubectl snap upload snapshot.yaml'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment and upload to Kubernetes Dashboard successful!'
+        }
+        failure {
+            echo 'Deployment or upload to Kubernetes Dashboard failed!'
+        }
+    }
+}

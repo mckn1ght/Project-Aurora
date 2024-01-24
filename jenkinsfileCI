@@ -1,0 +1,108 @@
+pipeline {
+    agent any
+
+    environment {
+        BACKEND_IMAGE_NAME = "mckn1ght/backend"
+        BACKEND_DOCKERFILE_PATH = "back/cloudComputing/Dockerfile"
+        FRONTEND_IMAGE_NAME = "mckn1ght/frontend"
+        FRONTEND_DOCKERFILE_PATH = "front/Dockerfile"
+        DATABASE_IMAGE_NAME = "mckn1ght/mysql-custom"
+        DATABASE_DOCKERFILE_PATH = "database/Dockerfile"
+        DOCKER_IMAGE_TAG = "jenkins"
+        DOCKERHUB_CREDENTIALS = credentials('docker')
+    }
+
+    stages {
+        stage('Install prerequisites on the container') {
+            steps {
+                script {
+                    // sh 'sudo apt-get update && apt-get install -y docker.io'
+                    //sh 'usermod -aG docker jenkins'
+                    //sh 'sudo chmod 666 /var/run/docker.sock'
+                    sh 'echo test'
+                    
+                }
+            }
+        }
+        
+        stage('Build Backend and Docker image') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                        git url: "https://${GITHUB_TOKEN}@github.com/mckn1ght/Project-Aurora.git", branch: 'main'
+                        sh "docker build -t ${BACKEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG} -f ${BACKEND_DOCKERFILE_PATH} ."
+                    }
+                }
+            }
+        }
+        
+        stage('Push Backend Docker Image') {
+            steps {
+                script {
+                    def dockerCredentials = credentials('docker')
+                    withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        sh "docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD"
+                        sh "docker tag ${BACKEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${BACKEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                        sh "docker push ${BACKEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    }
+                }
+            }
+        }
+        
+        stage('Build Frontend and Docker image') {
+            steps {
+               script {
+            // Build the frontend Docker image
+                    sh "sudo docker build -t ${FRONTEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG} -f ${FRONTEND_DOCKERFILE_PATH} ./front"
+                    }
+                }
+            
+        }
+
+        stage('Push Frontend Docker Image') {
+            steps {
+                script {
+                    def dockerCredentials = credentials('docker')
+                    // withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        // sh "docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD"
+                        sh "docker tag ${FRONTEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${FRONTEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                        sh "docker push ${FRONTEND_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    // }
+                }
+            }
+        }
+        
+        stage('Build Database Docker Image') {
+            steps {
+                script {
+                    sh "echo Build DB"
+                    sh "sudo docker build -t ${DATABASE_IMAGE_NAME}:${DOCKER_IMAGE_TAG} -f ${DATABASE_DOCKERFILE_PATH} ./database"
+                    
+                }
+            }
+        }
+        stage('Push Database Docker Image') {
+            steps {
+                script {
+                    sh "docker tag ${DATABASE_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DATABASE_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    sh "docker push ${DATABASE_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                }
+            }
+        }
+        stage('Call Deployment pipeline') {
+            steps {
+                script {
+                    // Trigger the deployment pipeline
+                    build job: 'ProjectAuroraCD', parameters: [
+                        string(name: 'BACKEND_IMAGE_NAME', value: BACKEND_IMAGE_NAME),
+                        string(name: 'FRONTEND_IMAGE_NAME', value: FRONTEND_IMAGE_NAME),
+                        string(name: 'DATABASE_IMAGE_NAME', value: DATABASE_IMAGE_NAME),
+                        string(name: 'DOCKER_IMAGE_TAG', value: DOCKER_IMAGE_TAG),
+                        // Add other parameters as needed
+                    ]
+                }
+            }
+        }
+        
+    }
+}

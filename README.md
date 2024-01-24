@@ -26,4 +26,5 @@ V0.1.5-SHAPSHOT
 &emsp;&emsp;-Specialists can now assign jobs to themselves  
 &emsp;&emsp;-Added the functionality to search for jobs  
 &emsp;&emsp;-Added Kubernetes and Dockerfiles  
-  
+&emsp;&emsp;-Implemented Jenkins CI/CD to automate the building of backend, frontend and their respective docker images and to push them automatically    
+    
