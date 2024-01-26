@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: mckn1ght/frontend:latest
+        image: mckn1ght/frontend:jenkins
         ports:
         - containerPort: 4200

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mckn1ght/mysql-custom:latest
+          image: mckn1ght/mysql-custom:jenkins
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: Admin12!@

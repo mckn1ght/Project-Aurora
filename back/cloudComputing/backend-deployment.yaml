@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: mckn1ght/backend:latest
+        image: mckn1ght/backend:jenkins
         ports:
         - containerPort: 8080
         resources:
