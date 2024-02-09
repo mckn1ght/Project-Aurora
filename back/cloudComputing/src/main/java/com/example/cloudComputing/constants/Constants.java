@@ -52,4 +52,8 @@ public class Constants {
   public static final String NO_JOBS_LAST_UPDATED_AFTER_DATE = "No jobs last updated after '%s'.";
   public static final String NO_JOBS_ON_WORKFLOW_STEP = "No jobs on workflow step '%s'.";
 
+  //Bid
+  public static final String NO_BID_FOUND = "No bids found.";
+  public static final String NO_BID_ID_FOUND = "No bids with id '%s' found.";
+
 }

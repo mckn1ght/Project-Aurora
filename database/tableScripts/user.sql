@@ -1,0 +1,23 @@
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `firstName` varchar(45) NOT NULL,
+  `lastName` varchar(45) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `phoneNumber` varchar(45) NOT NULL,
+  `created` datetime NOT NULL,
+  `last_updated` datetime NOT NULL,
+  `credit` varchar(45) NOT NULL DEFAULT '0.00',
+  `isAdmin` tinyint NOT NULL DEFAULT '0',
+  `specialistId` int DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `phoneNumber_UNIQUE` (`phoneNumber`),
+  UNIQUE KEY `specialistId` (`specialistId`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `specialistID_idx` (`specialistId`),
+  CONSTRAINT `fk_user_specialist` FOREIGN KEY (`specialistId`) REFERENCES `specialist` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
