@@ -23,5 +23,5 @@ export const getAllByDescriptionContaining = '/description/';
 export const getAllByTitleContaining = '/title/';
 
 export const MAX_LOGIN_ATTEMPTS = 3;
-export const APPLICATION_VERSION = '0.1.5-SHAPSHOT ';
+export const APPLICATION_VERSION = '0.2.0-SHAPSHOT ';
 export const APPLICATION_ENVIRONMENT = 'DEVELOPMENT';

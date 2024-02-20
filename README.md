@@ -27,4 +27,9 @@ V0.1.5-SHAPSHOT
 &emsp;&emsp;-Added the functionality to search for jobs  
 &emsp;&emsp;-Added Kubernetes and Dockerfiles  
 &emsp;&emsp;-Implemented Jenkins CI/CD to automate the building of backend, frontend and their respective docker images and to push them automatically    
+
+V0.2.0-SHAPSHOT    
+&emsp;&emsp;-Added PrimeNG for the front end  
+&emsp;&emsp;-Added the bid db table and other remaining tables in the backend    
+
     

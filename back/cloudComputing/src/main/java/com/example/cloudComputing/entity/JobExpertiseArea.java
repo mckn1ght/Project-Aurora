@@ -17,7 +17,10 @@ import java.time.LocalDate;
 public class JobExpertiseArea {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long jobid;
+  private Long id;
+
+  @Column(name = "jobId")
+  private int jobId;
 
   @Column(name = "expertiseAreaId")
   private int expertiseAreaId;
