@@ -30,6 +30,7 @@ V0.1.5-SHAPSHOT
 
 V0.2.0-SHAPSHOT    
 &emsp;&emsp;-Added PrimeNG for the front end  
-&emsp;&emsp;-Added the bid db table and other remaining tables in the backend    
+&emsp;&emsp;-Added the bid db table and other remaining tables in the backend   
+&emsp;&emsp;-Created the my-jobs page         
 
     

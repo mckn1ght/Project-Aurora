@@ -1,0 +1,153 @@
+<header class="top-menu">
+  <div class="logo">
+    <img
+      class="logoImage"
+      src="../../assets/icons/fossil.shell@2x.png"
+      alt="Logo"
+      style="display: inline-block"
+    />
+    <h1 style="display: inline-block">Project Aurora</h1>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/landing">Landing</a></li>
+      <li><a href="/login">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="active-jobs">
+  <h2>Solicitari in curs de executie</h2>
+
+  <ng-container *ngIf="activeJobs.length === 0; else showActiveJobsTable">
+    <p class="no-active-jobs">Nu aveti solicitari preluate</p>
+  </ng-container>
+  <!-- Show table if there are bidding jobs -->
+  <ng-template #showActiveJobsTable>
+    <p-table
+      [value]="activeJobs"
+      [paginator]="true"
+      [rows]="3"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      class="job-table"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Titlu</th>
+          <th>Descriere</th>
+          <th>Creator</th>
+          <th>Data Creare</th>
+          <th>Ultima Actualizare</th>
+          <th>Termen Limita de Rezolvare</th>
+          <th>Etapa</th>
+          <th>Actiune</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-job>
+        <tr (click)="goToJobDetails(job.id)">
+          <td>{{ job.title }}</td>
+          <td>{{ job.description }}</td>
+          <td>{{ job.createdByUser }}</td>
+          <td>{{ job.creationDate }}</td>
+          <td>{{ job.lastUpdated }}</td>
+          <td>{{ job.dueDate }}</td>
+          <td>
+            {{ job.currentWorkflowStep }}
+            <span class="workflow-info">
+              <i class="pi pi-info-circle" style="color: gray"></i
+            ></span>
+          </td>
+          <td>
+            <span class="workflow-actions">
+              <i class="pi pi-check" style="color: green"></i>
+              <i class="pi pi-times" style="color: red"></i>
+              <i class="pi pi-exclamation-triangle" style="color: orange"></i>
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="empty">
+        <tr>
+          <td colspan="2" style="text-align: center">No jobs available</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+</div>
+
+<div class="bidding-jobs">
+  <h2>Solicitari in curs de licitatie</h2>
+  <ng-container *ngIf="bidsWithJobDetails.length === 0; else showBiddingTable">
+    <p class="no-bidding-jobs">Nu aveti solicitari in curs de licitatie</p>
+  </ng-container>
+
+  <ng-template #showBiddingTable>
+    <p-table
+      [value]="bidsWithJobDetails"
+      [paginator]="true"
+      [rows]="3"
+      class="job-table"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Titlu</th>
+          <th>Descriere</th>
+          <th>Creator</th>
+          <th>Data Creare</th>
+          <th>Ultima Actualizare</th>
+          <th>Termen Limita de Rezolvare</th>
+          <th>Status Job</th>
+          <th>Ultima Oferta</th>
+          <th>Status Licitatie</th>
+          <th>Actiune</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" *ngFor="let item of bidsWithJobDetails">
+        <tr (click)="goToJobDetails(item.job.id)">
+          <td>{{ item.job.title }}</td>
+          <td>{{ item.job.description }}</td>
+          <td>{{ item.job.createdByUser }}</td>
+          <td>{{ item.job.creationDate }}</td>
+          <td>{{ item.job.lastUpdated }}</td>
+          <td>{{ item.job.dueDate }}</td>
+          <td>
+            {{ item.job.currentWorkflowStep }}
+            <span class="workflow-info">
+              <i class="pi pi-info-circle" style="color: gray"></i
+            ></span>
+          </td>
+          <td>{{ item.bid.updatedAt }}</td>
+          <td>
+            {{ item.bid.status }}
+            <span class="workflow-info">
+              <i class="pi pi-info-circle" style="color: gray"></i
+            ></span>
+          </td>
+          <td>
+            <span class="workflow-actions">
+              <i class="pi pi-check" style="color: green"></i>
+              <i class="pi pi-times" style="color: red"></i>
+              <i class="pi pi-exclamation-triangle" style="color: orange"></i>
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="empty">
+        <tr>
+          <td colspan="2" style="text-align: center">No jobs available</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+</div>
+
+<footer>
+  <p>
+    &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+    {{ appVersion }}
+  </p>
+</footer>

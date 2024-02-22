@@ -1,12 +1,14 @@
 package com.example.cloudComputing.controller;
 
 import com.example.cloudComputing.dto.BidDto;
+import com.example.cloudComputing.dto.JobDto;
 import com.example.cloudComputing.mapper.BidMapper;
 import com.example.cloudComputing.serviceImpl.BidServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -32,5 +34,10 @@ public class BidController {
   @GetMapping("/all")
   public List<BidDto> getAll() {
     return bidServiceImpl.findAll();
+  }
+
+  @GetMapping("/biddingSpecialist/{id}")
+  public ResponseEntity<List<BidDto>> getAllByBiddingSpecialist(@PathVariable int id) {
+    return ResponseEntity.ok(bidServiceImpl.findAllBySpecialistId(id));
   }
 }

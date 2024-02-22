@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BidDto {
+public class  BidDto {
 
   private Long id;
   private int jobId;

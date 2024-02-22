@@ -17,6 +17,10 @@ import { JobListComponent } from './job-list/job-list.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { MyJobsComponent } from './my-jobs/my-jobs.component';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     JobListComponent,
     JobDetailsComponent,
     PasswordResetComponent,
+    MyJobsComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,8 +43,11 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ButtonModule,
+    TableModule,
+    PaginatorModule,
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, MyJobsComponent],
 })
 export class AppModule {}

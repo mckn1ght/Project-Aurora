@@ -17,10 +17,14 @@ export const expertiseAreaEndpoint = '/expertiseArea';
 export const jobEndpoint = '/job';
 export const allJobsInWorkflow = '/inWorkflowStep/';
 export const assignJobToSpecialist = '/assign/';
-export const allJobsAssignedToSpecialist = '/getBySpecialistId/';
+export const allJobsAssignedToSpecialist = '/assignedTo/';
 export const getAllByLocationContaining = '/location/';
 export const getAllByDescriptionContaining = '/description/';
 export const getAllByTitleContaining = '/title/';
+
+//Bid
+export const bidEndpoint = '/bid';
+export const getAllByBiddingSpecialist = '/biddingSpecialist/';
 
 export const MAX_LOGIN_ATTEMPTS = 3;
 export const APPLICATION_VERSION = '0.2.0-SHAPSHOT ';

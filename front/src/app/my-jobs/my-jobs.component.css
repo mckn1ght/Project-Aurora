@@ -1,0 +1,100 @@
+.top-menu {
+  background-color: #f5f2f2d5;
+  padding: 1px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.top-menu nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-menu nav li {
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.top-menu nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 0px;
+  position: fixed;
+  font-size: 11px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Empty message styles */
+.empty-message {
+  text-align: center;
+  padding: 10px;
+  color: #888; /* You can adjust the color as needed */
+}
+.active-jobs h2,
+.bidding-jobs h2,
+.no-bidding-jobs,
+.no-active-jobs {
+  text-align: center;
+}
+
+/*Tables style*/
+.job-table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.job-table th,
+.job-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.job-table th {
+  background-color: #f2f2f2;
+}
+
+.workflow-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.workflow-info {
+  margin-left: 5px;
+}
+
+.workflow-actions i:hover,
+.workflow-info i:hover {
+  transform: scale(1.5);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.job-table tr:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}

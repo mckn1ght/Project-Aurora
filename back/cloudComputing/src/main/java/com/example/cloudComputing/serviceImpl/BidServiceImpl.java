@@ -50,4 +50,11 @@ public class BidServiceImpl implements BidService {
     return bidRepository.save(bid);
   }
 
+  public List<BidDto> findAllBySpecialistId(int id) {
+    List<BidDto> bidDtos = bidRepository.findAllBySpecialistId(id).stream().map(bid -> bidMapper.mapToBidDto(bid)).collect(Collectors.toList());
+    if (bidDtos.isEmpty()) {
+      throw new NoBidIdFoundException(NO_BID_FOUND);
+    }
+    return bidDtos;
+  }
 }

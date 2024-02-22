@@ -1,9 +1,9 @@
 export class Job {
-  id?: number;
+  id?: any;
   title?: string;
   description?: string;
   location?: string;
-  createdByUser?: number;
+  createdByUser?: any;
   assignedToSpecialist?: number;
   creationDate?: Date;
   dueDate?: Date;

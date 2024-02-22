@@ -13,4 +13,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
   List<Bid> findAll();
 
   Bid getById(Long id);
+
+  List<Bid> findAllBySpecialistId(int id);
 }

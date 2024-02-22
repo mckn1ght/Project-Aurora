@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Data
@@ -27,7 +28,7 @@ public class Bid {
   @Column(name = "specialistID")
   private int specialistId;
 
-  @Column(name = "amout")
+  @Column(name = "amount")
   private double amount;
 
   @Column(name = "status")
@@ -38,16 +39,14 @@ public class Bid {
 
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
-  // Method to auto-generate createdAt before persisting the entity
   @PrePersist
   protected void onCreate() {
     this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
   }
 
-  // Method to update updatedAt before updating the entity
   @PreUpdate
   protected void onUpdate() {
     this.updatedAt = LocalDateTime.now();
   }
 }
-
