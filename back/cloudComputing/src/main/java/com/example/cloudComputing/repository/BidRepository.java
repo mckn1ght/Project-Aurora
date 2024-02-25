@@ -2,6 +2,8 @@ package com.example.cloudComputing.repository;
 
 import com.example.cloudComputing.entity.Bid;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +17,8 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
   Bid getById(Long id);
 
   List<Bid> findAllBySpecialistId(int id);
+
+  @Query("SELECT COUNT(b) FROM Bid b WHERE b.specialistId = :specialistId AND b.status = 'active'")
+  int countActiveBidsBySpecialistId(@Param("specialistId") int specialistId);
+
 }

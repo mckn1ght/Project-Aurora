@@ -16,6 +16,7 @@ import { Bid } from '../models/bid';
 })
 export class MyJobsComponent implements OnInit {
   bidsWithJobDetails: { bid: Bid; job: Job }[] = [];
+  bidsWithJobDetailsCopy: { bid: Bid; job: Job }[] = [];
   bid: Bid[] = [];
   activeJobs: Job[] = [];
   biddingJobs: Job[] = [];
@@ -36,11 +37,10 @@ export class MyJobsComponent implements OnInit {
     this.authService.getLoggedInUser().subscribe((loggedInUser) => {
       if (loggedInUser) {
         this.loggedInUser = loggedInUser;
+        this.fetchActiveJobs();
+        this.fetchBidsWithJobDetails();
       }
     });
-
-    this.fetchActiveJobs();
-    this.fetchBidsWithJobDetails();
   }
 
   fetchActiveJobs() {
@@ -56,24 +56,6 @@ export class MyJobsComponent implements OnInit {
     }
   }
 
-  // fetchBidsWithJobDetails() {
-  //   if (this.loggedInUser && this.loggedInUser.specialistId !== undefined) {
-  //     this.bidService
-  //       .getAllBidsBySpecialist(this.loggedInUser.specialistId)
-  //       .subscribe((bids: Bid[]) => {
-  //         bids.forEach((bid: Bid) => {
-  //           if (bid.jobId !== undefined) {
-  //             this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
-  //               this.bidsWithJobDetails.push({ bid, job });
-  //             });
-  //           }
-  //         });
-  //       });
-  //   } else {
-  //     console.error('Specialist ID is undefined or not available.');
-  //   }
-  // }
-
   fetchBidsWithJobDetails() {
     if (this.loggedInUser && this.loggedInUser.specialistId !== undefined) {
       this.bidService
@@ -82,7 +64,6 @@ export class MyJobsComponent implements OnInit {
           bids.forEach((bid: Bid) => {
             if (bid.jobId !== undefined) {
               this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
-                // Fetch user details for createdByUser
                 this.userService.getById(job.createdByUser).subscribe(
                   (user: User) => {
                     job.createdByUser = user.firstName + ' ' + user.lastName;
@@ -94,7 +75,6 @@ export class MyJobsComponent implements OnInit {
                     );
                   }
                 );
-                // Push bid and job details to bidsWithJobDetails array
                 this.bidsWithJobDetails.push({ bid, job });
               });
             }
@@ -119,8 +99,22 @@ export class MyJobsComponent implements OnInit {
       }
     });
   }
-
+  display() {
+    console.log(this.bidsWithJobDetails);
+  }
   goToJobDetails(jobId: number) {
     this.router.navigate(['/job-details', jobId]);
+  }
+
+  deleteBid(bidId: number) {
+    this.bidService.deleteBid(bidId).subscribe(
+      () => {
+        console.log('Bid deleted successfully.');
+      },
+      (error) => {
+        console.error('Error deleting bid:', error);
+        // You can handle errors appropriately, such as displaying an error message
+      }
+    );
   }
 }

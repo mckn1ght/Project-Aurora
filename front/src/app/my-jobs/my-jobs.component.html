@@ -24,17 +24,17 @@
   <ng-container *ngIf="activeJobs.length === 0; else showActiveJobsTable">
     <p class="no-active-jobs">Nu aveti solicitari preluate</p>
   </ng-container>
-  <!-- Show table if there are bidding jobs -->
   <ng-template #showActiveJobsTable>
     <p-table
       [value]="activeJobs"
       [paginator]="true"
-      [rows]="3"
+      [rows]="5"
       [tableStyle]="{ 'min-width': '50rem' }"
       class="job-table"
     >
       <ng-template pTemplate="header">
         <tr>
+          <th>Id Job</th>
           <th>Titlu</th>
           <th>Descriere</th>
           <th>Creator</th>
@@ -46,8 +46,9 @@
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="body" let-job>
+      <ng-template pTemplate="body" let-job let-i="index">
         <tr (click)="goToJobDetails(job.id)">
+          <td>{{ job.id }}</td>
           <td>{{ job.title }}</td>
           <td>{{ job.description }}</td>
           <td>{{ job.createdByUser }}</td>
@@ -87,12 +88,13 @@
   <ng-template #showBiddingTable>
     <p-table
       [value]="bidsWithJobDetails"
-      [paginator]="true"
-      [rows]="3"
+      [rows]="5"
+      [tableStyle]="{ 'min-width': '50rem' }"
       class="job-table"
     >
       <ng-template pTemplate="header">
         <tr>
+          <th>Id Licitatie</th>
           <th>Titlu</th>
           <th>Descriere</th>
           <th>Creator</th>
@@ -106,8 +108,9 @@
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="body" *ngFor="let item of bidsWithJobDetails">
+      <ng-template pTemplate="body" let-item let-i="index">
         <tr (click)="goToJobDetails(item.job.id)">
+          <td>{{ item.job.id }}</td>
           <td>{{ item.job.title }}</td>
           <td>{{ item.job.description }}</td>
           <td>{{ item.job.createdByUser }}</td>
@@ -143,6 +146,7 @@
       </ng-template>
     </p-table>
   </ng-template>
+  <p-button (click)="display()"> Click Test</p-button>
 </div>
 
 <footer>
@@ -151,3 +155,4 @@
     {{ appVersion }}
   </p>
 </footer>
+<!-- </div> -->

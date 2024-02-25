@@ -8,6 +8,8 @@ import { isObservable } from 'rxjs';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 import { UserService } from '../service/user/user.service';
 import { Router } from '@angular/router';
+import { BidService } from '../service/bid/bid.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-job-details',
@@ -22,13 +24,23 @@ export class JobDetailsComponent implements OnInit {
   appVersion: String = APPLICATION_VERSION;
   createdByUser: String = '';
   assignedToSpecialist: String = '';
+  newBid: any = {
+    jobId: '',
+    specialistId: '',
+    amount: 0,
+    status: 'active',
+  };
+  activeBidCount: number = 0;
+  toastMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private jobService: JobService,
     private authService: AuthService,
     private userService: UserService,
-    private router: Router
+    private bidService: BidService,
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -40,6 +52,7 @@ export class JobDetailsComponent implements OnInit {
         console.error('Invalid job ID:', jobId);
       }
     });
+    this.getActiveBids();
   }
 
   fetchJobDetails(jobId: number) {
@@ -69,6 +82,41 @@ export class JobDetailsComponent implements OnInit {
         console.error('Error assigning job:', error);
       }
     );
+  }
+
+  addBid() {
+    if (this.activeBidCount < 5) {
+      (this.newBid.jobId = this.job?.id),
+        (this.newBid.specialistId = this.loggedInUser?.specialistId),
+        (this.newBid.amount = 0),
+        (this.newBid.status = 'active'),
+        this.bidService.addBid(this.newBid).subscribe(
+          (response) => {
+            console.log('Bid added successfully.', response);
+            this.router.navigate(['/my-jobs']);
+          },
+          (error) => {
+            console.error('Error adding bid:', error);
+          }
+        );
+    } else {
+      this.displayToast('Ati atins numarul maxim de licitatii concomitente.');
+    }
+  }
+
+  getActiveBids() {
+    this.authService.getLoggedInUser().subscribe((loggedInUser) => {
+      if (loggedInUser && loggedInUser.specialistId !== undefined) {
+        this.bidService.getActiveBids(loggedInUser.specialistId).subscribe(
+          (count) => {
+            this.activeBidCount = count;
+          },
+          (error) => {
+            console.error('Error fetching active bid count:', error);
+          }
+        );
+      }
+    });
   }
 
   showAssignToMeButton(): boolean {
@@ -115,5 +163,9 @@ export class JobDetailsComponent implements OnInit {
           );
       }
     }
+  }
+
+  displayToast(message: string) {
+    this.toastr.success(message);
   }
 }

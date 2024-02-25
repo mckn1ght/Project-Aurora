@@ -21,6 +21,8 @@ import { MyJobsComponent } from './my-jobs/my-jobs.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,9 @@ import { PaginatorModule } from 'primeng/paginator';
     ButtonModule,
     TableModule,
     PaginatorModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent, MyJobsComponent],

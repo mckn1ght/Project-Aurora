@@ -64,7 +64,7 @@ footer {
 .job-table {
   border: 1px solid #ccc;
   border-collapse: collapse;
-  width: 100%;
+  width: auto;
 }
 
 .job-table th,
@@ -72,6 +72,9 @@ footer {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowing content */
+  text-overflow: ellipsis; /* Show ellipsis for long content */
 }
 
 .job-table th {

@@ -1,0 +1,22 @@
+.toast-container {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 1000 !important;
+  opacity: 0 !important;
+  transition: opacity 1s ease !important;
+}
+
+.toast {
+  background-color: #ec4747;
+  color: #fff !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Show the toast when it has content */
+.toast-container.show {
+  opacity: 1 !important;
+}

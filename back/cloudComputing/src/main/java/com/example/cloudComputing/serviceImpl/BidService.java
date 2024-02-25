@@ -14,5 +14,7 @@ public interface BidService {
 
   BidDto getById(Long id);
 
+  int getActiveBidCount(int specialistId);
+
 
 }

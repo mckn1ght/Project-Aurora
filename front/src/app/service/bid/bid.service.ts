@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import {
   BACKEND_API_URL,
+  addEnpoint,
   bidEndpoint,
+  deleteById,
+  getActiveBids,
   getAllByBiddingSpecialist,
 } from 'src/app/constants';
 
@@ -17,5 +20,25 @@ export class BidService {
     return this.http.get(
       BACKEND_API_URL + bidEndpoint + getAllByBiddingSpecialist + id
     );
+  }
+
+  addBid(bid: any): Observable<any> {
+    return this.http.post(BACKEND_API_URL + bidEndpoint + addEnpoint, bid);
+  }
+
+  getActiveBids(specialistId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + bidEndpoint + getActiveBids + specialistId
+    );
+  }
+
+  deleteBid(bidId: number): Observable<any> {
+    return this.http
+      .delete(BACKEND_API_URL + bidEndpoint + deleteById + bidId)
+      .pipe(
+        catchError((error) => {
+          throw error;
+        })
+      );
   }
 }

@@ -57,4 +57,13 @@ public class BidServiceImpl implements BidService {
     }
     return bidDtos;
   }
+
+  public int getActiveBidCount(int specialistId) {
+    // Implement logic to count active bids for the given user
+    return bidRepository.countActiveBidsBySpecialistId(specialistId);
+  }
+
+  public void deleteById(Long bidId) {
+    bidRepository.deleteById(bidId);
+  }
 }

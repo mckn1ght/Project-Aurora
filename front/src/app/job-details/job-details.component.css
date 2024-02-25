@@ -47,16 +47,6 @@ footer {
   bottom: 0;
 }
 
-.job-details {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .title {
   color: #3498db;
   margin-bottom: 10px;
@@ -81,26 +71,35 @@ footer {
   justify-content: space-between;
 }
 
-/* Optional: Add hover effect */
+.job-details {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .job-details:hover {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   transform: scale(1.01);
   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* job-details.component.css */
-
 .button {
-  background-color: #186fc7 !important;
-  color: #fff !important;
+  background-color: #186fc7;
+  color: #fff;
   padding: 10px 20px;
-  border: none;
+  border: none; /* Remove border */
   border-radius: 7px;
   cursor: pointer;
   font-size: 16px;
   width: 100%;
+  outline: none; /* Remove outline when button is focused */
 }
 
 .button:hover {
-  background-color: #337fe1 !important;
+  background-color: #337fe1;
+  cursor: pointer;
 }

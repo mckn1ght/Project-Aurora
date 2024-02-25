@@ -61,7 +61,7 @@
     </div>
     <!-- job-details.component.html -->
 
-    <div class="job-details" *ngIf="job">
+    <div class="job-ddetails" *ngIf="job">
       <button
         *ngIf="
           loggedInUser &&
@@ -69,13 +69,13 @@
           job.assignedToSpecialist == 1
         "
         class="button"
-        (click)="assignToMe(job.id!, loggedInUser.specialistId!)"
+        (click)="addBid()"
+        title="You need to create a specialist account to claim this job"
       >
         Preiau!
       </button>
     </div>
   </div>
-
   <footer>
     <p>
       &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
