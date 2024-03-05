@@ -139,6 +139,15 @@ public class JobController {
     }
   }
 
+  @DeleteMapping("/deleteById/{jobId}")
+  public ResponseEntity<?> deleteJob(@PathVariable Long jobId) {
+    try {
+      jobServiceImpl.deleteById(jobId);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
 }
 
 

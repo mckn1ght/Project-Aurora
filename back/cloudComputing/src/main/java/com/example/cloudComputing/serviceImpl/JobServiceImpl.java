@@ -208,4 +208,8 @@ public class JobServiceImpl implements JobService {
     Job job = jobRepository.getById(jobId);
     return job.getAssignedToSpecialist() == 1;
   }
+
+  public void deleteById(Long jobId) {
+    jobRepository.deleteById(jobId);
+  }
 }

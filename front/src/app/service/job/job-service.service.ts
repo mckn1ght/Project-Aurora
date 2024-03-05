@@ -15,6 +15,7 @@ import {
   getAllByLocationContaining,
   getAllByDescriptionContaining,
   getAllByTitleContaining,
+  deleteById,
 } from 'src/app/constants';
 import { Job } from 'src/app/models/job';
 
@@ -166,5 +167,15 @@ export class JobService {
       {},
       { responseType: 'text' }
     ) as Observable<string>;
+  }
+
+  deleteJob(jobId: number): Observable<any> {
+    return this.http
+      .delete(BACKEND_API_URL + jobEndpoint + deleteById + jobId)
+      .pipe(
+        catchError((error) => {
+          throw error;
+        })
+      );
   }
 }

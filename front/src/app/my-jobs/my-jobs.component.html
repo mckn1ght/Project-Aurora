@@ -64,7 +64,11 @@
           <td>
             <span class="workflow-actions">
               <i class="pi pi-check" style="color: green"></i>
-              <i class="pi pi-times" style="color: red"></i>
+              <i
+                class="pi pi-times"
+                style="color: red"
+                (click)="openCreatorJobConfirmationDialog(job.id)"
+              ></i>
               <i class="pi pi-exclamation-triangle" style="color: orange"></i>
             </span>
           </td>
@@ -133,7 +137,11 @@
           <td>
             <span class="workflow-actions">
               <i class="pi pi-check" style="color: green"></i>
-              <i class="pi pi-times" style="color: red"></i>
+              <i
+                class="pi pi-times"
+                style="color: red"
+                (click)="openBidConfirmationDialog(item.bid.id)"
+              ></i>
               <i class="pi pi-exclamation-triangle" style="color: orange"></i>
             </span>
           </td>

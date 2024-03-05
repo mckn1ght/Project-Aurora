@@ -1,0 +1,29 @@
+<p-dialog
+  header="Confirmare"
+  [(visible)]="display"
+  [style]="{ width: '320px' }"
+  [modal]="true"
+  [closable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="content">
+    <p>{{ data.message }}</p>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      type="button"
+      (click)="onYesClick()"
+      class="p-button-danger p-button-text"
+    >
+      Da
+    </button>
+    <button
+      pButton
+      type="button"
+      (click)="onNoClick()"
+      label="Nu"
+      class="no-button"
+    ></button>
+  </ng-template>
+</p-dialog>

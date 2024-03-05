@@ -8,6 +8,8 @@ import { UserService } from '../service/user/user.service';
 import { BidService } from '../service/bid/bid.service';
 import { Router } from '@angular/router';
 import { Bid } from '../models/bid';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-my-jobs',
@@ -30,7 +32,8 @@ export class MyJobsComponent implements OnInit {
     private bidService: BidService,
     private authService: AuthService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -103,18 +106,80 @@ export class MyJobsComponent implements OnInit {
     console.log(this.bidsWithJobDetails);
   }
   goToJobDetails(jobId: number) {
-    this.router.navigate(['/job-details', jobId]);
+    // this.router.navigate(['/job-details', jobId]);
   }
 
-  deleteBid(bidId: number) {
+  deleteBid(bidId: number): void {
     this.bidService.deleteBid(bidId).subscribe(
       () => {
-        console.log('Bid deleted successfully.');
+        console.log('Licitatie stearsa cu succes.');
+
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate(['/my-jobs']);
+          });
       },
       (error) => {
-        console.error('Error deleting bid:', error);
-        // You can handle errors appropriately, such as displaying an error message
+        console.error('Eroare stergere licitatie:', error);
       }
     );
+  }
+
+  deleteJob(jobId: number): void {
+    this.jobService.deleteJob(jobId).subscribe(
+      () => {
+        console.log('Solicitare stearsa cu succes.');
+
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate(['/my-jobs']);
+          });
+      },
+      (error) => {
+        console.error('Eroare stergere solicitare:', error);
+      }
+    );
+  }
+  openBidConfirmationDialog(bidId: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: { message: 'Doriti sa renuntati la aceasta licitatie?' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteBid(bidId);
+      }
+    });
+  }
+  openCreatorJobConfirmationDialog(jobId: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: { message: 'Doriti sa anulati aceasta solicitare?' },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteJob(jobId);
+      }
+    });
+  }
+
+  openSpecialistJobConfirmationDialog(jobId: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+      data: {
+        message:
+          'Solicitarea a fost asumata de dumneavoastra si va atrage repercursiuni daca nu o duceti la bun sfarsit. Doriti sa nu mai finalizati aceasta solicitare?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // this.deleteJob(jobId); delete assumption
+      }
+    });
   }
 }

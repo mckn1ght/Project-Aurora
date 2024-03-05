@@ -23,6 +23,9 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { ToastrModule } from 'ngx-toastr';
     JobDetailsComponent,
     PasswordResetComponent,
     MyJobsComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +55,8 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    MatDialogModule,
+    DialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent, MyJobsComponent],

@@ -1,0 +1,11 @@
+.ui-dialog-content {
+  padding: 20px;
+}
+
+.ui-dialog-footer {
+  text-align: right;
+}
+
+.no-button {
+  color: white !important;
+}
