@@ -22,6 +22,7 @@ export class MyJobsComponent implements OnInit {
   bid: Bid[] = [];
   activeJobs: Job[] = [];
   biddingJobs: Job[] = [];
+  jobsCreatedByUser: Job[] = [];
   loggedInUser!: User;
 
   appEnvironment: String = APPLICATION_ENVIRONMENT;
@@ -40,8 +41,13 @@ export class MyJobsComponent implements OnInit {
     this.authService.getLoggedInUser().subscribe((loggedInUser) => {
       if (loggedInUser) {
         this.loggedInUser = loggedInUser;
-        this.fetchActiveJobs();
-        this.fetchBidsWithJobDetails();
+        if (this.loggedInUser.specialistId != null) {
+          this.fetchActiveJobs();
+          this.fetchBidsWithJobDetails();
+        } else {
+          this.fetchJobsCreatedByUser();
+          this.fetchJobsCreatedByUserWithBids();
+        }
       }
     });
   }
@@ -181,5 +187,97 @@ export class MyJobsComponent implements OnInit {
         // this.deleteJob(jobId); delete assumption
       }
     });
+  }
+
+  fetchJobsCreatedByUser() {
+    if (this.loggedInUser && this.loggedInUser.id) {
+      this.jobService
+        .getJobsCreatedByUserAndInExec(this.loggedInUser.id)
+        .subscribe((jobs) => {
+          this.jobsCreatedByUser = jobs;
+        });
+    }
+  }
+
+  // fetchJobsCreatedByUserWithBids() {
+  //   if (this.loggedInUser && this.loggedInUser.id) {
+  //     this.bidService
+  //       .getJobsCreatedByUserWithBids(this.loggedInUser.id)
+  //       .subscribe((bids: Bid[]) => {
+  //         bids.forEach((bid: Bid) => {
+  //           if (bid.jobId !== undefined) {
+  //             this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
+  //               this.bidsWithJobDetails.push({ bid, job });
+  //             });
+  //           }
+  //         });
+  //       });
+  //   }
+  // }
+
+  // fetchJobsCreatedByUserWithBids(): void {
+  //   if (this.loggedInUser.id)
+  //     this.jobService
+  //       .getJobsWithBidsCreatedByUser(this.loggedInUser.id)
+  //       .subscribe((data) => {
+  //         this.bidsWithJobDetails = data;
+  //         console.log('Jobs with bids:', this.bidsWithJobDetails);
+  //       });
+  // }
+
+  fetchJobsCreatedByUserWithBids(): void {
+    if (this.loggedInUser.id) {
+      this.jobService
+        .getJobsWithBidsCreatedByUser(this.loggedInUser.id)
+        .subscribe((data: any[]) => {
+          // Parse the data into JSON format
+          this.bidsWithJobDetails = data.map(
+            ([
+              id,
+              title,
+              description,
+              location,
+              createdByUser,
+              assignedToSpecialist,
+              creationDate,
+              dueDate,
+              lastUpdated,
+              currentWorkflowStep,
+              bidId,
+              jobId,
+              specialistId,
+              amount,
+              status,
+              created_at,
+              updated_at,
+            ]: any) => {
+              return {
+                job: {
+                  id: jobId,
+                  title,
+                  description,
+                  location,
+                  createdByUser,
+                  assignedToSpecialist,
+                  creationDate,
+                  dueDate,
+                  lastUpdated,
+                  currentWorkflowStep,
+                },
+                bid: {
+                  id: bidId,
+                  jobId,
+                  specialistId,
+                  amount,
+                  status,
+                  created_at,
+                  updated_at,
+                },
+              };
+            }
+          );
+          console.log('Jobs with bids:', this.bidsWithJobDetails);
+        });
+    }
   }
 }

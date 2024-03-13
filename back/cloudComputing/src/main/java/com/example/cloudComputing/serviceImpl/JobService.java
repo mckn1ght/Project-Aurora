@@ -47,4 +47,5 @@ public interface JobService {
   void assignJobToSpecialist(long jobId, int specialistId);
 
 
+
 }

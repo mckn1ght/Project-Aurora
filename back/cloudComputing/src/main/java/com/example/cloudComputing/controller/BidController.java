@@ -32,6 +32,11 @@ public class BidController {
     return ResponseEntity.ok(bidServiceImpl.getById(id));
   }
 
+  @RequestMapping("/getAllByJobId/{id}")
+  public List<BidDto> getAllByJobId(@PathVariable int id) {
+    return bidServiceImpl.getByJobId(id);
+  }
+
   @GetMapping("/all")
   public List<BidDto> getAll() {
     return bidServiceImpl.findAll();

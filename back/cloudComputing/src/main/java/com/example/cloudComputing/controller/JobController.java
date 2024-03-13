@@ -148,6 +148,16 @@ public class JobController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
+
+  @GetMapping("/createdBy/{userId}/withBids")
+  public List<Object[]> getJobsAndBidsCreatedByUser(@PathVariable Long userId) {
+    return jobServiceImpl.getJobsAndBidsCreatedByUser(userId);
+  }
+
+  @GetMapping("/createdBy/{userId}/status/preluat-or-in-executie")
+  public List<JobDto> getJobsCreatedByUserWithStatus(@PathVariable Long userId) {
+    return jobServiceImpl.getAllByCreatedByUserAndActive(userId);
+  }
 }
 
 

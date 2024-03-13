@@ -3,6 +3,8 @@ package com.example.cloudComputing.repository;
 import com.example.cloudComputing.dto.JobDto;
 import com.example.cloudComputing.entity.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -46,6 +48,11 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
   List<Job> getAllByCurrentWorkflowStep(String step);
 
+  @Query(value = "SELECT j.*, b.* FROM job j INNER JOIN bid b ON j.id = b.jobID WHERE j.createdByUser = :userId", nativeQuery = true)
+  List<Object[]> findJobsAndBidsCreatedByUser(Long userId);
+
+  @Query("SELECT j FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('Preluat', 'In executie')")
+  List<Job> findJobsCreatedByUserWithStatus(@Param("userId") Long userId);
 }
 
 

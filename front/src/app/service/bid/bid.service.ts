@@ -8,6 +8,7 @@ import {
   deleteById,
   getActiveBids,
   getAllByBiddingSpecialist,
+  getAllByJobId,
 } from 'src/app/constants';
 
 @Injectable({
@@ -40,5 +41,13 @@ export class BidService {
           throw error;
         })
       );
+  }
+
+  getActiveBidsByJob(jobId: number): Observable<any> {
+    return this.http.get(BACKEND_API_URL + bidEndpoint + getActiveBids + jobId);
+  }
+
+  getJobsCreatedByUserWithBids(jobId: number) {
+    return this.http.get(BACKEND_API_URL + bidEndpoint + getAllByJobId + jobId);
   }
 }

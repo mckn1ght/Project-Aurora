@@ -88,6 +88,14 @@ public class JobServiceImpl implements JobService {
     }
     return jobDto;
   }
+  public List<JobDto> getAllByCreatedByUserAndActive(Long id){
+    List<JobDto> jobDto = jobRepository.findJobsCreatedByUserWithStatus(id).stream()
+      .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
+    if (jobDto.isEmpty()) {
+      throw new NoJobCreatedByUserException(String.format(NO_JOBS_CREATED_BY_USER, id));
+    }
+    return jobDto;
+  }
 
   public List<JobDto> getAllByAssignedToSpecialist(int id){
     List<JobDto> jobDto = jobRepository.getAllByAssignedToSpecialist(id).stream()
@@ -211,5 +219,9 @@ public class JobServiceImpl implements JobService {
 
   public void deleteById(Long jobId) {
     jobRepository.deleteById(jobId);
+  }
+
+  public List<Object[]> getJobsAndBidsCreatedByUser(Long userId) {
+    return jobRepository.findJobsAndBidsCreatedByUser(userId);
   }
 }

@@ -16,6 +16,8 @@ import {
   getAllByDescriptionContaining,
   getAllByTitleContaining,
   deleteById,
+  createdByUser,
+  preluatOrInExec,
 } from 'src/app/constants';
 import { Job } from 'src/app/models/job';
 
@@ -177,5 +179,21 @@ export class JobService {
           throw error;
         })
       );
+  }
+
+  getJobsCreatedByUserAndInExec(userId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL +
+        jobEndpoint +
+        createdByUser +
+        userId +
+        '/status/' +
+        preluatOrInExec
+    );
+  }
+  getJobsWithBidsCreatedByUser(userId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + jobEndpoint + createdByUser + userId + '/withBids'
+    );
   }
 }

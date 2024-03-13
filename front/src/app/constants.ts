@@ -4,6 +4,7 @@ export const getAllEndpoint = '/all';
 export const addEnpoint = '/add';
 export const getById = '/getById/';
 export const deleteById = '/deleteById/';
+export const createdByUser = '/createdBy/';
 
 //User
 export const userEndpoint = '/user';
@@ -22,11 +23,13 @@ export const allJobsAssignedToSpecialist = '/assignedTo/';
 export const getAllByLocationContaining = '/location/';
 export const getAllByDescriptionContaining = '/description/';
 export const getAllByTitleContaining = '/title/';
+export const preluatOrInExec = '/preluat-or-in-executie';
 
 //Bid
 export const bidEndpoint = '/bid';
 export const getAllByBiddingSpecialist = '/biddingSpecialist/';
 export const getActiveBids = '/activeCount/';
+export const getAllByJobId = '/getAllByJobId/';
 
 export const MAX_LOGIN_ATTEMPTS = 3;
 export const APPLICATION_VERSION = '0.2.0-SHAPSHOT ';
