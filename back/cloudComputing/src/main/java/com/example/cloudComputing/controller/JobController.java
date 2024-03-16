@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.example.cloudComputing.constants.Constants.*;
@@ -127,6 +128,10 @@ public class JobController {
   public ResponseEntity<List<JobDto>> getAllByCurrentWorkflowStep(@PathVariable String step) {
     return ResponseEntity.ok(jobServiceImpl.getAllByCurrentWorkflowStep(step));
   }
+  @GetMapping("/allNewCreatedByUser/{userId}")
+  public ResponseEntity<List<JobDto>> getAllByCurrentWorkflowStep(@PathVariable Long userId) {
+    return ResponseEntity.ok(jobServiceImpl.getNewJobsCreatedByUser(userId));
+  }
 
   @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping("/{jobId}/assign/{specialistId}")
@@ -158,6 +163,18 @@ public class JobController {
   public List<JobDto> getJobsCreatedByUserWithStatus(@PathVariable Long userId) {
     return jobServiceImpl.getAllByCreatedByUserAndActive(userId);
   }
+
+  @PostMapping("/{jobId}/workflow/{workflowStatus}")
+  @CrossOrigin(origins = "http://localhost:4200")
+  public ResponseEntity<Object> setWorkflowStatus(@PathVariable long jobId, @PathVariable String workflowStatus) {
+    try {
+      jobServiceImpl.setWorkflowStatus(jobId, workflowStatus);
+      return ResponseEntity.ok().body(Map.of("message", "Workflow status of job with ID " + jobId + " updated successfully"));
+    } catch (RuntimeException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+    }
+  }
+
 }
 
 

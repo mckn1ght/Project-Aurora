@@ -18,12 +18,14 @@ export const expertiseAreaEndpoint = '/expertiseArea';
 //Job
 export const jobEndpoint = '/job';
 export const allJobsInWorkflow = '/inWorkflowStep/';
+export const allNewCreatedByUser = '/allNewCreatedByUser/';
 export const assignJobToSpecialist = '/assign/';
 export const allJobsAssignedToSpecialist = '/assignedTo/';
 export const getAllByLocationContaining = '/location/';
 export const getAllByDescriptionContaining = '/description/';
 export const getAllByTitleContaining = '/title/';
 export const preluatOrInExec = '/preluat-or-in-executie';
+export const workflow = '/workflow/';
 
 //Bid
 export const bidEndpoint = '/bid';

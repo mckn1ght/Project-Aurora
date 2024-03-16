@@ -86,21 +86,34 @@ export class JobDetailsComponent implements OnInit {
 
   addBid() {
     if (this.activeBidCount < 5) {
-      (this.newBid.jobId = this.job?.id),
-        (this.newBid.specialistId = this.loggedInUser?.specialistId),
-        (this.newBid.amount = 0),
-        (this.newBid.status = 'active'),
+      if (this.job) {
+        this.newBid.jobId = this.job.id;
+        this.newBid.specialistId = this.loggedInUser?.specialistId;
+        this.newBid.amount = 0;
+        this.newBid.status = 'active';
+
         this.bidService.addBid(this.newBid).subscribe(
           (response) => {
             console.log('Bid added successfully.', response);
-            this.router.navigate(['/my-jobs']);
+            this.jobService
+              .setWorkflowStatus(this.job?.id, 'In Licitatie')
+              .subscribe(
+                () => {
+                  console.log('Workflow status updated successfully.');
+                  this.router.navigate(['/my-jobs']);
+                },
+                (error) => {
+                  console.error('Error updating workflow status:', error);
+                }
+              );
           },
           (error) => {
             console.error('Error adding bid:', error);
           }
         );
-    } else {
-      this.displayToast('Ati atins numarul maxim de licitatii concomitente.');
+      } else {
+        this.displayToast('Ati atins numarul maxim de licitatii concomitente.');
+      }
     }
   }
 

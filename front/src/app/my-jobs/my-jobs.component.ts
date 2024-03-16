@@ -23,6 +23,7 @@ export class MyJobsComponent implements OnInit {
   activeJobs: Job[] = [];
   biddingJobs: Job[] = [];
   jobsCreatedByUser: Job[] = [];
+  newJobsCreatedByUser: Job[] = [];
   loggedInUser!: User;
 
   appEnvironment: String = APPLICATION_ENVIRONMENT;
@@ -42,11 +43,14 @@ export class MyJobsComponent implements OnInit {
       if (loggedInUser) {
         this.loggedInUser = loggedInUser;
         if (this.loggedInUser.specialistId != null) {
+          console.log(this.loggedInUser);
           this.fetchActiveJobs();
           this.fetchBidsWithJobDetails();
         } else {
+          console.log(this.loggedInUser);
           this.fetchJobsCreatedByUser();
           this.fetchJobsCreatedByUserWithBids();
+          this.fetchAllNewCreatedByUser();
         }
       }
     });
@@ -278,6 +282,19 @@ export class MyJobsComponent implements OnInit {
           );
           console.log('Jobs with bids:', this.bidsWithJobDetails);
         });
+    }
+  }
+
+  fetchAllNewCreatedByUser() {
+    if (this.loggedInUser && this.loggedInUser.id) {
+      this.jobService
+        .getNewJobsCreatedByUser(this.loggedInUser.id)
+        .subscribe((jobs) => {
+          this.newJobsCreatedByUser = jobs;
+          this.getCreatorUserName();
+        });
+    } else {
+      console.error('User ID is undefined or not available.');
     }
   }
 }

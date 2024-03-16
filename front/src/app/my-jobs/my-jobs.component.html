@@ -18,6 +18,78 @@
   </nav>
 </header>
 
+<!-- NEW USER JOBS(NOT IN BIDDING) -->
+<div *ngIf="this.loggedInUser.specialistId == null">
+  <div class="createdByUser-jobs">
+    <h2>Solicitari Nou Create</h2>
+
+    <ng-container
+      *ngIf="
+        newJobsCreatedByUser.length === 0;
+        else showNewJobsCreatedByUserTable
+      "
+    >
+      <p class="no-created-jobs">Nu ati creat solicitari</p>
+    </ng-container>
+    <ng-template #showNewJobsCreatedByUserTable>
+      <p-table
+        [value]="newJobsCreatedByUser"
+        [paginator]="true"
+        [rows]="5"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        class="job-table"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Id Job</th>
+            <th>Titlu</th>
+            <th>Descriere</th>
+            <th>Creator</th>
+            <th>Data Creare</th>
+            <th>Ultima Actualizare</th>
+            <th>Termen Limita de Rezolvare</th>
+            <th>Etapa</th>
+            <th>Actiune</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-job let-i="index">
+          <tr (click)="goToJobDetails(job.id)">
+            <td>{{ job.id }}</td>
+            <td>{{ job.title }}</td>
+            <td>{{ job.description }}</td>
+            <td>{{ job.createdByUser }}</td>
+            <td>{{ job.creationDate }}</td>
+            <td>{{ job.lastUpdated }}</td>
+            <td>{{ job.dueDate }}</td>
+            <td>
+              {{ job.currentWorkflowStep }}
+              <span class="workflow-info">
+                <i class="pi pi-info-circle" style="color: gray"></i
+              ></span>
+            </td>
+            <td>
+              <span class="workflow-actions">
+                <i class="pi pi-check" style="color: green"></i>
+                <i
+                  class="pi pi-times"
+                  style="color: red"
+                  (click)="openCreatorJobConfirmationDialog(job.id)"
+                ></i>
+                <i class="pi pi-exclamation-triangle" style="color: orange"></i>
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="empty">
+          <tr>
+            <td colspan="2" style="text-align: center">No jobs available</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </div>
+</div>
 <!-- SPECIALIST IN EXECUTION -->
 <div *ngIf="this.loggedInUser.specialistId !== null">
   <div class="active-jobs">
@@ -86,7 +158,7 @@
   </div>
 </div>
 
-<!-- CREATED BY USER -->
+<!-- CREATED BY USER si PRELUATE / IN EXEC -->
 <div *ngIf="this.loggedInUser.specialistId == null">
   <div class="createdByUser-jobs">
     <h2>Solicitari in curs de executie</h2>

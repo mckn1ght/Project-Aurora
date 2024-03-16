@@ -224,4 +224,23 @@ public class JobServiceImpl implements JobService {
   public List<Object[]> getJobsAndBidsCreatedByUser(Long userId) {
     return jobRepository.findJobsAndBidsCreatedByUser(userId);
   }
+  public List<JobDto> getNewJobsCreatedByUser(Long userId) {
+    List<JobDto> jobDto = jobRepository.findNewJobsCreatedByUser(userId).stream()
+      .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
+    if (jobDto.isEmpty()) {
+      throw new NoJobsOnWorkflowStepException(String.format(NO_JOBS_CREATED_BY_USER, userId));
+    }
+    return jobDto;
+  }
+
+  public void setWorkflowStatus(long jobId, String workflowStatus) {
+    Job job = jobRepository.findById(jobId).orElse(null);
+    if (job != null) {
+      job.setCurrentWorkflowStep(workflowStatus);
+      jobRepository.save(job);
+    } else {
+      throw new RuntimeException(NO_JOB_ID_FOUND + jobId);
+    }
+  }
 }
+

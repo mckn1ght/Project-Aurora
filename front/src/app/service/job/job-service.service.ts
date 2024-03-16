@@ -18,6 +18,8 @@ import {
   deleteById,
   createdByUser,
   preluatOrInExec,
+  allNewCreatedByUser,
+  workflow,
 } from 'src/app/constants';
 import { Job } from 'src/app/models/job';
 
@@ -194,6 +196,25 @@ export class JobService {
   getJobsWithBidsCreatedByUser(userId: number): Observable<any> {
     return this.http.get(
       BACKEND_API_URL + jobEndpoint + createdByUser + userId + '/withBids'
+    );
+  }
+
+  getNewJobsCreatedByUser(userId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + jobEndpoint + allNewCreatedByUser + userId
+    );
+  }
+
+  setWorkflowStatus(jobId: number, workflowStatus: string): Observable<any> {
+    const url =
+      BACKEND_API_URL + jobEndpoint + '/' + jobId + workflow + workflowStatus;
+    const body = { workflowStatus };
+
+    return this.http.post<any>(url, body).pipe(
+      catchError((error) => {
+        console.error('Error setting workflow status:', error);
+        return throwError(error);
+      })
     );
   }
 }
