@@ -5,6 +5,8 @@ import com.example.cloudComputing.entity.Bid;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class BidMapper {
@@ -31,4 +33,11 @@ public class BidMapper {
       .updatedAt(bid.getUpdatedAt())
       .build();
   }
+
+  public List<BidDto> mapToBidDtoList(List<Bid> bids) {
+    return bids.stream()
+      .map(this::mapToBidDto)
+      .collect(Collectors.toList());
+  }
+
 }

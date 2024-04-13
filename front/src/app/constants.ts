@@ -26,12 +26,15 @@ export const getAllByDescriptionContaining = '/description/';
 export const getAllByTitleContaining = '/title/';
 export const preluatOrInExec = '/preluat-or-in-executie';
 export const workflow = '/workflow/';
+export const withBids = '/withBids';
 
 //Bid
 export const bidEndpoint = '/bid';
 export const getAllByBiddingSpecialist = '/biddingSpecialist/';
 export const getActiveBids = '/activeCount/';
 export const getAllByJobId = '/getAllByJobId/';
+export const setBidStatus = '/status/';
+export const getActiveBidCountByJobId = '/getActiveBidCountByJobId/';
 
 export const MAX_LOGIN_ATTEMPTS = 3;
 export const APPLICATION_VERSION = '0.2.0-SHAPSHOT ';

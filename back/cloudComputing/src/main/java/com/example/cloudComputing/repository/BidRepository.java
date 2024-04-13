@@ -21,6 +21,8 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
   @Query("SELECT COUNT(b) FROM Bid b WHERE b.specialistId = :specialistId AND b.status = 'active'")
   int countActiveBidsBySpecialistId(@Param("specialistId") int specialistId);
 
+  @Query("SELECT COUNT(b) FROM Bid b WHERE b.jobId = :jobId AND b.status = 'active'")
+  int countActiveBidsByJobId(@Param("jobId") int jobId);
 
   @Query("SELECT b FROM Bid b WHERE b.jobId = :jobId AND b.status = 'active'")
   List<Bid> getAllByJobId(int jobId);

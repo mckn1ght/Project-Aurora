@@ -339,7 +339,7 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-rowData let-i="index">
-          <tr (click)="goToJobDetails(rowData.job.id)">
+          <tr (click)="viewBids(rowData.job.id)">
             <td>{{ rowData.job.id }}</td>
             <td>{{ rowData.job.title }}</td>
             <td>{{ rowData.job.description }}</td>
@@ -382,4 +382,3 @@
     {{ appVersion }}
   </p>
 </footer>
-<!-- </div> -->

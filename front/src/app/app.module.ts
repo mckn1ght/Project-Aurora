@@ -26,6 +26,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogModule } from 'primeng/dialog';
+import { BidListComponent } from './bid-list/bid-list.component';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { DialogModule } from 'primeng/dialog';
     PasswordResetComponent,
     MyJobsComponent,
     ConfirmationDialogComponent,
+    BidListComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import { DialogModule } from 'primeng/dialog';
     ToastrModule.forRoot(),
     MatDialogModule,
     DialogModule,
+    CardModule,
   ],
   providers: [],
   bootstrap: [AppComponent, MyJobsComponent],

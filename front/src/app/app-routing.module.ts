@@ -9,6 +9,7 @@ import { JobListComponent } from './job-list/job-list.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { MyJobsComponent } from './my-jobs/my-jobs.component';
+import { BidListComponent } from './bid-list/bid-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'job-details/:id', component: JobDetailsComponent },
   { path: 'password-reset', component: PasswordResetComponent },
   { path: 'my-jobs', component: MyJobsComponent },
+  { path: 'bid-list/:id', component: BidListComponent },
   { path: '**', redirectTo: '/landing', pathMatch: 'full' },
 ];
 

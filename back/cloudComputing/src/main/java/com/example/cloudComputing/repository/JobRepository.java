@@ -49,7 +49,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
   List<Job> getAllByCurrentWorkflowStep(String step);
 
   @Query(value = "SELECT j.*, b.* FROM job j INNER JOIN bid b ON j.id = b.jobID WHERE j.createdByUser = :userId AND " +
-    "j.currentWorkflowStep NOT IN ('Preluat', 'In executie')", nativeQuery = true)
+    "j.currentWorkflowStep NOT IN ('Preluat', 'In executie', 'New')", nativeQuery = true)
   List<Object[]> findJobsAndBidsCreatedByUser(Long userId);
 
   @Query("SELECT j FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('Preluat', 'In executie')")

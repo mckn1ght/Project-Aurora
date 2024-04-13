@@ -1,0 +1,37 @@
+<div class="centered-container">
+  <h2 class="h2 title">{{ selectedJob?.title }}</h2>
+  <h2 class="h2 description">{{ selectedJob?.description }}</h2>
+</div>
+
+<div class="card-container">
+  <div *ngFor="let bid of bids; let i = index" class="card">
+    <p-card [subheader]="" [style]="{ width: '18rem' }">
+      <ng-template pTemplate="content">
+        <p>
+          Specialist: {{ userDetails[i]?.firstName }}
+          {{ userDetails[i]?.lastName }}
+        </p>
+        <p>Bid: {{ bid.amount }}</p>
+        <p>Bid Created at: {{ bid.createdAt | date : "short" }}</p>
+        <p>Phone Number: {{ userDetails[i]?.phoneNumber }}</p>
+        <p>Email: {{ userDetails[i]?.email }}</p>
+        <p>Username {{ userDetails[i]?.username }}</p>
+        <!-- Display more user details here -->
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="card-footer">
+          <td>
+            <span class="workflow-actions">
+              <i class="pi pi-check accept-icon" style="color: green"></i>
+              <i
+                class="pi pi-times reject-icon"
+                style="color: red"
+                (click)="rejectBid(bid.id!)"
+              ></i>
+            </span>
+          </td>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

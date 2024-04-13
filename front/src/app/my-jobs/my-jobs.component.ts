@@ -68,6 +68,35 @@ export class MyJobsComponent implements OnInit {
       console.error('Specialist ID is undefined or not available.');
     }
   }
+  // Trage si joburile new in tabela de cicitatii
+  // fetchBidsWithJobDetails() {
+  //   if (this.loggedInUser && this.loggedInUser.specialistId !== undefined) {
+  //     this.bidService
+  //       .getAllBidsBySpecialist(this.loggedInUser.specialistId)
+  //       .subscribe((bids: Bid[]) => {
+  //         bids.forEach((bid: Bid) => {
+  //           if (bid.jobId !== undefined) {
+  //             this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
+  //               this.userService.getById(job.createdByUser).subscribe(
+  //                 (user: User) => {
+  //                   job.createdByUser = user.firstName + ' ' + user.lastName;
+  //                 },
+  //                 (error) => {
+  //                   console.error(
+  //                     'Error fetching creator user:',
+  //                     error.message
+  //                   );
+  //                 }
+  //               );
+  //               this.bidsWithJobDetails.push({ bid, job });
+  //             });
+  //           }
+  //         });
+  //       });
+  //   } else {
+  //     console.error('Specialist ID is undefined or not available.');
+  //   }
+  // }
 
   fetchBidsWithJobDetails() {
     if (this.loggedInUser && this.loggedInUser.specialistId !== undefined) {
@@ -77,18 +106,22 @@ export class MyJobsComponent implements OnInit {
           bids.forEach((bid: Bid) => {
             if (bid.jobId !== undefined) {
               this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
-                this.userService.getById(job.createdByUser).subscribe(
-                  (user: User) => {
-                    job.createdByUser = user.firstName + ' ' + user.lastName;
-                  },
-                  (error) => {
-                    console.error(
-                      'Error fetching creator user:',
-                      error.message
-                    );
-                  }
-                );
-                this.bidsWithJobDetails.push({ bid, job });
+                // Check if the job's currentWorkflowStatus is the one to be excluded
+                if (job.currentWorkflowStep !== 'New') {
+                  // Modify 'ExcludedStatus' with your desired status
+                  this.userService.getById(job.createdByUser).subscribe(
+                    (user: User) => {
+                      job.createdByUser = user.firstName + ' ' + user.lastName;
+                    },
+                    (error) => {
+                      console.error(
+                        'Error fetching creator user:',
+                        error.message
+                      );
+                    }
+                  );
+                  this.bidsWithJobDetails.push({ bid, job });
+                }
               });
             }
           });
@@ -203,32 +236,6 @@ export class MyJobsComponent implements OnInit {
     }
   }
 
-  // fetchJobsCreatedByUserWithBids() {
-  //   if (this.loggedInUser && this.loggedInUser.id) {
-  //     this.bidService
-  //       .getJobsCreatedByUserWithBids(this.loggedInUser.id)
-  //       .subscribe((bids: Bid[]) => {
-  //         bids.forEach((bid: Bid) => {
-  //           if (bid.jobId !== undefined) {
-  //             this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
-  //               this.bidsWithJobDetails.push({ bid, job });
-  //             });
-  //           }
-  //         });
-  //       });
-  //   }
-  // }
-
-  // fetchJobsCreatedByUserWithBids(): void {
-  //   if (this.loggedInUser.id)
-  //     this.jobService
-  //       .getJobsWithBidsCreatedByUser(this.loggedInUser.id)
-  //       .subscribe((data) => {
-  //         this.bidsWithJobDetails = data;
-  //         console.log('Jobs with bids:', this.bidsWithJobDetails);
-  //       });
-  // }
-
   fetchJobsCreatedByUserWithBids(): void {
     if (this.loggedInUser.id) {
       this.jobService
@@ -296,5 +303,9 @@ export class MyJobsComponent implements OnInit {
     } else {
       console.error('User ID is undefined or not available.');
     }
+  }
+
+  viewBids(jobId: number) {
+    this.router.navigate(['/bid-list', jobId]);
   }
 }

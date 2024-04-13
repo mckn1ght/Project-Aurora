@@ -45,11 +45,11 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      const jobId = +params['id'];
-      if (jobId) {
-        this.fetchJobDetails(jobId);
+      const id = +params['id'];
+      if (id) {
+        this.fetchJobDetails(id);
       } else {
-        console.error('Invalid job ID:', jobId);
+        console.error('Invalid job ID:', id);
       }
     });
     this.getActiveBids();

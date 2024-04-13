@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import {
   BACKEND_API_URL,
   addEnpoint,
   bidEndpoint,
   deleteById,
+  getActiveBidCountByJobId,
   getActiveBids,
   getAllByBiddingSpecialist,
   getAllByJobId,
+  setBidStatus,
 } from 'src/app/constants';
 
 @Injectable({
@@ -47,7 +49,46 @@ export class BidService {
     return this.http.get(BACKEND_API_URL + bidEndpoint + getActiveBids + jobId);
   }
 
+  getActiveBidCountByJobId(jobId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + bidEndpoint + getActiveBidCountByJobId + jobId
+    );
+  }
+
   getJobsCreatedByUserWithBids(jobId: number) {
     return this.http.get(BACKEND_API_URL + bidEndpoint + getAllByJobId + jobId);
   }
+
+  // setBidStatus(bidId: number, newStatus: string): Observable<any> {
+  //   const url =
+  //     BACKEND_API_URL + bidEndpoint + '/' + bidId + setBidStatus + newStatus;
+  //   const body = { newStatus };
+  //   console.log(url);
+  //   return this.http.post<any>(url, body).pipe(
+  //     catchError((error) => {
+  //       console.error('Error setting bid status:', error);
+  //       return throwError(error);
+  //     })
+  //   );
+  // }
+
+  setBidStatus(bidId: number, newStatus: string): Observable<any> {
+    const url =
+      BACKEND_API_URL + bidEndpoint + '/' + bidId + '/status/' + newStatus;
+    const body = { newStatus };
+    return this.http.post<any>(url, body).pipe(
+      catchError((error) => {
+        console.error('Error setting bid status:', error);
+        return throwError(error);
+      })
+    );
+  }
 }
+
+//   setBidStatus(bidId: number, status: string): Observable<any> {
+//     const apiUrl = BACKEND_API_URL + bidEndpoint;
+//     const url = `${apiUrl}/${bidId}/status/${status}`;
+//     console.log(url);
+//     return this.http.post<any>(url, null);
+//   }
+// }
