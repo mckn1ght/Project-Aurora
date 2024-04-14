@@ -94,15 +94,13 @@ public class BidController {
     }
   }
 
-//  @GetMapping("/getAllBidsForJob/{jobId}")
-//  public ResponseEntity<List<BidWithSpecialistInfo>> getAllBidsForJob(@PathVariable Long jobId) {
-//    List<BidWithSpecialistInfo> bidsForJob = bidServiceImpl.getAllBidsForJob(jobId);
-//    return ResponseEntity.ok(bidsForJob);
-//  }
-
-//  @GetMapping("/job/{jobId}/bids")
-//  public ResponseEntity<BidWithSpecialistInfo> getBidsWithSpecialistInfo(@PathVariable Long jobId) {
-//    BidWithSpecialistInfo bidsWithSpecialistInfo = bidServiceImpl.getBidsWithSpecialistInfo(jobId);
-//    return ResponseEntity.ok(bidsWithSpecialistInfo);
-//  }
+  @PutMapping("/job/{jobId}/except/{exceptBidId}")
+//  @CrossOrigin(origins = "http://localhost:4200")
+  public ResponseEntity<String> acceptBid(
+    @PathVariable Long jobId,
+    @PathVariable Long exceptBidId
+  ) {
+    bidServiceImpl.acceptBid(jobId, exceptBidId);
+    return ResponseEntity.status(HttpStatus.OK).body("Bids accepted successfully");
+  }
 }

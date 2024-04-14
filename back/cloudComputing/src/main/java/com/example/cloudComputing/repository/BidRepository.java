@@ -1,7 +1,9 @@
 package com.example.cloudComputing.repository;
 
 import com.example.cloudComputing.entity.Bid;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -26,5 +28,14 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
 
   @Query("SELECT b FROM Bid b WHERE b.jobId = :jobId AND b.status = 'active'")
   List<Bid> getAllByJobId(int jobId);
+
+  @Modifying
+  @Transactional
+  @Query("UPDATE Bid b SET b.status = CASE " +
+    "WHEN b.id = :exceptBidId THEN 'accepted' " +
+    "ELSE 'rejected' " +
+    "END " +
+    "WHERE b.jobId = :jobId")
+  void acceptBid(@Param("jobId") Long jobId, @Param("exceptBidId") Long exceptBidId);
 
 }

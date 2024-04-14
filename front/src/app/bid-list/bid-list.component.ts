@@ -5,7 +5,7 @@ import { Bid } from '../models/bid';
 import { Job } from '../models/job';
 import { JobService } from '../service/job/job-service.service';
 import { UserService } from '../service/user/user.service';
-import { forkJoin, map, of } from 'rxjs';
+import { forkJoin, map, of, switchMap } from 'rxjs';
 import { User } from '../models/user';
 
 @Component({
@@ -103,8 +103,53 @@ export class BidListComponent implements OnInit {
     });
   }
 
-  acceptBid(bidId: number) {
-    //daca e acceptata , de pus toate bidurile jobului in rejected.
+  // acceptBid(bidId: number) {
+  //   this.bidService
+  //     .acceptBid(this.selectedJobId, bidId)
+  //     .pipe(
+  //       // Once the bid is accepted, switch to setting the workflow status
+  //       switchMap(() =>
+  //         this.jobService.setWorkflowStatus(this.selectedJobId, 'Preluat')
+  //       )
+  //     )
+  //     .subscribe(
+  //       () => {
+  //         // After setting the workflow status, navigate to my-jobs
+  //         this.router.navigate(['/my-jobs']);
+  //       },
+  //       (error) => {
+  //         // Handle errors
+  //         console.error('Error accepting bid:', error);
+  //       }
+  //     );
+  // }
+
+  acceptBid(bidId: number, bidSpecialistId: number) {
+    this.bidService
+      .acceptBid(this.selectedJobId, bidId)
+      .pipe(
+        switchMap(() =>
+          this.jobService.setWorkflowStatus(this.selectedJobId, 'Preluat')
+        ),
+        switchMap(() =>
+          this.jobService.assignJobToSpecialist(
+            this.selectedJobId,
+            bidSpecialistId
+          )
+        )
+      )
+      .subscribe(
+        () => {
+          // Success: Bid accepted and workflow status set
+          console.log('Bid accepted and workflow status set successfully.');
+          // Navigate to my-jobs
+          this.router.navigate(['/my-jobs']);
+        },
+        (error) => {
+          // Error handling
+          console.error('Error accepting bid:', error);
+        }
+      );
   }
 
   rejectBid(bidId: number) {
@@ -134,9 +179,7 @@ export class BidListComponent implements OnInit {
   }
 
   changeJobStatus() {
-    console.log('@@@@@@@@@OUTSIDE IF@@@@@');
     if (this.activeBidCount == 0) {
-      console.log('@@@@@@@@@IN IF@@@@@');
       this.jobService.setWorkflowStatus(this.selectedJob.id, 'New').subscribe(
         () => {
           console.log('Workflow status updated successfully.');
@@ -147,7 +190,6 @@ export class BidListComponent implements OnInit {
         }
       );
     } else {
-      console.log('@@@@@@ Else');
       // this.refreshPage();
     }
   }

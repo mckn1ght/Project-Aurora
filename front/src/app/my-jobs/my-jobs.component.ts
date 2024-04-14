@@ -26,6 +26,10 @@ export class MyJobsComponent implements OnInit {
   newJobsCreatedByUser: Job[] = [];
   loggedInUser!: User;
 
+  //
+  uniqueBidsWithJobDetails: { bid: Bid; job: Job }[] = [];
+  //
+
   appEnvironment: String = APPLICATION_ENVIRONMENT;
   appVersion: String = APPLICATION_VERSION;
 
@@ -51,6 +55,7 @@ export class MyJobsComponent implements OnInit {
           this.fetchJobsCreatedByUser();
           this.fetchJobsCreatedByUserWithBids();
           this.fetchAllNewCreatedByUser();
+          console.log(this.bidsWithJobDetails);
         }
       }
     });
@@ -107,7 +112,11 @@ export class MyJobsComponent implements OnInit {
             if (bid.jobId !== undefined) {
               this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
                 // Check if the job's currentWorkflowStatus is the one to be excluded
-                if (job.currentWorkflowStep !== 'New') {
+                if (
+                  job.currentWorkflowStep !== 'New' &&
+                  job.currentWorkflowStep !== 'Preluat' &&
+                  bid.status !== 'rejected'
+                ) {
                   // Modify 'ExcludedStatus' with your desired status
                   this.userService.getById(job.createdByUser).subscribe(
                     (user: User) => {
@@ -287,6 +296,7 @@ export class MyJobsComponent implements OnInit {
               };
             }
           );
+          this.filterUniqueJobs();
           console.log('Jobs with bids:', this.bidsWithJobDetails);
         });
     }
@@ -307,5 +317,19 @@ export class MyJobsComponent implements OnInit {
 
   viewBids(jobId: number) {
     this.router.navigate(['/bid-list', jobId]);
+  }
+
+  /////
+
+  filterUniqueJobs() {
+    const uniqueJobIdsSet = new Set<number>();
+
+    this.bidsWithJobDetails.forEach(({ bid, job }) => {
+      if (!uniqueJobIdsSet.has(job.id)) {
+        uniqueJobIdsSet.add(job.id);
+        this.uniqueBidsWithJobDetails.push({ bid, job });
+      }
+    });
+    console.log(this.uniqueBidsWithJobDetails);
   }
 }

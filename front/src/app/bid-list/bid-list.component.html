@@ -22,7 +22,11 @@
         <div class="card-footer">
           <td>
             <span class="workflow-actions">
-              <i class="pi pi-check accept-icon" style="color: green"></i>
+              <i
+                class="pi pi-check accept-icon"
+                style="color: green"
+                (click)="acceptBid(bid.id!, bid.specialistId!)"
+              ></i>
               <i
                 class="pi pi-times reject-icon"
                 style="color: red"

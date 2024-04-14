@@ -144,28 +144,9 @@ public class BidServiceImpl implements BidService {
     }
   }
 
-//  public BidWithSpecialistInfo getBidsWithSpecialistInfo(Long jobId) {
-//    Job job = jobRepository.findById(jobId)
-//      .orElseThrow(() -> new JobIdNotFoundException("Job not found"));
-//
-//    List<Bid> bids = bidRepository.findByJobId(jobId);
-//    List<BidDto> bidDtos = bids.stream()
-//      .map(bidMapper::mapToBidDto)
-//      .collect(Collectors.toList());
-//
-//    List<Specialist> specialists = specialistRepository.findDistinctByBidsIn(bids);
-//    List<SpecialistDto> specialistDtos = specialists.stream()
-//      .map(specialistMapper::mapToSpecialistDto)
-//      .collect(Collectors.toList());
-//
-//    List<User> users = userRepository.findDistinctBySpecialistsIn(specialists);
-//    List<UserDto> userDtos = users.stream()
-//      .map(userMapper::mapToUserDto)
-//      .collect(Collectors.toList());
-//
-//    // Assuming JobDto is properly initialized and constructed from the Job object
-//    JobDto jobDto = new JobDto(job.getId(), job.getTitle(), job.getDescription(), job.getLocation(), job.getCreatedByUser(), job.getAssignedToSpecialist(), job.getCreationDate(), job.getDueDate(), job.getLastUpdated(), job.getCurrentWorkflowStep());
-//
-//    return new BidWithSpecialistInfo(jobDto, bidDtos, specialistDtos, userDtos);
-//  }
+
+  public void acceptBid(Long jobId, Long exceptBidId) {
+    bidRepository.acceptBid(jobId, exceptBidId);
+  }
+
 }
