@@ -28,6 +28,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogModule } from 'primeng/dialog';
 import { BidListComponent } from './bid-list/bid-list.component';
 import { CardModule } from 'primeng/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DoubleNumberInputDirective } from './directive/double-number-input.directive';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,7 @@ import { CardModule } from 'primeng/card';
     MyJobsComponent,
     ConfirmationDialogComponent,
     BidListComponent,
+    DoubleNumberInputDirective,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +66,10 @@ import { CardModule } from 'primeng/card';
     MatDialogModule,
     DialogModule,
     CardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    InputTextModule,
   ],
   providers: [],
   bootstrap: [AppComponent, MyJobsComponent],

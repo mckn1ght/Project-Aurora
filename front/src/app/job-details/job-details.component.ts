@@ -10,6 +10,8 @@ import { UserService } from '../service/user/user.service';
 import { Router } from '@angular/router';
 import { BidService } from '../service/bid/bid.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+// import { BidPopupComponent } from '../bid-popup/bid-popup.component';
 
 @Component({
   selector: 'app-job-details',
@@ -24,12 +26,18 @@ export class JobDetailsComponent implements OnInit {
   appVersion: String = APPLICATION_VERSION;
   createdByUser: String = '';
   assignedToSpecialist: String = '';
+  showBidAmountPopUp: boolean = false;
+
+  popupVisible: boolean = false;
+  bidAmount: number = 0;
+
   newBid: any = {
     jobId: '',
     specialistId: '',
     amount: 0,
     status: 'active',
   };
+
   activeBidCount: number = 0;
   toastMessage: string | null = null;
 
@@ -40,7 +48,8 @@ export class JobDetailsComponent implements OnInit {
     private userService: UserService,
     private bidService: BidService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -85,11 +94,12 @@ export class JobDetailsComponent implements OnInit {
   }
 
   addBid() {
+    this.showBidAmountPopUp = true;
     if (this.activeBidCount < 5) {
       if (this.job) {
         this.newBid.jobId = this.job.id;
         this.newBid.specialistId = this.loggedInUser?.specialistId;
-        this.newBid.amount = 0;
+        this.newBid.amount = this.bidAmount;
         this.newBid.status = 'active';
 
         this.bidService.addBid(this.newBid).subscribe(
@@ -115,6 +125,7 @@ export class JobDetailsComponent implements OnInit {
         this.displayToast('Ati atins numarul maxim de licitatii concomitente.');
       }
     }
+    this.closePopup();
   }
 
   getActiveBids() {
@@ -180,5 +191,13 @@ export class JobDetailsComponent implements OnInit {
 
   displayToast(message: string) {
     this.toastr.success(message);
+  }
+
+  openPopup() {
+    this.popupVisible = true;
+  }
+
+  closePopup() {
+    this.popupVisible = false;
   }
 }

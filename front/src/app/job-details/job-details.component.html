@@ -69,7 +69,7 @@
           job.assignedToSpecialist == 1
         "
         class="button"
-        (click)="addBid()"
+        (click)="openPopup()"
         title="You need to create a specialist account to claim this job"
       >
         Preiau!
@@ -82,4 +82,26 @@
       {{ appVersion }}
     </p>
   </footer>
+</div>
+
+<div class="popup" [ngStyle]="{ display: popupVisible ? 'block' : 'none' }">
+  <div class="popup-content">
+    <span (click)="closePopup()" class="close">&times;</span>
+    <h2>Introduceti suma</h2>
+    <form>
+      <label for="bidAmount">Suma licitata:</label>
+      <input
+        pInputText
+        type="text"
+        id="bidAmount"
+        name="bidAmount"
+        [(ngModel)]="bidAmount"
+        class="bidInput"
+        appDoubleNumberInput
+      />
+      <button type="submit" class="button" (click)="addBid()">
+        Trimite solicitare
+      </button>
+    </form>
+  </div>
 </div>

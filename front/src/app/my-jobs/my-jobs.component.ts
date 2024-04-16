@@ -73,35 +73,6 @@ export class MyJobsComponent implements OnInit {
       console.error('Specialist ID is undefined or not available.');
     }
   }
-  // Trage si joburile new in tabela de cicitatii
-  // fetchBidsWithJobDetails() {
-  //   if (this.loggedInUser && this.loggedInUser.specialistId !== undefined) {
-  //     this.bidService
-  //       .getAllBidsBySpecialist(this.loggedInUser.specialistId)
-  //       .subscribe((bids: Bid[]) => {
-  //         bids.forEach((bid: Bid) => {
-  //           if (bid.jobId !== undefined) {
-  //             this.jobService.getJobDetails(bid.jobId).subscribe((job: Job) => {
-  //               this.userService.getById(job.createdByUser).subscribe(
-  //                 (user: User) => {
-  //                   job.createdByUser = user.firstName + ' ' + user.lastName;
-  //                 },
-  //                 (error) => {
-  //                   console.error(
-  //                     'Error fetching creator user:',
-  //                     error.message
-  //                   );
-  //                 }
-  //               );
-  //               this.bidsWithJobDetails.push({ bid, job });
-  //             });
-  //           }
-  //         });
-  //       });
-  //   } else {
-  //     console.error('Specialist ID is undefined or not available.');
-  //   }
-  // }
 
   fetchBidsWithJobDetails() {
     if (this.loggedInUser && this.loggedInUser.specialistId !== undefined) {

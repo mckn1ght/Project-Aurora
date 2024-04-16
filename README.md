@@ -33,5 +33,6 @@ V0.2.0-SHAPSHOT
 &emsp;&emsp;-Added the bid db table and other remaining tables in the backend   
 &emsp;&emsp;-Created the my-jobs page  
 &emsp;&emsp;-The specialist now expresses interest to take a job and the job is added in their active bidding list           
-&emsp;&emsp;-added creator user logic and specialist logic in my-jobs page    
+&emsp;&emsp;-Added creator user logic and specialist logic in my-jobs page  
+&emsp;&emsp;-Added possibility to bid amounts   
     
