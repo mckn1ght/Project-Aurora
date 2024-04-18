@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface JobExpertiseAreaService {
-  JobExpertiseAreaDto add(JobExpertiseAreaDto jobExpertiseAreaDto);
+  void add(Long jobId, List<Integer> expertiseAreas);
 
 
   List<JobExpertiseAreaDto> getByJobId(Long id);

@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface JobService {
-  JobDto add(JobDto jobDto);
+//  JobDto add(JobDto jobDto);
 
   List<JobDto> getAll();
 
@@ -45,6 +45,8 @@ public interface JobService {
 
   List<JobDto> getAllByCurrentWorkflowStep(String step);
   void assignJobToSpecialist(long jobId, int specialistId);
+
+  Long add(JobDto jobDto);
 
 
 

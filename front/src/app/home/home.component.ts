@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 import { ExpertiseAreaService } from '../service/expertiseArea/expertise-area.service';
 import { Router } from '@angular/router';
+import { User } from '../models/user';
+import { AuthService } from '../service/auth/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,14 +15,22 @@ export class HomeComponent {
 
   expertiseAreasList: any[] = [];
   searchInput: string = '';
+  loggedInUser: User | null = null;
 
   constructor(
     private expertiseAreaService: ExpertiseAreaService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.loadExpertiseAreas();
+    this.authService.getLoggedInUser().subscribe((user) => {
+      this.loggedInUser = user;
+      if (this.loggedInUser) {
+        const userId = this.loggedInUser.id;
+      }
+    });
   }
 
   loadExpertiseAreas() {

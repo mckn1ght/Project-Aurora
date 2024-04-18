@@ -36,10 +36,16 @@ public class JobController {
   JobMapper jobMapper;
 
   @CrossOrigin(origins = "http://localhost:4200")
+//  @PostMapping("/add")
+//  public ResponseEntity<String> addjob(@Valid @RequestBody JobDto jobDto) {
+//    ResponseEntity.ok(jobServiceImpl.add(jobDto));
+//    return ResponseEntity.ok("{\"message\": \"Job posted successful\"}");
+//  }
   @PostMapping("/add")
-  public ResponseEntity<String> addjob(@Valid @RequestBody JobDto jobDto) {
-    ResponseEntity.ok(jobServiceImpl.add(jobDto));
-    return ResponseEntity.ok("{\"message\": \"Job posted successful\"}");
+  public ResponseEntity<Object> addJob(@Valid @RequestBody JobDto jobDto) {
+    Long addedJobId = jobServiceImpl.add(jobDto);
+    // Return the ID of the added job
+    return ResponseEntity.ok().body("{\"jobId\": " + addedJobId + "}");
   }
 
   @RequestMapping("/getById/{id}")

@@ -16,6 +16,9 @@ export const getBySpecialistId = '/getBySpecialistId/';
 //ExpertiseArea
 export const expertiseAreaEndpoint = '/expertiseArea';
 
+//Job_ExpertiseArea
+export const jobExpertiseArea = '/jobExpertiseArea';
+
 //Job
 export const jobEndpoint = '/job';
 export const allJobsInWorkflow = '/inWorkflowStep/';

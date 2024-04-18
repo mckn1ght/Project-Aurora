@@ -1,0 +1,24 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <img
+      src="path_to_background.jpg"
+      alt="Background"
+      class="background-image"
+    />
+    <div class="profile-info">
+      <img src="path_to_avatar.jpg" alt="Avatar" class="profile-avatar" />
+      <h1>{{ loggedInUser?.firstName }} {{ loggedInUser?.lastName }}</h1>
+      <p class="Admin:">{{ loggedInUser?.isAdmin }}</p>
+    </div>
+  </div>
+  <div class="profile-details">
+    <h2>Contact Information</h2>
+    <p><strong>Email:</strong> {{ loggedInUser?.email }}</p>
+    <p><strong>Phone:</strong> {{ loggedInUser?.phoneNumber }}</p>
+    <h2>About</h2>
+    <p>{{ loggedInUser?.address }}</p>
+  </div>
+  <div class="profile-footer">
+    <a href="#">Edit Profile</a> | <a href="#">More...</a>
+  </div>
+</div>

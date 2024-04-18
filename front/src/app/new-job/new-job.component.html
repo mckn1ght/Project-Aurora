@@ -56,7 +56,7 @@
             Titlul trebuie să aibă cel puțin 10 caractere
           </div>
         </div>
-
+        <!-- 
         <div class="form-group">
           <label for="expertiseArea">Domeniu de activitate:</label>
           <select
@@ -71,22 +71,54 @@
                 newJobForm.get('expertiseArea')?.touched
             }"
           >
-            <option value="" disabled>
-              Selectati un domeniu de activitate
-            </option>
+            <option value="" disabled>Select a expertise area</option>
             <option *ngFor="let area of expertiseAreasList" [value]="area.id">
               {{ area.name }}
             </option>
           </select>
+        </div> -->
+        <div
+          class="form-group"
+          [ngClass]="{
+            'has-error':
+              newJobForm.get('expertiseAreas')?.invalid &&
+              newJobForm.get('expertiseAreas')?.touched
+          }"
+        >
+          <label for="expertiseAreas">Arii de activitate:</label>
+          <p-multiSelect
+            id="expertiseAreas"
+            name="expertiseAreas"
+            formControlName="expertiseAreas"
+            [options]="expertiseAreasList"
+            defaultLabel="Alegeti cel putin un domeniu de activitate"
+            [style]="{ width: '100%' }"
+            optionLabel="name"
+            selectedItemsLabel="{0} Expertise Areas Selected"
+            [showClear]="true"
+            [panelStyle]="{
+              'border-color':
+                newJobForm.get('expertiseAreas')?.invalid &&
+                newJobForm.get('expertiseAreas')?.touched
+                  ? 'red'
+                  : ''
+            }"
+            [style.border-color]="
+              newJobForm.get('expertiseAreas')?.invalid &&
+              newJobForm.get('expertiseAreas')?.touched
+                ? 'red'
+                : ''
+            "
+          ></p-multiSelect>
         </div>
         <div
           class="errorLabel"
           *ngIf="
-            newJobForm.get('expertiseArea')?.hasError('required') &&
-            newJobForm.get('expertiseArea')?.touched
+            newJobForm.get('expertiseAreas')?.invalid &&
+            newJobForm.get('expertiseAreas')?.touched
           "
         >
-          Trebuie sa alegeti un domeniu de activitate
+          Alegeti minim un domeniu de activitate
         </div>
       </div>
 

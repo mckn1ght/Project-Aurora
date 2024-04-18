@@ -32,6 +32,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DoubleNumberInputDirective } from './directive/double-number-input.directive';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { DoubleNumberInputDirective } from './directive/double-number-input.dire
     ConfirmationDialogComponent,
     BidListComponent,
     DoubleNumberInputDirective,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { DoubleNumberInputDirective } from './directive/double-number-input.dire
     MatButtonModule,
     MatDialogModule,
     InputTextModule,
+    MultiSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent, MyJobsComponent],

@@ -32,9 +32,15 @@ public class JobServiceImpl implements JobService {
   @Autowired
   private JobMapper jobMapper;
 
-  public JobDto add(JobDto jobDto) {
-    return jobMapper.mapToJobDto(jobRepository.save(jobMapper.mapToJob(jobDto)));
-  }
+//  public JobDto add(JobDto jobDto) {
+//    return jobMapper.mapToJobDto(jobRepository.save(jobMapper.mapToJob(jobDto)));
+//  }
+
+    public Long add(JobDto jobDto) {
+      Job job = jobRepository.save(jobMapper.mapToJob(jobDto));
+      return job.getId();
+    }
+
 
   public List<JobDto> getAll() {
     List<JobDto> jobDtos = jobRepository.findAll().stream().map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());

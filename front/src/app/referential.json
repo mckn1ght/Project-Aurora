@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Vopsitor",
+    "iconName": "paintbrush@2x"
+  },
+  {
+    "id": 13,
+    "name": "Electrician",
+    "iconName": "bolt@2x"
+  },
+  {
+    "id": 14,
+    "name": "Instalator",
+    "iconName": "pipe.and.drop@2x"
+  },
+  {
+    "id": 15,
+    "name": "Tamplar",
+    "iconName": "tree@2x"
+  },
+  {
+    "id": 16,
+    "name": "Mecanic",
+    "iconName": "wrench.and.screwdriver@2x"
+  },
+  {
+    "id": 17,
+    "name": "Electronist",
+    "iconName": "screwdriver@2x"
+  },
+  {
+    "id": 18,
+    "name": "Frigotehnist",
+    "iconName": "snowflake@2x"
+  },
+  {
+    "id": 19,
+    "name": "Tehnician IT",
+    "iconName": "desktopcomputer.trianglebadge.exclamationmark@2x"
+  },
+  {
+    "id": 20,
+    "name": "Jardinist",
+    "iconName": "leaf@2x"
+  },
+  {
+    "id": 21,
+    "name": "Constructii",
+    "iconName": "hammer@2x"
+  },
+  {
+    "id": 22,
+    "name": "Diverse",
+    "iconName": "square.grid.3x3.middle.filled@2x"
+  }
+]

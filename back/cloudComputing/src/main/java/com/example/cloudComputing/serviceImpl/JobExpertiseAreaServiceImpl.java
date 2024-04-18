@@ -24,10 +24,22 @@ public class JobExpertiseAreaServiceImpl implements JobExpertiseAreaService {
 
   @Autowired
   private JobExpertiseAreaMapper jobExpertiseAreaMapper;
-
-  public JobExpertiseAreaDto add(JobExpertiseAreaDto jobExpertiseAreaDto) {
-    return jobExpertiseAreaMapper.mapToJobExpertiseAreaDto(jobExpertiseAreaRepository.save(jobExpertiseAreaMapper.mapToJobExpertiseArea(jobExpertiseAreaDto)));
+  @Autowired
+  public JobExpertiseAreaServiceImpl(JobExpertiseAreaRepository jobExpertiseAreaRepository, JobExpertiseAreaMapper jobExpertiseAreaMapper) {
+    this.jobExpertiseAreaRepository = jobExpertiseAreaRepository;
+    this.jobExpertiseAreaMapper = jobExpertiseAreaMapper;
   }
+
+  public void add(Long jobId, List<Integer> expertiseAreas) {
+    System.out.println("Adding expertise areas to job.");
+    for (Integer expertiseAreaId : expertiseAreas) {
+      JobExpertiseAreaDto jobExpertiseAreaDto = new JobExpertiseAreaDto();
+      jobExpertiseAreaDto.setJobId(Math.toIntExact(jobId));
+      jobExpertiseAreaDto.setExpertiseAreaId(expertiseAreaId);
+      jobExpertiseAreaRepository.save(jobExpertiseAreaMapper.mapToJobExpertiseArea(jobExpertiseAreaDto));
+    }
+  }
+
 
   public List<JobExpertiseAreaDto> getByExpertiseAreaId(Long expertiseAreaid) {
     List<JobExpertiseAreaDto> jobExpertiseAreaDtos = jobExpertiseAreaRepository.getByExpertiseAreaId(expertiseAreaid).stream().map(jobExpertiseArea ->

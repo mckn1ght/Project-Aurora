@@ -35,4 +35,5 @@ V0.2.0-SHAPSHOT
 &emsp;&emsp;-The specialist now expresses interest to take a job and the job is added in their active bidding list           
 &emsp;&emsp;-Added creator user logic and specialist logic in my-jobs page  
 &emsp;&emsp;-Added possibility to bid amounts   
+&emsp;&emsp;-Added ExpertiseAreas when creating a job   
     
