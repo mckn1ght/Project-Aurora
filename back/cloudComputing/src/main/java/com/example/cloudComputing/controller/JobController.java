@@ -181,6 +181,11 @@ public class JobController {
     }
   }
 
+  @GetMapping("/countCreatedBy/{userId}/")
+  public int countJobsCreatedByUser(@PathVariable Long userId) {
+    return jobServiceImpl.countJobsCreatedByUser(userId);
+  }
+
 }
 
 

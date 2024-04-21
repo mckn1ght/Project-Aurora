@@ -1,24 +1,82 @@
 <div class="profile-container">
   <div class="profile-header">
     <img
-      src="path_to_background.jpg"
+      src="../../assets/images/profile-banner.png"
       alt="Background"
       class="background-image"
     />
     <div class="profile-info">
       <img src="path_to_avatar.jpg" alt="Avatar" class="profile-avatar" />
-      <h1>{{ loggedInUser?.firstName }} {{ loggedInUser?.lastName }}</h1>
-      <p class="Admin:">{{ loggedInUser?.isAdmin }}</p>
     </div>
   </div>
+  <div class="credit">
+    <h1>Credit: {{ this.loggedInUser?.credit }}</h1>
+  </div>
+  <div class="hr-design-top"></div>
   <div class="profile-details">
+    <h1 class="name">
+      {{ loggedInUser?.firstName }} {{ loggedInUser?.lastName }}
+    </h1>
+    <p class="Admin">
+      Permisiuni:
+      {{ loggedInUser?.admin == true ? "Admin" : "Utilizator fara permisiuni" }}
+    </p>
+    <p class="Admin">
+      Identificator Specialist:
+      {{
+        loggedInUser?.specialistId == null
+          ? "-"
+          : this.loggedInUser?.specialistId
+      }}
+    </p>
+    <div class="hr-design"></div>
+    <!-- Decorative line -->
     <h2>Contact Information</h2>
     <p><strong>Email:</strong> {{ loggedInUser?.email }}</p>
+    <input
+      pInputText
+      *ngIf="editMode"
+      type="email"
+      [(ngModel)]="loggedInUser!.email"
+    />
     <p><strong>Phone:</strong> {{ loggedInUser?.phoneNumber }}</p>
+    <input
+      *ngIf="editMode"
+      type="tel"
+      pInputText
+      class="input"
+      [(ngModel)]="loggedInUser!.phoneNumber"
+    />
+
+    <div class="hr-design"></div>
     <h2>About</h2>
-    <p>{{ loggedInUser?.address }}</p>
+    <p></p>
+    <p>
+      <strong>Address:</strong>
+      {{ loggedInUser?.address == null ? "-" : this.loggedInUser?.address }}
+    </p>
+    <p>
+      <strong>Cont creat:</strong>
+      {{ createdDate }}
+    </p>
+    <p>
+      <strong>Total solicitari in lucru:</strong> {{ jobsCreatedByUser.length }}
+    </p>
+    <p><strong>Total solicitari terminate: </strong> -</p>
+    <p><strong>Total solicitari anulate: </strong> -</p>
+    <p><strong>Total solicitari:</strong> {{ counterTotalJobs }}</p>
   </div>
   <div class="profile-footer">
-    <a href="#">Edit Profile</a> | <a href="#">More...</a>
+    <p-button *ngIf="!editMode" (click)="toggleEditMode()"
+      >Editeaza Profil</p-button
+    >
+    <p-button *ngIf="editMode" (click)="saveProfile()">Confirmare</p-button>
+    <p-button *ngIf="editMode" class="anuleaza" (click)="toggleEditMode()"
+      >Anuleaza</p-button
+    >
+
+    <p-button href="#" class="adminPanel" *ngIf="loggedInUser?.admin == true"
+      >ADMIN PANEL</p-button
+    >
   </div>
 </div>

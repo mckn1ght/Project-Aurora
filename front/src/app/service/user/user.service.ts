@@ -8,6 +8,8 @@ import {
   userEndpoint,
   getById,
   getBySpecialistId,
+  updateEmail,
+  updatePhoneNumber,
 } from 'src/app/constants';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from 'src/app/models/user';
@@ -34,5 +36,19 @@ export class UserService {
     return this.http
       .get<User>(BACKEND_API_URL + userEndpoint + getBySpecialistId + id)
       .pipe(map((user: User) => user));
+  }
+
+  updateEmail(id: number, email: string): Observable<any> {
+    return this.http.put(
+      `${BACKEND_API_URL}${userEndpoint}/updateEmail/${id}`,
+      email
+    );
+  }
+
+  updatePhoneNumber(id: number, phoneNumber: string): Observable<any> {
+    return this.http.put(
+      `${BACKEND_API_URL}${userEndpoint}/updatePhoneNumber/${id}`,
+      phoneNumber
+    );
   }
 }

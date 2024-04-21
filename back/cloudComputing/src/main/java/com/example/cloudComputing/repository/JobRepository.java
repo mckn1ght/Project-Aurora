@@ -57,6 +57,9 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
   @Query("SELECT j FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('New')")
   List<Job> findNewJobsCreatedByUser(@Param("userId") Long userId);
+
+  @Query("SELECT COUNT(j) FROM Job j WHERE j.createdByUser = :userId")
+  int countJobsCreatedByUser(@Param("userId") Long userId);
 }
 
 

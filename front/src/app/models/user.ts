@@ -9,6 +9,6 @@ export class User {
   created?: Date;
   last_updated?: Date;
   credit?: number;
-  isAdmin?: boolean;
+  admin?: boolean;
   specialistId?: number;
 }

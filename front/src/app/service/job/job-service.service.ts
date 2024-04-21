@@ -20,6 +20,7 @@ import {
   preluatOrInExec,
   allNewCreatedByUser,
   workflow,
+  countCreatedBy,
 } from 'src/app/constants';
 import { Job } from 'src/app/models/job';
 
@@ -215,6 +216,13 @@ export class JobService {
         console.error('Error setting workflow status:', error);
         return throwError(error);
       })
+    );
+  }
+
+  countJobsCreatedByUser(userId: number): Observable<any> {
+    console.log(BACKEND_API_URL + jobEndpoint + countCreatedBy + userId + '/');
+    return this.http.get(
+      BACKEND_API_URL + jobEndpoint + countCreatedBy + userId + '/'
     );
   }
 }

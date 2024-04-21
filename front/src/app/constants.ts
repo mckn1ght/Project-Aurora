@@ -12,6 +12,8 @@ export const userEndpoint = '/user';
 export const userLogin = '/login';
 export const getByUsername = '/username/';
 export const getBySpecialistId = '/getBySpecialistId/';
+export const updateEmail = '/updateEmail/';
+export const updatePhoneNumber = '/updatePhoneNumber/';
 
 //ExpertiseArea
 export const expertiseAreaEndpoint = '/expertiseArea';
@@ -31,6 +33,7 @@ export const getAllByTitleContaining = '/title/';
 export const preluatOrInExec = '/preluat-or-in-executie';
 export const workflow = '/workflow/';
 export const withBids = '/withBids';
+export const countCreatedBy = '/countCreatedBy/';
 
 //Bid
 export const bidEndpoint = '/bid';

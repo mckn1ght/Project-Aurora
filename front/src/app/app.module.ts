@@ -15,7 +15,11 @@ import { NoSpaceDirective } from './directive/no-space.directive';
 import { NewJobComponent } from './new-job/new-job.component';
 import { JobListComponent } from './job-list/job-list.component';
 import { JobDetailsComponent } from './job-details/job-details.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {
+  CommonModule,
+  HashLocationStrategy,
+  LocationStrategy,
+} from '@angular/common';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { MyJobsComponent } from './my-jobs/my-jobs.component';
 import { ButtonModule } from 'primeng/button';
@@ -74,6 +78,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatDialogModule,
     InputTextModule,
     MultiSelectModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent, MyJobsComponent],

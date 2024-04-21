@@ -24,7 +24,6 @@ public class UserController {
 
   @Autowired
   UserMapper userMapper;
-
   @CrossOrigin(origins = "http://localhost:4200")
   @PostMapping("/add")
   public ResponseEntity<String> adduser(@Valid @RequestBody UserDto userDto) {
@@ -42,6 +41,26 @@ public class UserController {
       return ResponseEntity.ok("{\"message\": \"Account registered successful\"}");
     }
   }
+
+  @PutMapping("/updatePhoneNumber/{id}")
+  public ResponseEntity<UserDto> updatePhoneNumber(
+    @PathVariable Long id,
+    @RequestBody String phoneNumber
+  ) {
+    userServiceImpl.updatePhoneNumber(id, phoneNumber);
+    return ResponseEntity.ok().build();
+  }
+
+  @PutMapping("/updateEmail/{id}")
+  public ResponseEntity<UserDto> updateEmail(
+    @PathVariable Long id,
+    @RequestBody String email
+  ) {
+    userServiceImpl.updateEmail(id, email);
+    return ResponseEntity.ok().build();
+  }
+
+
 
   @CrossOrigin(origins = "http://localhost:4200")
   @RequestMapping("/getById/{id}")

@@ -239,6 +239,11 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
+  public int countJobsCreatedByUser(Long userId) {
+    int totalJobs = jobRepository.countJobsCreatedByUser(userId);
+    return totalJobs;
+  }
+
   public void setWorkflowStatus(long jobId, String workflowStatus) {
     Job job = jobRepository.findById(jobId).orElse(null);
     if (job != null) {

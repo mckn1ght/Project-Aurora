@@ -6,6 +6,7 @@ import com.example.cloudComputing.exception.user.*;
 import com.example.cloudComputing.mapper.UserMapper;
 import com.example.cloudComputing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,22 @@ public class UserServiceImpl implements UserService {
   public UserDto add(UserDto userDto) {
     return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
   }
+
+  public void updatePhoneNumber(Long userId, String phoneNumber) {
+    User user = userRepository.findById(userId)
+      .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));
+    user.setPhoneNumber(phoneNumber);
+    userRepository.save(user);
+  }
+
+  public void updateEmail(Long userId, String email) {
+    User user = userRepository.findById(userId)
+      .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));
+    user.setEmail(email);
+    userRepository.save(user);
+  }
+
+
 
   public boolean existsUserByUsername(String username) {
     return userRepository.existsUserByUsername(username);
