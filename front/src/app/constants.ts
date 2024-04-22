@@ -34,6 +34,7 @@ export const preluatOrInExec = '/preluat-or-in-executie';
 export const workflow = '/workflow/';
 export const withBids = '/withBids';
 export const countCreatedBy = '/countCreatedBy/';
+export const getByExpertiseArea = '/getByExpertiseArea/';
 
 //Bid
 export const bidEndpoint = '/bid';

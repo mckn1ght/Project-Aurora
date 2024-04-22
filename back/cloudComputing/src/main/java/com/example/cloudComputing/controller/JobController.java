@@ -2,6 +2,7 @@ package com.example.cloudComputing.controller;
 
 import com.example.cloudComputing.dto.JobDto;
 import com.example.cloudComputing.dto.ReviewDto;
+import com.example.cloudComputing.entity.Job;
 import com.example.cloudComputing.exception.job.*;
 import com.example.cloudComputing.mapper.JobMapper;
 import com.example.cloudComputing.serviceImpl.JobServiceImpl;
@@ -186,6 +187,10 @@ public class JobController {
     return jobServiceImpl.countJobsCreatedByUser(userId);
   }
 
+  @GetMapping("/getByExpertiseArea/{expertiseAreaId}")
+  public List<Job> getJobsByExpertiseAreaId(@PathVariable int expertiseAreaId) {
+    return jobServiceImpl.getJobsByExpertiseAreaId(expertiseAreaId);
+  }
 }
 
 

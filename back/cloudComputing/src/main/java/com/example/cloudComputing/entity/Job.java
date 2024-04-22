@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Builder
@@ -61,4 +62,12 @@ public class Job {
     lastUpdated = LocalDate.now();
   }
 
+
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+    name = "job_expertiseArea",
+    joinColumns = @JoinColumn(name = "jobID"),
+    inverseJoinColumns = @JoinColumn(name = "expertiseAreaID")
+  )
+  private Set<ExpertiseArea> expertiseAreas;
 }

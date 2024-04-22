@@ -36,10 +36,10 @@ public class JobServiceImpl implements JobService {
 //    return jobMapper.mapToJobDto(jobRepository.save(jobMapper.mapToJob(jobDto)));
 //  }
 
-    public Long add(JobDto jobDto) {
-      Job job = jobRepository.save(jobMapper.mapToJob(jobDto));
-      return job.getId();
-    }
+  public Long add(JobDto jobDto) {
+    Job job = jobRepository.save(jobMapper.mapToJob(jobDto));
+    return job.getId();
+  }
 
 
   public List<JobDto> getAll() {
@@ -54,12 +54,12 @@ public class JobServiceImpl implements JobService {
     try {
       Job job = jobRepository.getReferenceById(id);
       return jobMapper.mapToJobDto(job);
-    }catch(Exception e){
+    } catch (Exception e) {
       throw new NoJobFoundException(String.format(NO_JOB_ID_FOUND, id));
     }
   }
 
-  public List<JobDto> getAllByTitleContainingIgnoreCase(String title){
+  public List<JobDto> getAllByTitleContainingIgnoreCase(String title) {
     List<JobDto> jobDto = jobRepository.getAllByTitleContainingIgnoreCase(title).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -68,7 +68,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByDescriptionContainingIgnoreCase(String desc){
+  public List<JobDto> getAllByDescriptionContainingIgnoreCase(String desc) {
     List<JobDto> jobDto = jobRepository.getAllByDescriptionContainingIgnoreCase(desc).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -77,7 +77,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByLocationContainingIgnoreCase(String location){
+  public List<JobDto> getAllByLocationContainingIgnoreCase(String location) {
     List<JobDto> jobDto = jobRepository.getAllByLocationContainingIgnoreCase(location).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -86,7 +86,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByCreatedByUser(int id){
+  public List<JobDto> getAllByCreatedByUser(int id) {
     List<JobDto> jobDto = jobRepository.getAllByCreatedByUser(id).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -94,7 +94,8 @@ public class JobServiceImpl implements JobService {
     }
     return jobDto;
   }
-  public List<JobDto> getAllByCreatedByUserAndActive(Long id){
+
+  public List<JobDto> getAllByCreatedByUserAndActive(Long id) {
     List<JobDto> jobDto = jobRepository.findJobsCreatedByUserWithStatus(id).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -103,7 +104,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByAssignedToSpecialist(int id){
+  public List<JobDto> getAllByAssignedToSpecialist(int id) {
     List<JobDto> jobDto = jobRepository.getAllByAssignedToSpecialist(id).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -112,7 +113,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByCreationDate(LocalDate date){
+  public List<JobDto> getAllByCreationDate(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByCreationDate(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -121,7 +122,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByCreationDateBefore(LocalDate date){
+  public List<JobDto> getAllByCreationDateBefore(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByCreationDateBefore(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -130,7 +131,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByCreationDateAfter(LocalDate date){
+  public List<JobDto> getAllByCreationDateAfter(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByCreationDateAfter(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -139,7 +140,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByDueDate(LocalDate date){
+  public List<JobDto> getAllByDueDate(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByDueDate(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -148,7 +149,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByDueDateAfter(LocalDate date){
+  public List<JobDto> getAllByDueDateAfter(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByDueDateAfter(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -157,7 +158,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByDueDateBefore(LocalDate date){
+  public List<JobDto> getAllByDueDateBefore(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByDueDateBefore(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -166,7 +167,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByLastUpdated(LocalDate date){
+  public List<JobDto> getAllByLastUpdated(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByLastUpdated(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -175,7 +176,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByLastUpdatedBefore(LocalDate date){
+  public List<JobDto> getAllByLastUpdatedBefore(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByLastUpdatedBefore(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -184,7 +185,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByLastUpdatedAfter(LocalDate date){
+  public List<JobDto> getAllByLastUpdatedAfter(LocalDate date) {
     List<JobDto> jobDto = jobRepository.getAllByLastUpdatedAfter(date).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -193,7 +194,7 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByCurrentWorkflowStep(String step){
+  public List<JobDto> getAllByCurrentWorkflowStep(String step) {
     List<JobDto> jobDto = jobRepository.getAllByCurrentWorkflowStep(step).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
@@ -214,11 +215,11 @@ public class JobServiceImpl implements JobService {
         throw new IllegalStateException("Job is already assigned to a specialist.");
       }
     } else {
-        throw new NoJobFoundException(String.format(NO_JOB_ID_FOUND, jobId));
-      }
+      throw new NoJobFoundException(String.format(NO_JOB_ID_FOUND, jobId));
+    }
   }
 
-  public boolean isJobAvailableForTaking(long jobId){
+  public boolean isJobAvailableForTaking(long jobId) {
     Job job = jobRepository.getById(jobId);
     return job.getAssignedToSpecialist() == 1;
   }
@@ -230,6 +231,7 @@ public class JobServiceImpl implements JobService {
   public List<Object[]> getJobsAndBidsCreatedByUser(Long userId) {
     return jobRepository.findJobsAndBidsCreatedByUser(userId);
   }
+
   public List<JobDto> getNewJobsCreatedByUser(Long userId) {
     List<JobDto> jobDto = jobRepository.findNewJobsCreatedByUser(userId).stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
@@ -252,6 +254,10 @@ public class JobServiceImpl implements JobService {
     } else {
       throw new RuntimeException(NO_JOB_ID_FOUND + jobId);
     }
+  }
+
+  public List<Job> getJobsByExpertiseAreaId(int expertiseAreaId) {
+    return jobRepository.findByExpertiseAreasId(expertiseAreaId);
   }
 }
 

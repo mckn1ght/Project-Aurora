@@ -60,6 +60,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
   @Query("SELECT COUNT(j) FROM Job j WHERE j.createdByUser = :userId")
   int countJobsCreatedByUser(@Param("userId") Long userId);
+
+  List<Job> findByExpertiseAreasId(int expertiseAreaId);
 }
 
 

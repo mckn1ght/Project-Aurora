@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'new-job', component: NewJobComponent },
   { path: 'job-list', component: JobListComponent },
+  { path: 'job-list/:expertiseAreaId', component: JobListComponent },
   { path: 'job-details/:id', component: JobDetailsComponent },
   { path: 'password-reset', component: PasswordResetComponent },
   { path: 'my-jobs', component: MyJobsComponent },

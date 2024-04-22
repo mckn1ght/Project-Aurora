@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -23,6 +25,9 @@ public class ExpertiseArea {
   @Column(name = "iconName")
   private String iconName;
 
+
+  @ManyToMany(mappedBy = "expertiseAreas")
+  private Set<Job> jobs;
 
 }
 

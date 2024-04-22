@@ -48,7 +48,7 @@
     <section class="services">
       <section class="services">
         <div class="service" *ngFor="let expertiseArea of expertiseAreasList">
-          <button [routerLink]="'/servicii/' + expertiseArea.name">
+          <button [routerLink]="'/job-list/' + expertiseArea.id">
             <div class="domain-icon">
               <!-- Add an icon for each domain (you may need to replace the [icon] attribute) -->
               <img

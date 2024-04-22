@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { JobService } from '../service/job/job-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
+import { Job } from '../models/job';
 
 @Component({
   selector: 'app-job-list',
@@ -12,6 +13,7 @@ export class JobListComponent {
   appEnvironment: String = APPLICATION_ENVIRONMENT;
   appVersion: String = APPLICATION_VERSION;
   activeJobs: any[] = [];
+  jobs: any[] = [];
 
   searchInput: string = '';
   constructor(
@@ -20,13 +22,39 @@ export class JobListComponent {
     private route: ActivatedRoute
   ) {}
 
+  // ngOnInit(): void {
+  //   // this.route.queryParams.subscribe((params) => {
+  //   //   this.searchInput = params['searchInput'] || '';
+  //   //   console.log('this.searchInput: ' + this.searchInput);
+  //   //   if (this.searchInput != '') this.getAllJobsByKeyword(this.searchInput);
+  //   //   else {
+  //   //     this.getAllNewJobs();
+  //   //   }
+  //   // });
+  //   this.route.params.subscribe((params) => {
+  //     const expertiseAreaId = params['expertiseAreaId'];
+  //     if (expertiseAreaId) {
+  //       this.getJobsByExpertiseArea(expertiseAreaId);
+  //     }
+  //   });
+  // }
+
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.searchInput = params['searchInput'] || '';
-      console.log('this.searchInput: ' + this.searchInput);
-      if (this.searchInput != '') this.getAllJobsByKeyword(this.searchInput);
-      else {
-        this.getAllNewJobs();
+    // Handle both queryParams for general searches and params for specific expertise area
+    this.route.params.subscribe((params) => {
+      const expertiseAreaId = params['expertiseAreaId'];
+      if (expertiseAreaId) {
+        this.getJobsByExpertiseArea(expertiseAreaId);
+      } else {
+        // Also listen to query parameters for general keyword searches
+        this.route.queryParams.subscribe((queryParams) => {
+          this.searchInput = queryParams['searchInput'] || '';
+          if (this.searchInput !== '') {
+            this.getAllJobsByKeyword(this.searchInput);
+          } else {
+            this.getAllNewJobs();
+          }
+        });
       }
     });
   }
@@ -104,5 +132,20 @@ export class JobListComponent {
 
   navigateToJobDetails(jobId: number) {
     this.router.navigate(['/job-details', jobId]);
+  }
+
+  getJobsByExpertiseArea(expertiseAreaId: number): void {
+    this.jobService.getByExpertiseArea(expertiseAreaId).subscribe(
+      (jobs) => {
+        this.activeJobs = jobs;
+      },
+      (error) => {
+        console.error('Error fetching jobs by expertise area:', error);
+      }
+    );
+  }
+
+  back() {
+    this.router.navigate(['/home']);
   }
 }

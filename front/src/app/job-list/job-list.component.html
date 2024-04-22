@@ -20,7 +20,7 @@
   </header>
 
   <div class="job-listing-container">
-    <h2>Lista de anunturi</h2>
+    <h2 *ngIf="activeJobs.length > 0">Lista de anunturi</h2>
     <ul class="job-list">
       <li *ngFor="let job of activeJobs" (click)="navigateToJobDetails(job.id)">
         <div class="job-item">
@@ -31,6 +31,14 @@
         </div>
       </li>
     </ul>
+    <div class="noJob">
+      <h2 *ngIf="activeJobs.length == 0">
+        Nu s-au gasit solicitari pentru criteriile selectionate
+      </h2>
+      <p-button *ngIf="activeJobs.length == 0" (click)="back()"
+        >Inapoi!</p-button
+      >
+    </div>
   </div>
 </div>
 <div>

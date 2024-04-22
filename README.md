@@ -37,4 +37,5 @@ V0.2.0-SHAPSHOT
 &emsp;&emsp;-Added possibility to bid amounts   
 &emsp;&emsp;-Added ExpertiseAreas when creating a job   
 &emsp;&emsp;-Added My profile page     
+&emsp;&emsp;-Fixed the home expertise area search   
     

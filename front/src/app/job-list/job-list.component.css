@@ -102,3 +102,8 @@ header {
   color: #d63f19; /* Adjust the color as needed */
   font-weight: bold;
 }
+
+.noJob {
+  text-align: center;
+  margin-top: 20%;
+}

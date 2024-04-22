@@ -21,6 +21,7 @@ import {
   allNewCreatedByUser,
   workflow,
   countCreatedBy,
+  getByExpertiseArea,
 } from 'src/app/constants';
 import { Job } from 'src/app/models/job';
 
@@ -220,9 +221,21 @@ export class JobService {
   }
 
   countJobsCreatedByUser(userId: number): Observable<any> {
-    console.log(BACKEND_API_URL + jobEndpoint + countCreatedBy + userId + '/');
     return this.http.get(
       BACKEND_API_URL + jobEndpoint + countCreatedBy + userId + '/'
+    );
+  }
+  // getByExpertiseArea(expertiseAreaId: number) {
+  //   return this.http.get(
+  //     BACKEND_API_URL + jobEndpoint + getByExpertiseArea + expertiseAreaId
+  //   );
+
+  // }
+  getByExpertiseArea(expertiseAreaId: number): Observable<Job[]> {
+    const apiUrl = BACKEND_API_URL + jobEndpoint;
+    console.log(`${apiUrl}${getByExpertiseArea}${expertiseAreaId}`);
+    return this.http.get<Job[]>(
+      `${apiUrl}${getByExpertiseArea}${expertiseAreaId}`
     );
   }
 }

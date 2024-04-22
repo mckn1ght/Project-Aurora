@@ -37,6 +37,7 @@ export class HomeComponent {
     this.expertiseAreaService.getAllExpertiseAreas().subscribe(
       (data) => {
         this.expertiseAreasList = data;
+        console.log(this.expertiseAreasList);
       },
       (error) => {
         console.error('Error fetching expertise areas:', error);
