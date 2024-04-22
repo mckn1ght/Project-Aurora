@@ -38,6 +38,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DoubleNumberInputDirective } from './directive/double-number-input.directive';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProfileComponent } from './profile/profile.component';
+import { OnlyNumbersDirective } from './directive/only-numbers.directive';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ProfileComponent } from './profile/profile.component';
     BidListComponent,
     DoubleNumberInputDirective,
     ProfileComponent,
+    OnlyNumbersDirective,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +81,8 @@ import { ProfileComponent } from './profile/profile.component';
     InputTextModule,
     MultiSelectModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent, MyJobsComponent],

@@ -5,6 +5,7 @@ import { JobService } from '../service/job/job-service.service';
 import { Job } from '../models/job';
 import { UserService } from '../service/user/user.service';
 import { Observable, forkJoin } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -17,12 +18,46 @@ export class ProfileComponent implements OnInit {
   jobsCreatedByUser: Job[] = [];
   counterTotalJobs: number = 0;
   editMode: boolean = false;
+  newEmail: string = '';
+  confirmEmail: string = '';
+  newPhoneNumber: string = '';
+  error: string = 'Va rog verificati informatiile introduse';
+  showError: boolean = false;
+  // editForm: FormGroup;
 
   constructor(
     private authService: AuthService,
     private jobService: JobService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private formBuilder: FormBuilder
+  ) {
+    // this.editForm = this.formBuilder.group({
+    //   // password: [
+    //   //   '',
+    //   //   [
+    //   //     Validators.required,
+    //   //     Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+    //   //   ],
+    //   // ],
+    //   // confirmPassword: ['', Validators.required],
+    //   email: [
+    //     '',
+    //     [
+    //       Validators.required,
+    //       Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
+    //     ],
+    //   ],
+    //   phoneNumber: [
+    //     '',
+    //     [Validators.required],
+    //     [
+    //       Validators.pattern(
+    //         '[+]?[0-9]{1,3}?[-\\s\\.]?[(]?[0-9]{1,3}[)]?[-\\s\\.]?[0-9]{1,4}[-\\s\\.]?[0-9]{1,4}[-\\s\\.]?[0-9]{1,9}'
+    //       ),
+    //     ],
+    //   ],
+    // });
+  }
 
   ngOnInit(): void {
     this.authService.getLoggedInUser().subscribe((user) => {
@@ -78,7 +113,11 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile() {
-    if (this.loggedInUser && this.loggedInUser.id !== undefined) {
+    if (
+      this.loggedInUser &&
+      this.loggedInUser.id !== undefined &&
+      this.newEmail == this.confirmEmail
+    ) {
       const { id, email, phoneNumber } = this.loggedInUser;
       const updateUserObservable: Observable<any>[] = [];
 
@@ -102,6 +141,17 @@ export class ProfileComponent implements OnInit {
           console.error('Failed to update profile.', error);
         }
       );
+    } else {
+      this.showError = true;
+    }
+  }
+
+  checkValidity(): boolean {
+    if (this.newEmail == this.confirmEmail && this.newPhoneNumber != '') {
+      this.showError = false;
+      return false;
+    } else {
+      return true;
     }
   }
 }

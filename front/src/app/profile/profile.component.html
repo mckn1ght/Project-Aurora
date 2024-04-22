@@ -14,63 +14,105 @@
   </div>
   <div class="hr-design-top"></div>
   <div class="profile-details">
-    <h1 class="name">
-      {{ loggedInUser?.firstName }} {{ loggedInUser?.lastName }}
-    </h1>
-    <p class="Admin">
-      Permisiuni:
-      {{ loggedInUser?.admin == true ? "Admin" : "Utilizator fara permisiuni" }}
-    </p>
-    <p class="Admin">
-      Identificator Specialist:
-      {{
-        loggedInUser?.specialistId == null
-          ? "-"
-          : this.loggedInUser?.specialistId
-      }}
-    </p>
-    <div class="hr-design"></div>
-    <!-- Decorative line -->
-    <h2>Contact Information</h2>
-    <p><strong>Email:</strong> {{ loggedInUser?.email }}</p>
-    <input
-      pInputText
-      *ngIf="editMode"
-      type="email"
-      [(ngModel)]="loggedInUser!.email"
-    />
-    <p><strong>Phone:</strong> {{ loggedInUser?.phoneNumber }}</p>
-    <input
-      *ngIf="editMode"
-      type="tel"
-      pInputText
-      class="input"
-      [(ngModel)]="loggedInUser!.phoneNumber"
-    />
+    <div class="editForm">
+      <h1 class="name">
+        {{ loggedInUser?.firstName }} {{ loggedInUser?.lastName }}
+      </h1>
+      <p class="Admin">
+        Permisiuni:
+        {{
+          loggedInUser?.admin == true ? "Admin" : "Utilizator fara permisiuni"
+        }}
+      </p>
+      <p class="Admin">
+        Identificator Specialist:
+        {{
+          loggedInUser?.specialistId == null
+            ? "-"
+            : this.loggedInUser?.specialistId
+        }}
+      </p>
+      <div class="hr-design"></div>
+      <!-- Decorative line -->
+      <h2>Contact Information</h2>
+      <p><strong>Email:</strong> {{ loggedInUser?.email }}</p>
+      <p *ngIf="editMode"><strong>Email nou:</strong></p>
+      <input
+        pInputText
+        appNoSpace
+        *ngIf="editMode"
+        onchange="checkValidity()"
+        type="email"
+        [(ngModel)]="newEmail"
+        [ngClass]="{
+          'error-border': newEmail != confirmEmail || newEmail == ''
+        }"
+      />
+      <p *ngIf="editMode"><strong>Confirmare email nou:</strong></p>
+      <input
+        pInputText
+        appNoSpace
+        *ngIf="editMode"
+        onchange="checkValidity()"
+        type="email"
+        [(ngModel)]="confirmEmail"
+        [ngClass]="{
+          'error-border': newEmail != confirmEmail || confirmEmail == ''
+        }"
+      />
 
-    <div class="hr-design"></div>
-    <h2>About</h2>
-    <p></p>
-    <p>
-      <strong>Address:</strong>
-      {{ loggedInUser?.address == null ? "-" : this.loggedInUser?.address }}
-    </p>
-    <p>
-      <strong>Cont creat:</strong>
-      {{ createdDate }}
-    </p>
-    <p>
-      <strong>Total solicitari in lucru:</strong> {{ jobsCreatedByUser.length }}
-    </p>
-    <p><strong>Total solicitari terminate: </strong> -</p>
-    <p><strong>Total solicitari anulate: </strong> -</p>
-    <p><strong>Total solicitari:</strong> {{ counterTotalJobs }}</p>
+      <p><strong>Telefon:</strong> {{ loggedInUser?.phoneNumber }}</p>
+      <p *ngIf="editMode">
+        <strong>Telefon nou:</strong>
+      </p>
+      <input
+        *ngIf="editMode"
+        type="tel"
+        id="tel"
+        pInputText
+        appNoSpace
+        appDoubleNumberInput
+        onchange="checkValidity()"
+        class="input"
+        [(ngModel)]="newPhoneNumber"
+        [ngClass]="{
+          'error-border': newPhoneNumber == ''
+        }"
+      />
+
+      <div class="hr-design"></div>
+      <h2>About</h2>
+      <p></p>
+      <p>
+        <strong>Address:</strong>
+        {{ loggedInUser?.address == null ? "-" : this.loggedInUser?.address }}
+      </p>
+      <p>
+        <strong>Cont creat:</strong>
+        {{ createdDate }}
+      </p>
+      <p>
+        <strong>Total solicitari in lucru:</strong>
+        {{ jobsCreatedByUser.length }}
+      </p>
+      <p><strong>Total solicitari terminate: </strong> -</p>
+      <p><strong>Total solicitari anulate: </strong> -</p>
+      <p><strong>Total solicitari:</strong> {{ counterTotalJobs }}</p>
+    </div>
   </div>
   <div class="profile-footer">
+    <div *ngIf="checkValidity() && editMode" class="errorLabel">
+      {{ error }}
+    </div>
     <p-button *ngIf="!editMode" (click)="toggleEditMode()"
       >Editeaza Profil</p-button
     >
-    <p-button *ngIf="editMode" (click)="saveProfile()">Confirmare</p-button>
+    <p-button
+      *ngIf="editMode"
+      [disabled]="checkValidity()"
+      (click)="saveProfile()"
+      >Confirmare</p-button
+    >
     <p-button *ngIf="editMode" class="anuleaza" (click)="toggleEditMode()"
       >Anuleaza</p-button
     >
