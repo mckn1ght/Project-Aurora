@@ -39,6 +39,10 @@ import { DoubleNumberInputDirective } from './directive/double-number-input.dire
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProfileComponent } from './profile/profile.component';
 import { OnlyNumbersDirective } from './directive/only-numbers.directive';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AccordionModule } from 'primeng/accordion';
+import { ConfirmDialogModule } from 'primeng/confirmdialog'; // Import the ConfirmDialogModule
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -58,6 +62,7 @@ import { OnlyNumbersDirective } from './directive/only-numbers.directive';
     DoubleNumberInputDirective,
     ProfileComponent,
     OnlyNumbersDirective,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,8 +88,14 @@ import { OnlyNumbersDirective } from './directive/only-numbers.directive';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    TableModule,
+    ButtonModule,
+    AccordionModule,
+    ConfirmDialogModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent, MyJobsComponent],
+  providers: [ConfirmationService],
+  bootstrap: [AppComponent], //, MyJobsComponent - > eroare my-jobs-component not found NG System
 })
 export class AppModule {}
