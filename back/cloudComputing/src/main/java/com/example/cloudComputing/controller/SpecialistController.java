@@ -16,6 +16,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/specialist")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SpecialistController {
   @Autowired
   private SpecialistServiceImpl specialistServiceImpl;

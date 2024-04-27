@@ -19,6 +19,7 @@ import static com.example.cloudComputing.constants.Constants.NO_EXPAREA_NAME_FOU
 
 @Validated
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/expertiseArea")
 public class ExpertiseAreaController {
   @Autowired

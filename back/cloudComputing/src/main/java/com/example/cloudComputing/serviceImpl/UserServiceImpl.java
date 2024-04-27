@@ -5,6 +5,7 @@ import com.example.cloudComputing.entity.User;
 import com.example.cloudComputing.exception.user.*;
 import com.example.cloudComputing.mapper.UserMapper;
 import com.example.cloudComputing.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,19 +33,26 @@ public class UserServiceImpl implements UserService {
     return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
   }
 
+  @Transactional
   public void updatePhoneNumber(Long userId, String phoneNumber) {
     User user = userRepository.findById(userId)
       .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));
+    System.out.println("Current phone number: " + user.getPhoneNumber()); // Log current number
     user.setPhoneNumber(phoneNumber);
     userRepository.save(user);
+    System.out.println("Updated phone number: " + user.getPhoneNumber()); // Log updated number
   }
 
+  @Transactional
   public void updateEmail(Long userId, String email) {
     User user = userRepository.findById(userId)
       .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));
+    System.out.println("Current email: " + user.getEmail()); // Log current email
     user.setEmail(email);
     userRepository.save(user);
+    System.out.println("Updated email to: " + user.getEmail()); // Log updated email
   }
+
 
 
 

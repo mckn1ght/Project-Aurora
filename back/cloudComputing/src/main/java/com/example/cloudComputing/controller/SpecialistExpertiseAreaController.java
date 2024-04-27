@@ -28,6 +28,10 @@ public class SpecialistExpertiseAreaController {
     ResponseEntity.ok(specialistExpertiseAreaServiceImpl.add(specialistExpertiseAreaDto));
     return ResponseEntity.ok("{\"message\": \"Expertise Area added succesfully to the specialist\"}");
   }
+  @GetMapping("/all")
+  public List<SpecialistExpertiseAreaDto> getAll() {
+    return specialistExpertiseAreaServiceImpl.getAll();
+  }
 
   @GetMapping("/specialistId/{id}")
   public ResponseEntity<List<SpecialistExpertiseAreaDto>> getAllWithSpecialistId(@PathVariable Long specialistId) {

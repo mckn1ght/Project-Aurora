@@ -1,5 +1,6 @@
 package com.example.cloudComputing.serviceImpl;
 
+import com.example.cloudComputing.dto.JobDto;
 import com.example.cloudComputing.dto.JobExpertiseAreaDto;
 import com.example.cloudComputing.entity.JobExpertiseArea;
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaFoundException;
@@ -38,6 +39,15 @@ public class JobExpertiseAreaServiceImpl implements JobExpertiseAreaService {
       jobExpertiseAreaDto.setExpertiseAreaId(expertiseAreaId);
       jobExpertiseAreaRepository.save(jobExpertiseAreaMapper.mapToJobExpertiseArea(jobExpertiseAreaDto));
     }
+  }
+
+  public List<JobExpertiseAreaDto> getAll() {
+    List<JobExpertiseAreaDto> jobExpertiseAreaDtos = jobExpertiseAreaRepository.findAll().stream().map(jobExpertiseAreaDto ->
+      jobExpertiseAreaMapper.mapToJobExpertiseAreaDto(jobExpertiseAreaDto)).collect(Collectors.toList());
+    if (jobExpertiseAreaDtos.isEmpty()) {
+      throw new NoJobFoundException(NO_JOB_FOUND);
+    }
+    return jobExpertiseAreaDtos;
   }
 
 

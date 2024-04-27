@@ -19,6 +19,7 @@ import static com.example.cloudComputing.constants.Constants.*;
 
 @Validated
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/review")
 public class ReviewController {
   @Autowired

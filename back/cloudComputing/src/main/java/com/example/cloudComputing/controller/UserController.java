@@ -4,6 +4,7 @@ import com.example.cloudComputing.dto.UserDto;
 import com.example.cloudComputing.exception.user.UserUsernameNotFoundException;
 import com.example.cloudComputing.mapper.UserMapper;
 import com.example.cloudComputing.serviceImpl.UserServiceImpl;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Validated
@@ -42,20 +44,26 @@ public class UserController {
     }
   }
 
-  @PutMapping("/updatePhoneNumber/{id}")
-  public ResponseEntity<UserDto> updatePhoneNumber(
+  @PutMapping(path = "/updatePhoneNumber/{id}", consumes = "application/json")
+  @Transactional
+  public ResponseEntity<Void> updatePhoneNumber(
     @PathVariable Long id,
-    @RequestBody String phoneNumber
+    @RequestBody Map<String, String> phoneNumberMap
   ) {
+    String phoneNumber = phoneNumberMap.get("phoneNumber");
+    System.out.println("Received phone number: " + phoneNumber);
     userServiceImpl.updatePhoneNumber(id, phoneNumber);
     return ResponseEntity.ok().build();
   }
 
-  @PutMapping("/updateEmail/{id}")
-  public ResponseEntity<UserDto> updateEmail(
+  @PutMapping(path = "/updateEmail/{id}", consumes = "application/json")
+  @Transactional
+  public ResponseEntity<Void> updateEmail(
     @PathVariable Long id,
-    @RequestBody String email
+    @RequestBody Map<String, String> emailMap
   ) {
+    String email = emailMap.get("email");
+    System.out.println("Received email: " + email);
     userServiceImpl.updateEmail(id, email);
     return ResponseEntity.ok().build();
   }

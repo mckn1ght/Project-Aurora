@@ -17,7 +17,6 @@ public interface JobExpertiseAreaRepository extends JpaRepository<JobExpertiseAr
   List<JobExpertiseArea> getByExpertiseAreaId(Long id);
 
 
-
 }
 
 

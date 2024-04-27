@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "specialist_experiseArea")
+@Table(name = "specialist_expertiseArea")
 public class SpecialistExpertiseArea {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

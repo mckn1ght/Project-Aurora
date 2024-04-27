@@ -1,5 +1,6 @@
 package com.example.cloudComputing.controller;
 
+import com.example.cloudComputing.dto.JobDto;
 import com.example.cloudComputing.dto.JobExpertiseAreaDto;
 import com.example.cloudComputing.entity.AddJobExpertiseRequest;
 import com.example.cloudComputing.mapper.JobExpertiseAreaMapper;
@@ -63,9 +64,10 @@ public class JobExpertiseAreaController {
     }
   }
 
-
-
-
+  @GetMapping("/all")
+  public List<JobExpertiseAreaDto> getAll() {
+    return jobExpertiseAreaServiceImpl.getAll();
+  }
 
   @GetMapping("/jobId/{id}")
   public ResponseEntity<List<JobExpertiseAreaDto>> getAllWithJobId(@PathVariable Long jobId) {
