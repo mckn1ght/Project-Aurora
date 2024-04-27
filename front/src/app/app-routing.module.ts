@@ -11,6 +11,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { MyJobsComponent } from './my-jobs/my-jobs.component';
 import { BidListComponent } from './bid-list/bid-list.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'password-reset', component: PasswordResetComponent },
   { path: 'my-jobs', component: MyJobsComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'admin', component: AdminPanelComponent },
   { path: 'bid-list/:id', component: BidListComponent },
   { path: '**', redirectTo: '/landing', pathMatch: 'full' },
 ];

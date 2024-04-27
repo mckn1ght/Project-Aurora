@@ -4,8 +4,9 @@ import { AuthService } from '../service/auth/auth.service';
 import { JobService } from '../service/job/job-service.service';
 import { Job } from '../models/job';
 import { UserService } from '../service/user/user.service';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, firstValueFrom, forkJoin } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +30,8 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private jobService: JobService,
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     // this.editForm = this.formBuilder.group({
     //   // password: [
@@ -112,38 +114,36 @@ export class ProfileComponent implements OnInit {
     this.editMode = !this.editMode;
   }
 
-  saveProfile() {
+  async saveProfile() {
     if (
       this.loggedInUser &&
       this.loggedInUser.id !== undefined &&
-      this.newEmail == this.confirmEmail
+      this.newEmail === this.confirmEmail
     ) {
-      const { id, email, phoneNumber } = this.loggedInUser;
-      const updateUserObservable: Observable<any>[] = [];
+      try {
+        // Update email
+        await firstValueFrom(
+          this.userService.updateEmail(this.loggedInUser.id, this.newEmail)
+        );
+        // Update phone number
+        await firstValueFrom(
+          this.userService.updatePhoneNumber(
+            this.loggedInUser.id,
+            this.newPhoneNumber
+          )
+        );
 
-      // Update email
-      updateUserObservable.push(
-        this.userService.updateEmail(this.loggedInUser.id, email!)
-      );
-
-      // Update phone number
-      updateUserObservable.push(
-        this.userService.updatePhoneNumber(this.loggedInUser.id, phoneNumber!)
-      );
-
-      // Subscribe to all update observables
-      forkJoin(updateUserObservable).subscribe(
-        () => {
-          console.log('Profile updated successfully.');
-          this.toggleEditMode(); // Turn off edit mode after save
-        },
-        (error) => {
-          console.error('Failed to update profile.', error);
-        }
-      );
+        console.log('Profile updated successfully.');
+        this.toggleEditMode();
+      } catch (error) {
+        console.error('Failed to update profile.', error);
+        this.showError = true;
+      }
     } else {
       this.showError = true;
     }
+    this.loggedInUser!.email = this.newEmail;
+    this.loggedInUser!.phoneNumber = this.newPhoneNumber;
   }
 
   checkValidity(): boolean {
@@ -153,5 +153,9 @@ export class ProfileComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  admin() {
+    this.router.navigate(['/admin']);
   }
 }

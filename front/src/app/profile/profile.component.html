@@ -1,3 +1,22 @@
+<header class="top-menu">
+  <div class="logo">
+    <img
+      class="logoImage"
+      src="../../assets/icons/fossil.shell@2x.png"
+      alt="Logo"
+      style="display: inline-block"
+    />
+    <h1 style="display: inline-block">Project Aurora</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/login">Logout</a></li>
+      <li><a href="/my-jobs">My Jobs</a></li>
+    </ul>
+  </nav>
+</header>
+
 <div class="profile-container">
   <div class="profile-header">
     <img
@@ -117,7 +136,11 @@
       >Anuleaza</p-button
     >
 
-    <p-button href="#" class="adminPanel" *ngIf="loggedInUser?.admin == true"
+    <p-button
+      href="#"
+      class="adminPanel"
+      (click)="admin()"
+      *ngIf="loggedInUser?.admin == true"
       >ADMIN PANEL</p-button
     >
   </div>

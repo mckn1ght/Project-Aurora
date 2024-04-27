@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
@@ -12,11 +12,14 @@ import { User } from 'src/app/models/user';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   formData = {
     username: '',
     password: '',
   };
+  ngOnInit(): void {
+    this.authService.logout();
+  }
 
   error: string = '';
 

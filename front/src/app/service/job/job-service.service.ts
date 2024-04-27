@@ -191,7 +191,7 @@ export class JobService {
         jobEndpoint +
         createdByUser +
         userId +
-        '/status/' +
+        '/status' +
         preluatOrInExec
     );
   }

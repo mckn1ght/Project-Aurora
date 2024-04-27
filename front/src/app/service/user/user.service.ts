@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpHeaders,
+  HttpResponse,
+} from '@angular/common/http';
 import * as bcrypt from 'bcryptjs';
 
 import {
@@ -19,6 +24,11 @@ import { map } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
   constructor(private http: HttpClient) {}
 
   register(user: any) {
@@ -38,17 +48,20 @@ export class UserService {
       .pipe(map((user: User) => user));
   }
 
+  // Service
   updateEmail(id: number, email: string): Observable<any> {
     return this.http.put(
       `${BACKEND_API_URL}${userEndpoint}/updateEmail/${id}`,
-      email
+      { email: email }, // Send data as JSON object
+      { headers: { 'Content-Type': 'application/json' } } // Set Content-Type to application/json
     );
   }
 
   updatePhoneNumber(id: number, phoneNumber: string): Observable<any> {
     return this.http.put(
       `${BACKEND_API_URL}${userEndpoint}/updatePhoneNumber/${id}`,
-      phoneNumber
+      { phoneNumber: phoneNumber }, // Send data as JSON object
+      { headers: { 'Content-Type': 'application/json' } } // Set Content-Type to application/json
     );
   }
 }

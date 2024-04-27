@@ -1,0 +1,84 @@
+/* In src/app/admin-panel/admin-panel.component.css */
+
+.top-menu {
+  background-color: #f5f2f2d5;
+  padding: 1px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.top-menu nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-menu nav li {
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.top-menu nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+.container {
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 0px;
+  position: fixed;
+  font-size: 11px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.cell-content {
+  white-space: normal; /* Ensures text wraps */
+  word-wrap: break-word; /* Breaks words to prevent overflow */
+  max-width: 150px; /* Adjust based on your content and layout */
+}
+
+/* In src/app/admin-panel/admin-panel.component.css */
+.p-datatable-responsive {
+  width: 100%; /* Full width to utilize the available space */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+}
+
+.text-wrap {
+  white-space: normal; /* Allow text wrapping */
+  word-wrap: break-word; /* Break words to avoid horizontal overflow */
+  max-width: 100px; /* Set a max-width for each cell, adjust as needed */
+}
+
+.container {
+  padding: 20px;
+}
+
+p-accordion {
+  width: 100%; /* Ensure accordion uses full width */
+}
+
+p-table {
+  width: 100%; /* Ensure table uses full width */
+}
