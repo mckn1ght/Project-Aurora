@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { BidService } from '../service/bid/bid.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationService } from 'primeng/api';
 // import { BidPopupComponent } from '../bid-popup/bid-popup.component';
 
 @Component({
@@ -49,7 +50,8 @@ export class JobDetailsComponent implements OnInit {
     private bidService: BidService,
     private router: Router,
     private toastr: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -94,8 +96,8 @@ export class JobDetailsComponent implements OnInit {
   }
 
   addBid() {
-    this.showBidAmountPopUp = true;
     if (this.activeBidCount < 5) {
+      this.showBidAmountPopUp = true;
       if (this.job) {
         this.newBid.jobId = this.job.id;
         this.newBid.specialistId = this.loggedInUser?.specialistId;
@@ -124,8 +126,8 @@ export class JobDetailsComponent implements OnInit {
       } else {
         this.displayToast('Ati atins numarul maxim de licitatii concomitente.');
       }
+      this.closePopup();
     }
-    this.closePopup();
   }
 
   getActiveBids() {
@@ -194,7 +196,18 @@ export class JobDetailsComponent implements OnInit {
   }
 
   openPopup() {
-    this.popupVisible = true;
+    if (this.activeBidCount < 5) {
+      this.popupVisible = true;
+    } else {
+      this.confirmationService.confirm({
+        message: 'Ati atins numarul maxim de 5 licitatii concomitente.',
+        header: 'Limita de licitatii stinsa',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'OK',
+        rejectVisible: false,
+        accept: () => {},
+      });
+    }
   }
 
   closePopup() {
