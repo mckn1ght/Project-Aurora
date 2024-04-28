@@ -4,6 +4,7 @@ import { ExpertiseAreaService } from '../service/expertiseArea/expertise-area.se
 import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { AuthService } from '../service/auth/auth.service';
+import { ResourceService } from '../service/resource/resource.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -20,7 +21,8 @@ export class HomeComponent {
   constructor(
     private expertiseAreaService: ExpertiseAreaService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private resourceService: ResourceService
   ) {}
 
   ngOnInit() {

@@ -7,6 +7,8 @@ import { UserService } from '../service/user/user.service';
 import { Observable, firstValueFrom, forkJoin } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ResourceService } from '../service/resource/resource.service';
+import { Resource } from '../models/resource';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +26,8 @@ export class ProfileComponent implements OnInit {
   newPhoneNumber: string = '';
   error: string = 'Va rog verificati informatiile introduse';
   showError: boolean = false;
+  avatarLocation: string = '';
+  resource: Resource = new Resource();
   // editForm: FormGroup;
 
   constructor(
@@ -31,7 +35,8 @@ export class ProfileComponent implements OnInit {
     private jobService: JobService,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private resourceService: ResourceService
   ) {
     // this.editForm = this.formBuilder.group({
     //   // password: [
@@ -74,6 +79,7 @@ export class ProfileComponent implements OnInit {
     });
     this.fetchJobsCreatedByUser();
     this.countJobsCreatedByUser();
+    this.fetchAvatarLocation();
   }
 
   formatEuropeanDate(isoDateString: string): string {
@@ -157,5 +163,18 @@ export class ProfileComponent implements OnInit {
 
   admin() {
     this.router.navigate(['/admin']);
+  }
+
+  fetchAvatarLocation() {
+    this.resourceService
+      .getByIdAndType(this.loggedInUser?.id!, 'avatar')
+      .subscribe(
+        (resource: Resource) => {
+          this.resource = resource;
+        },
+        (error) => {
+          console.error('Error fetching avatar location:', error);
+        }
+      );
   }
 }

@@ -56,4 +56,6 @@ public class Constants {
   public static final String NO_BID_FOUND = "No bids found.";
   public static final String NO_BID_ID_FOUND = "No bids with id '%s' found.";
 
+  //Resource
+  public static final String NO_RESOURCE_FOUND = "Resource not found.";
 }

@@ -46,6 +46,13 @@ export const getActiveBidCountByJobId = '/getActiveBidCountByJobId/';
 export const job = '/job/';
 export const except = '/except/';
 
+//Resource
+// @GetMapping("/getByUserId/{userId}")
+// @GetMapping("/getByUserId/{userId}/type/{type}")
+export const resourceEndpoint = '/resource';
+export const getByUserId = '/getByUserId/';
+export const type = '/type/';
+
 //System
 export const MAX_LOGIN_ATTEMPTS = 3;
 export const APPLICATION_VERSION = '0.2.0-SHAPSHOT ';

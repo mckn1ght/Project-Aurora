@@ -6,6 +6,7 @@ import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaFoundEx
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaIdFoundException;
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaNameFoundException;
 import com.example.cloudComputing.exception.job.*;
+import com.example.cloudComputing.exception.resource.NoResourceFoundException;
 import com.example.cloudComputing.exception.review.*;
 import com.example.cloudComputing.exception.specialist.NoSpecialistCoverageAreaFoundException;
 import com.example.cloudComputing.exception.specialist.NoSpecialistExpertiseAreaFoundException;
@@ -35,7 +36,7 @@ public class ExceptionControllerAdvice {
     NoJobsCreatedAfterDateException.class, NoJobsWithDueDateException.class, NoJobsAfterDueDateException.class,
     NoJobsBeforeDueDateException.class, NoJobsLastUpdatedOnDateException.class, NoJobsLastUpdatedBeforeDateException.class,
     NoJobsLastUpdatedAfterDateException.class, NoJobsOnWorkflowStepException.class, NoBidFoundException.class,
-    NoBidIdFoundException.class
+    NoBidIdFoundException.class, NoResourceFoundException.class
   })
 
   public ResponseEntity<String> handleControllerExceptions(Exception exception) {
