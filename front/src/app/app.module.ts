@@ -43,6 +43,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AccordionModule } from 'primeng/accordion';
 import { ConfirmDialogModule } from 'primeng/confirmdialog'; // Import the ConfirmDialogModule
 import { ConfirmationService } from 'primeng/api';
+import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ConfirmationService } from 'primeng/api';
     ProfileComponent,
     OnlyNumbersDirective,
     AdminPanelComponent,
+    UploadAvatarComponent,
   ],
   imports: [
     BrowserModule,

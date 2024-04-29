@@ -26,7 +26,7 @@ public class Resource {
   private String type;
 
   @Column(name = "location")
-  private String location = "../../assets/users/";
+  private String location;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "createdAt")

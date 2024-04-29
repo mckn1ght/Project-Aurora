@@ -29,10 +29,15 @@ public class UserServiceImpl implements UserService {
   private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-  public UserDto add(UserDto userDto) {
-    return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
-  }
-
+//  public UserDto add(UserDto userDto) {
+//    return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
+//  }
+@Transactional
+public UserDto add(UserDto userDto) {
+  User user = userRepository.save(userMapper.mapToUser(userDto));
+  userMapper.createDefaultResource(user); // Handle resource creation after the user is saved
+  return userMapper.mapToUserDto(user);
+}
   @Transactional
   public void updatePhoneNumber(Long userId, String phoneNumber) {
     User user = userRepository.findById(userId)
@@ -52,9 +57,6 @@ public class UserServiceImpl implements UserService {
     userRepository.save(user);
     System.out.println("Updated email to: " + user.getEmail()); // Log updated email
   }
-
-
-
 
   public boolean existsUserByUsername(String username) {
     return userRepository.existsUserByUsername(username);

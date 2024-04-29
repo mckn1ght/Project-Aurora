@@ -66,6 +66,29 @@ public class ResourceServiceImpl implements ResourceService {
     }
     return resourceMapper.mapToResourceDto(resource);
   }
+
+  public void updateResource(ResourceDto resourceDto) {
+    Resource resource = resourceMapper.mapToResource(resourceDto);
+    resourceRepository.save(resource);
+  }
+
+  public void updateAvatarResource(int userId, String location, String type) {
+    Resource resource = resourceRepository.findByUserIdAndAndType(userId, type);
+
+    if (resource != null) {
+      // Update existing resource
+      resource.setLocation(location);
+    } else {
+      // Create new resource if none exists
+      resource = new Resource();
+      resource.setUserId(userId);
+      resource.setType(type);
+      resource.setLocation(location);
+    }
+
+    resourceRepository.save(resource);
+  }
+
 }
 
 

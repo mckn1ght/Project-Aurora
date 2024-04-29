@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResourceService } from '../service/resource/resource.service';
 import { Resource } from '../models/resource';
+// import { Resource } from '../../../../back/cloudComputing/uploads/avatars/';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
   showError: boolean = false;
   avatarLocation: string = '';
   resource: Resource = new Resource();
+  selectedFile: File | null = null;
   // editForm: FormGroup;
 
   constructor(
@@ -176,5 +178,30 @@ export class ProfileComponent implements OnInit {
           console.error('Error fetching avatar location:', error);
         }
       );
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      this.uploadAvatar();
+    }
+  }
+
+  uploadAvatar(): void {
+    if (!this.selectedFile) return;
+
+    const formData = new FormData();
+    formData.append('avatar', this.selectedFile, this.selectedFile.name);
+
+    // Assuming you have a method in your service to handle file uploads
+    this.resourceService
+      .uploadAvatar(this.loggedInUser!.id!, formData)
+      .subscribe({
+        next: (response) => {
+          console.log('Avatar updated successfully:', response);
+          this.fetchAvatarLocation(); // Refresh the displayed avatar
+        },
+        error: (error) => console.error('Error updating avatar:', error),
+      });
   }
 }

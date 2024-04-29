@@ -1,0 +1,4 @@
+<div class="upload-container">
+  <input type="file" (change)="onFileSelected($event)" id="file" />
+  <button (click)="uploadFile()" [disabled]="!selectedFile">Upload</button>
+</div>

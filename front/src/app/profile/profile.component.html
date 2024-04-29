@@ -25,7 +25,22 @@
       class="background-image"
     />
     <div class="profile-info">
-      <img [src]="resource.location" alt="Avatar" class="profile-avatar" />
+      <img
+        [src]="'http://localhost:8080/' + resource.location"
+        alt="Avatar"
+        class="profile-avatar"
+      />
+
+      <input
+        type="file"
+        #fileInput
+        style="display: none"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+      <button class="change-avatar-btn" (click)="fileInput.click()">
+        Schimba
+      </button>
     </div>
   </div>
   <div class="credit">
