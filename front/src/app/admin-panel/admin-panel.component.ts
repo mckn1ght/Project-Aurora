@@ -151,4 +151,17 @@ export class AdminPanelComponent implements OnInit {
       }
     });
   }
+
+  saveUser(item: any): void {
+    // Example of handling response after updating user details
+    this.userService.updateUser(item).subscribe({
+      next: (updatedUser) => {
+        console.log('User updated successfully');
+        this.authService.setLoggedInUser(updatedUser); // Updated user with potentially new username
+        this.authService.refreshUserData(); // Optionally refresh if needed
+        item.editing = false;
+      },
+      error: (error) => console.error('Error updating user:', error),
+    });
+  }
 }

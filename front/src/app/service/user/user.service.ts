@@ -71,4 +71,11 @@ export class UserService {
       { credit: credit.toString() }
     );
   }
+
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(
+      `${BACKEND_API_URL}/user/update/${user.id}`,
+      user
+    );
+  }
 }

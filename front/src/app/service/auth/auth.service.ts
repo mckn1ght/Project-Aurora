@@ -106,16 +106,18 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  passedData: any;
   private loggedInUserSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient) {
-    // Check if user data is stored in localStorage on initialization
+    this.loadInitialUserData();
+  }
+
+  private loadInitialUserData() {
     const storedUserData = localStorage.getItem('loggedInUser');
     if (storedUserData) {
-      const parsedUserData: User = JSON.parse(storedUserData);
-      this.setLoggedInUser(parsedUserData);
+      const user: User = JSON.parse(storedUserData);
+      this.setLoggedInUser(user);
     }
   }
 
@@ -125,50 +127,37 @@ export class AuthService {
     onError: (error: any) => void
   ): void {
     this.http
-      .post(BACKEND_API_URL + userEndpoint + userLogin, formData, {
+      .post(`${BACKEND_API_URL}${userEndpoint}${userLogin}`, formData, {
         observe: 'response',
       })
-      .subscribe(
-        (response) => {
-          this.passedData = formData;
+      .subscribe({
+        next: (response) => {
           if (response.status === 200) {
             console.log('Login successful');
-            this.getUserData(onSuccess, onError);
-            onSuccess();
+            this.getUserData(formData.username, onSuccess, onError);
           } else {
-            console.error('Login failed with status code', response.status);
             onError('Login failed');
           }
         },
-        (error) => {
-          console.error('Login error', error);
-          onError(error);
-        }
-      );
+        error: onError,
+      });
   }
 
   private getUserData(
+    username: string,
     onSuccess: () => void,
     onError: (error: any) => void
   ): void {
     this.http
-      .get<User>(
-        BACKEND_API_URL +
-          userEndpoint +
-          getByUsername +
-          this.passedData.username
-      )
-      .subscribe(
-        (userData) => {
+      .get<User>(`${BACKEND_API_URL}${userEndpoint}/username/${username}`)
+      .subscribe({
+        next: (userData) => {
           this.setLoggedInUser(userData);
-          // Save user data to localStorage
           localStorage.setItem('loggedInUser', JSON.stringify(userData));
           onSuccess();
         },
-        (error) => {
-          onError(error);
-        }
-      );
+        error: onError,
+      });
   }
 
   setLoggedInUser(user: User | null): void {
@@ -186,34 +175,38 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('loggedInUser');
-    this.setLoggedInUser(null);
+    this.loggedInUserSubject.next(null);
   }
 
-  // resetPassword(newPassword: string, resetToken: string): Observable<any> {
-  //   const body = { newPassword, resetToken };
-  //   return this.http.post(`${API_URL}/reset-password`, body);
-  // }
-
   refreshUserData(): void {
-    if (!this.loggedInUserSubject.value) {
-      console.error('No user logged in');
-      return;
+    const currentUser = this.loggedInUserSubject.value;
+    if (currentUser && currentUser.username) {
+      this.http
+        .get<User>(
+          `${BACKEND_API_URL}${userEndpoint}${getByUsername}${currentUser.username}`
+        )
+        .subscribe({
+          next: (user) => {
+            this.setLoggedInUser(user);
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            console.log('User data refreshed successfully');
+          },
+          error: (error) => console.error('Failed to refresh user data', error),
+        });
+    } else {
+      console.error('No user logged in to refresh');
     }
+  }
 
-    const username = this.loggedInUserSubject.value.username; // Ensure you have the username available
-    this.http
-      .get<User>(`${BACKEND_API_URL}${userEndpoint}${getByUsername}${username}`)
-      .subscribe({
-        next: (user) => {
-          console.log('User data refreshed successfully:', user);
-          this.setLoggedInUser(user);
-          // Update local storage with the new user data
-          localStorage.setItem('loggedInUser', JSON.stringify(user));
-        },
-        error: (error) => {
-          console.error('Failed to refresh user data', error);
-          // Optionally notify the user of the error
-        },
-      });
+  public updateUserDetails(username: string): void {
+    this.getUserData(
+      username,
+      () => {
+        console.log('User data refreshed successfully after update.');
+      },
+      (error) => {
+        console.error('Failed to fetch updated user data', error);
+      }
+    );
   }
 }

@@ -57,7 +57,15 @@
         <ng-template pTemplate="body" let-item>
           <tr>
             <td *ngFor="let bodyKey of getKeys(item)">
-              <ng-container *ngIf="table === 'user' && bodyKey === 'credit'">
+              <ng-container
+                *ngIf="
+                  table === 'user' &&
+                  (bodyKey === 'credit' ||
+                    bodyKey === 'username' ||
+                    bodyKey === 'email' ||
+                    bodyKey === 'phoneNumber')
+                "
+              >
                 <div *ngIf="!item.editing">
                   {{ item[bodyKey] }}
                   <button
@@ -70,13 +78,23 @@
                 </div>
                 <input
                   *ngIf="item.editing"
-                  type="number"
+                  [type]="bodyKey === 'email' ? 'email' : 'text'"
                   [(ngModel)]="item[bodyKey]"
                   style="width: 100%"
                   class="p-inputtext p-component"
                 />
               </ng-container>
-              <ng-container *ngIf="!(table === 'user' && bodyKey === 'credit')">
+              <ng-container
+                *ngIf="
+                  !(
+                    table === 'user' &&
+                    (bodyKey === 'credit' ||
+                      bodyKey === 'username' ||
+                      bodyKey === 'email' ||
+                      bodyKey === 'phoneNumber')
+                  )
+                "
+              >
                 {{ item[bodyKey] }}
               </ng-container>
             </td>
@@ -94,7 +112,7 @@
                 type="button"
                 icon="pi pi-check"
                 class="p-button-rounded p-button-success"
-                (click)="saveCredit(item)"
+                (click)="saveUser(item)"
               ></button>
             </td>
           </tr>

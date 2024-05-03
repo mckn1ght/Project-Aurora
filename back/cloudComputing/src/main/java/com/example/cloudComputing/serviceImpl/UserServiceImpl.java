@@ -145,6 +145,16 @@ public UserDto add(UserDto userDto) {
     return userMapper.mapToUserDto(user);
   }
 
+  public User updateUserDetails(User user) throws Exception {
+    User existingUser = userRepository.findById(user.getId())
+      .orElseThrow(() -> new Exception("User not found: " + user.getId()));
+    existingUser.setUsername(user.getUsername());
+    existingUser.setEmail(user.getEmail());
+    existingUser.setPhoneNumber(user.getPhoneNumber());
+    existingUser.setCredit(user.getCredit()); // Assuming you want to update credit too.
+    return userRepository.save(existingUser);
+  }
+
 
 }
 

@@ -1,6 +1,7 @@
 package com.example.cloudComputing.controller;
 
 import com.example.cloudComputing.dto.UserDto;
+import com.example.cloudComputing.entity.User;
 import com.example.cloudComputing.exception.user.UserUsernameNotFoundException;
 import com.example.cloudComputing.mapper.UserMapper;
 import com.example.cloudComputing.serviceImpl.UserServiceImpl;
@@ -137,6 +138,17 @@ public class UserController {
   @RequestMapping("/getBySpecialistId/{id}")
   public ResponseEntity<UserDto> getBySpecialistId(@PathVariable int id) {
     return ResponseEntity.ok(userServiceImpl.getBySpecialistId(id));
+  }
+
+  @PutMapping("/update/{id}")
+  public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    try {
+      user.setId(id); // Ensure the ID is set correctly based on the path variable
+      User updatedUser = userServiceImpl.updateUserDetails(user);
+      return ResponseEntity.ok(updatedUser);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
   }
 }
 
