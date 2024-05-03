@@ -98,6 +98,7 @@ export class AdminPanelComponent implements OnInit {
       this.userService.updateCredit(user.id, user.credit).subscribe({
         next: () => {
           console.log('Credit updated successfully for user ID:', user.id);
+          this;
           // You might want to refresh the data or indicate success in the UI
         },
         error: (error) => {
@@ -111,12 +112,24 @@ export class AdminPanelComponent implements OnInit {
     item.editing = true; // Enables the edit mode
   }
 
+  // saveCredit(item: any): void {
+  //   this.userService.updateCredit(item.id, item.credit).subscribe({
+  //     next: () => {
+  //       console.log('Credit updated successfully');
+  //       item.editing = false; // Disable editing mode on successful update
+  //       this.fetchUserData();
+  //       this.refreshUser();
+  //     },
+  //     error: (error) => console.error('Error updating credit:', error),
+  //   });
+  // }
+
   saveCredit(item: any): void {
     this.userService.updateCredit(item.id, item.credit).subscribe({
       next: () => {
         console.log('Credit updated successfully');
         item.editing = false; // Disable editing mode on successful update
-        this.fetchUserData();
+        this.authService.refreshUserData(); // Refresh the user data from the server
       },
       error: (error) => console.error('Error updating credit:', error),
     });
@@ -126,6 +139,16 @@ export class AdminPanelComponent implements OnInit {
     this.authService.getLoggedInUser().subscribe((user) => {
       console.log(user);
       this.loggedInUser = user;
+    });
+  }
+
+  refreshUser() {
+    this.authService.getLoggedInUser().subscribe((user) => {
+      console.log(user);
+      this.loggedInUser = user;
+      if (this.loggedInUser) {
+        const userId = this.loggedInUser.id;
+      }
     });
   }
 }

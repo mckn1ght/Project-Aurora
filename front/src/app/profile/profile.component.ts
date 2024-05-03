@@ -67,23 +67,17 @@ export class ProfileComponent implements OnInit {
     //   ],
     // });
   }
-
   ngOnInit(): void {
     this.authService.getLoggedInUser().subscribe((user) => {
-      console.log(user);
-      this.loggedInUser = user;
-      this.createdDate = this.formatEuropeanDate(
-        String(this.loggedInUser?.created)
-      );
-      if (this.loggedInUser) {
-        const userId = this.loggedInUser.id;
+      if (user) {
+        this.loggedInUser = user;
+        this.createdDate = this.formatEuropeanDate(String(user.created));
+        this.fetchJobsCreatedByUser();
+        this.countJobsCreatedByUser();
+        this.fetchAvatarLocation();
       }
     });
-    this.fetchJobsCreatedByUser();
-    this.countJobsCreatedByUser();
-    this.fetchAvatarLocation();
   }
-
   formatEuropeanDate(isoDateString: string): string {
     if (!isoDateString) {
       return '';

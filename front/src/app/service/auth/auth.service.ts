@@ -173,6 +173,11 @@ export class AuthService {
 
   setLoggedInUser(user: User | null): void {
     this.loggedInUserSubject.next(user);
+    if (user) {
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('loggedInUser');
+    }
   }
 
   getLoggedInUser(): Observable<User | null> {
@@ -188,4 +193,27 @@ export class AuthService {
   //   const body = { newPassword, resetToken };
   //   return this.http.post(`${API_URL}/reset-password`, body);
   // }
+
+  refreshUserData(): void {
+    if (!this.loggedInUserSubject.value) {
+      console.error('No user logged in');
+      return;
+    }
+
+    const username = this.loggedInUserSubject.value.username; // Ensure you have the username available
+    this.http
+      .get<User>(`${BACKEND_API_URL}${userEndpoint}${getByUsername}${username}`)
+      .subscribe({
+        next: (user) => {
+          console.log('User data refreshed successfully:', user);
+          this.setLoggedInUser(user);
+          // Update local storage with the new user data
+          localStorage.setItem('loggedInUser', JSON.stringify(user));
+        },
+        error: (error) => {
+          console.error('Failed to refresh user data', error);
+          // Optionally notify the user of the error
+        },
+      });
+  }
 }
