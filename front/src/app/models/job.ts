@@ -9,4 +9,5 @@ export class Job {
   dueDate?: Date;
   lastUpdated?: Date;
   currentWorkflowStep?: string;
+  editing?: boolean;
 }

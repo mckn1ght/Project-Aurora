@@ -57,13 +57,17 @@
         <ng-template pTemplate="body" let-item>
           <tr>
             <td *ngFor="let bodyKey of getKeys(item)">
+              <!-- Editable fields for job -->
               <ng-container
                 *ngIf="
-                  table === 'user' &&
-                  (bodyKey === 'credit' ||
-                    bodyKey === 'username' ||
-                    bodyKey === 'email' ||
-                    bodyKey === 'phoneNumber')
+                  table === 'job' &&
+                  [
+                    'title',
+                    'description',
+                    'location',
+                    'assignedToSpecialist',
+                    'currentWorkflowStep'
+                  ].includes(bodyKey)
                 "
               >
                 <div *ngIf="!item.editing">
@@ -78,20 +82,56 @@
                 </div>
                 <input
                   *ngIf="item.editing"
-                  [type]="bodyKey === 'email' ? 'email' : 'text'"
                   [(ngModel)]="item[bodyKey]"
-                  style="width: 100%"
                   class="p-inputtext p-component"
+                  style="width: 100%"
+                  [type]="bodyKey === 'email' ? 'email' : 'text'"
                 />
               </ng-container>
+
+              <!-- Editable fields for user -->
+              <ng-container
+                *ngIf="
+                  table === 'user' &&
+                  ['username', 'email', 'phoneNumber', 'credit'].includes(
+                    bodyKey
+                  )
+                "
+              >
+                <div *ngIf="!item.editing">
+                  {{ item[bodyKey] }}
+                  <button
+                    pButton
+                    type="button"
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-success"
+                    (click)="enableEdit(item)"
+                  ></button>
+                </div>
+                <input
+                  *ngIf="item.editing"
+                  [(ngModel)]="item[bodyKey]"
+                  class="p-inputtext p-component"
+                  style="width: 100%"
+                  [type]="bodyKey === 'email' ? 'email' : 'text'"
+                />
+              </ng-container>
+
               <ng-container
                 *ngIf="
                   !(
+                    table === 'job' &&
+                    [
+                      'title',
+                      'description',
+                      'location',
+                      'assignedToSpecialist',
+                      'currentWorkflowStep'
+                    ].includes(bodyKey)
+                  ) &&
+                  !(
                     table === 'user' &&
-                    (bodyKey === 'credit' ||
-                      bodyKey === 'username' ||
-                      bodyKey === 'email' ||
-                      bodyKey === 'phoneNumber')
+                    ['username', 'email', 'phoneNumber'].includes(bodyKey)
                   )
                 "
               >
@@ -107,12 +147,12 @@
                 (click)="deleteEntry(table, item.id)"
               ></button>
               <button
-                *ngIf="item.editing && table === 'user'"
+                *ngIf="item.editing"
                 pButton
                 type="button"
                 icon="pi pi-check"
                 class="p-button-rounded p-button-success"
-                (click)="saveUser(item)"
+                (click)="table === 'job' ? saveJob(item) : saveUser(item)"
               ></button>
             </td>
           </tr>
@@ -121,6 +161,7 @@
     </p-accordionTab>
   </p-accordion>
 </div>
+
 <p-confirmDialog></p-confirmDialog>
 
 <footer>

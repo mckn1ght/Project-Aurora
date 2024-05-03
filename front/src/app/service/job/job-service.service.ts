@@ -243,4 +243,11 @@ export class JobService {
     const apiUrl = BACKEND_API_URL + jobEndpoint;
     return this.http.get<string[]>(`${apiUrl}/${jobId}/expertiseAreas/`);
   }
+
+  updateJob(jobId: number, job: Job): Observable<Job> {
+    return this.http.put<Job>(
+      `${BACKEND_API_URL}${jobEndpoint}/update/${jobId}`,
+      job
+    );
+  }
 }

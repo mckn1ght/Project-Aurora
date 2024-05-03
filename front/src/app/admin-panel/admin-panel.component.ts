@@ -5,6 +5,8 @@ import { ConfirmationService } from 'primeng/api';
 import { UserService } from '../service/user/user.service';
 import { User } from '../models/user';
 import { AuthService } from '../service/auth/auth.service';
+import { JobService } from '../service/job/job-service.service';
+import { Job } from '../models/job';
 
 @Component({
   selector: 'app-admin-panel',
@@ -35,7 +37,8 @@ export class AdminPanelComponent implements OnInit {
     private dataService: DataService,
     private confirmationService: ConfirmationService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private jobService: JobService
   ) {}
 
   ngOnInit(): void {
@@ -108,9 +111,6 @@ export class AdminPanelComponent implements OnInit {
       });
     }
   }
-  enableEdit(item: any): void {
-    item.editing = true; // Enables the edit mode
-  }
 
   // saveCredit(item: any): void {
   //   this.userService.updateCredit(item.id, item.credit).subscribe({
@@ -163,5 +163,27 @@ export class AdminPanelComponent implements OnInit {
       },
       error: (error) => console.error('Error updating user:', error),
     });
+  }
+
+  saveJob(job: Job): void {
+    this.jobService.updateJob(job.id, job).subscribe({
+      next: (updatedJob) => {
+        console.log('Job updated successfully:', updatedJob);
+        job.editing = false;
+        // Handle successful update (e.g., update the UI or give feedback)
+      },
+      error: (error) => {
+        console.error('Error updating job:', error);
+        // Handle error (e.g., show an error message)
+      },
+    });
+  }
+
+  disableEdit(item: any): void {
+    item.editing = false;
+  }
+
+  enableEdit(item: any): void {
+    item.editing = true; // Enables the edit mode
   }
 }

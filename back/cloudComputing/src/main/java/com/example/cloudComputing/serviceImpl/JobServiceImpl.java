@@ -267,5 +267,17 @@ public class JobServiceImpl implements JobService {
   public List<String> getExpertiseAreaNamesByJobId(Long jobId) {
     return expertiseAreaRepository.findExpertiseAreaNamesByJobId(jobId);
   }
+  
+  public Job updateJob(Long jobId, Job updatedJob) {
+    return jobRepository.findById(jobId)
+      .map(job -> {
+        job.setTitle(updatedJob.getTitle());
+        job.setDescription(updatedJob.getDescription());
+        job.setLocation(updatedJob.getLocation());
+        job.setAssignedToSpecialist(updatedJob.getAssignedToSpecialist());
+        job.setCurrentWorkflowStep(updatedJob.getCurrentWorkflowStep());
+        return jobRepository.save(job);
+      }).orElse(null);
+  }
 }
 

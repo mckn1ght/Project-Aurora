@@ -200,6 +200,15 @@ public class JobController {
     }
     return ResponseEntity.ok(expertiseAreaNames);
   }
+
+  @PutMapping("/update/{jobId}")
+  public ResponseEntity<Job> updateJob(@PathVariable Long jobId, @RequestBody Job updatedJob) {
+    Job job = jobServiceImpl.updateJob(jobId, updatedJob);
+    if (job == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(job);
+  }
 }
 
 
