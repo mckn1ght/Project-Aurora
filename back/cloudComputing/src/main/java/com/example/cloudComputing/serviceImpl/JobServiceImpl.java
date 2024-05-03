@@ -6,6 +6,7 @@ import com.example.cloudComputing.entity.Review;
 import com.example.cloudComputing.exception.job.*;
 import com.example.cloudComputing.exception.review.NoReviewIdFoundException;
 import com.example.cloudComputing.mapper.JobMapper;
+import com.example.cloudComputing.repository.ExpertiseAreaRepository;
 import com.example.cloudComputing.repository.JobRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class JobServiceImpl implements JobService {
 
   @Autowired
   private JobMapper jobMapper;
+
+  @Autowired
+  private ExpertiseAreaRepository expertiseAreaRepository;
 
 //  public JobDto add(JobDto jobDto) {
 //    return jobMapper.mapToJobDto(jobRepository.save(jobMapper.mapToJob(jobDto)));
@@ -258,6 +262,10 @@ public class JobServiceImpl implements JobService {
 
   public List<Job> getJobsByExpertiseAreaId(int expertiseAreaId) {
     return jobRepository.findByExpertiseAreasId(expertiseAreaId);
+  }
+
+  public List<String> getExpertiseAreaNamesByJobId(Long jobId) {
+    return expertiseAreaRepository.findExpertiseAreaNamesByJobId(jobId);
   }
 }
 

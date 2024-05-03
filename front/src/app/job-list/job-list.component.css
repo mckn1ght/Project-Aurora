@@ -75,6 +75,7 @@ header {
   padding: 15px;
   margin-bottom: 20px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Hide content that goes beyond the box */
 }
 
 .job-item:hover {
@@ -91,6 +92,9 @@ header {
 
 .job-description {
   margin-bottom: 10px;
+  word-wrap: break-word; /* Breaks long words to prevent overflow */
+  overflow-wrap: break-word; /* Ensures proper wrapping of content */
+  white-space: normal; /* Ensures no extra whitespace is preserved */
 }
 
 .job-expertise {

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../service/data/data.service';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 import { ConfirmationService } from 'primeng/api';
+import { UserService } from '../service/user/user.service';
+import { User } from '../models/user';
+import { AuthService } from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -19,13 +22,20 @@ export class AdminPanelComponent implements OnInit {
     specialist: [],
     specialistExpertiseArea: [],
     user: [],
+    resource: [],
   };
+  newCredit: number = 0;
+  userId: number = 0;
+  loggedInUser: User | null = null;
+
   appEnvironment: String = APPLICATION_ENVIRONMENT;
   appVersion: String = APPLICATION_VERSION;
 
   constructor(
     private dataService: DataService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +53,7 @@ export class AdminPanelComponent implements OnInit {
       specialistExpertiseArea:
         this.dataService.getAllSpecialistExpertiseAreas(),
       user: this.dataService.getAllUsers(),
+      resource: this.dataService.getAllResources(),
     };
 
     Object.entries(fetchers).forEach(([key, observable]) => {
@@ -79,6 +90,42 @@ export class AdminPanelComponent implements OnInit {
           },
         });
       },
+    });
+  }
+
+  updateUserCredit(user: any): void {
+    if (user.id && user.credit) {
+      this.userService.updateCredit(user.id, user.credit).subscribe({
+        next: () => {
+          console.log('Credit updated successfully for user ID:', user.id);
+          // You might want to refresh the data or indicate success in the UI
+        },
+        error: (error) => {
+          console.error('Failed to update credit', error);
+          // Handle errors here, such as displaying a user-facing message
+        },
+      });
+    }
+  }
+  enableEdit(item: any): void {
+    item.editing = true; // Enables the edit mode
+  }
+
+  saveCredit(item: any): void {
+    this.userService.updateCredit(item.id, item.credit).subscribe({
+      next: () => {
+        console.log('Credit updated successfully');
+        item.editing = false; // Disable editing mode on successful update
+        this.fetchUserData();
+      },
+      error: (error) => console.error('Error updating credit:', error),
+    });
+  }
+
+  fetchUserData() {
+    this.authService.getLoggedInUser().subscribe((user) => {
+      console.log(user);
+      this.loggedInUser = user;
     });
   }
 }

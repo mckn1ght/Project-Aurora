@@ -191,6 +191,15 @@ public class JobController {
   public List<Job> getJobsByExpertiseAreaId(@PathVariable int expertiseAreaId) {
     return jobServiceImpl.getJobsByExpertiseAreaId(expertiseAreaId);
   }
+
+  @GetMapping("/{jobId}/expertiseAreas/")
+  public ResponseEntity<List<String>> getExpertiseAreaNames(@PathVariable Long jobId) {
+    List<String> expertiseAreaNames = jobServiceImpl.getExpertiseAreaNamesByJobId(jobId);
+    if (expertiseAreaNames.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(expertiseAreaNames);
+  }
 }
 
 

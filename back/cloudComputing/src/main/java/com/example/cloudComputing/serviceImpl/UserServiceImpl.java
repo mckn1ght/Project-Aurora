@@ -49,6 +49,17 @@ public UserDto add(UserDto userDto) {
   }
 
   @Transactional
+  public void updateCredit(Long userId, double credit) {
+    User user = userRepository.findById(userId)
+      .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));
+    System.out.println("Current credit: " + user.getCredit());
+    user.setCredit(credit);
+    userRepository.save(user);
+    System.out.println("Updated credit: " + user.getCredit());
+  }
+
+
+  @Transactional
   public void updateEmail(Long userId, String email) {
     User user = userRepository.findById(userId)
       .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));

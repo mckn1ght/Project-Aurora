@@ -64,4 +64,11 @@ export class UserService {
       { headers: { 'Content-Type': 'application/json' } } // Set Content-Type to application/json
     );
   }
+
+  updateCredit(userId: number, credit: number): Observable<any> {
+    return this.http.put(
+      `${BACKEND_API_URL}${userEndpoint}/updateCredit/${userId}`,
+      { credit: credit.toString() }
+    );
+  }
 }

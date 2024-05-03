@@ -28,6 +28,7 @@ export class JobDetailsComponent implements OnInit {
   createdByUser: String = '';
   assignedToSpecialist: String = '';
   showBidAmountPopUp: boolean = false;
+  expertiseAreas: string[] = [];
 
   popupVisible: boolean = false;
   bidAmount: number = 0;
@@ -59,6 +60,7 @@ export class JobDetailsComponent implements OnInit {
       const id = +params['id'];
       if (id) {
         this.fetchJobDetails(id);
+        this.loadExpertiseAreas(id);
       } else {
         console.error('Invalid job ID:', id);
       }
@@ -212,5 +214,16 @@ export class JobDetailsComponent implements OnInit {
 
   closePopup() {
     this.popupVisible = false;
+  }
+
+  loadExpertiseAreas(id: number) {
+    console.log(this.job);
+    console.log(this.job?.id);
+    this.jobService.getExpertiseAreaNames(id).subscribe({
+      next: (areas) => {
+        this.expertiseAreas = areas;
+      },
+      error: (error) => console.error('Error fetching expertise areas:', error),
+    });
   }
 }

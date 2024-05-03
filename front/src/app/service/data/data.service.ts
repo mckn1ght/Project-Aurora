@@ -43,6 +43,10 @@ export class DataService {
     return this.http.get<any[]>(`${this.apiUrl}/user/all`);
   }
 
+  getAllResources(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/resource/all`);
+  }
+
   delete(tableName: string, id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${tableName}/delete/${id}`);
   }

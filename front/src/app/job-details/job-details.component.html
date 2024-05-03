@@ -56,9 +56,21 @@
       </div>
     </div>
     <div class="details-section">
-      <p class="label">Etapa:</p>
-      <p class="value">{{ job.currentWorkflowStep }}</p>
+      <div>
+        <p class="label">Etapa:</p>
+        <p class="value">{{ job.currentWorkflowStep }}</p>
+      </div>
+      <div *ngIf="expertiseAreas.length > 0; else noAreas">
+        <h3>Expertise Areas</h3>
+        <ul>
+          <li *ngFor="let area of expertiseAreas">{{ area }}</li>
+        </ul>
+      </div>
+      <ng-template #noAreas>
+        <p>No expertise areas found for this job.</p>
+      </ng-template>
     </div>
+
     <!-- job-details.component.html -->
 
     <div class="job-ddetails" *ngIf="job">

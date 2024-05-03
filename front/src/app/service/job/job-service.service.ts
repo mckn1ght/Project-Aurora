@@ -238,4 +238,9 @@ export class JobService {
       `${apiUrl}${getByExpertiseArea}${expertiseAreaId}`
     );
   }
+
+  getExpertiseAreaNames(jobId: number): Observable<string[]> {
+    const apiUrl = BACKEND_API_URL + jobEndpoint;
+    return this.http.get<string[]>(`${apiUrl}/${jobId}/expertiseAreas/`);
+  }
 }

@@ -68,6 +68,18 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @PutMapping(path = "/updateCredit/{id}", consumes = "application/json")
+  @Transactional
+  public ResponseEntity<Void> updateCredit(
+    @PathVariable Long id,
+    @RequestBody Map<String, String> creditMap
+  ) {
+    String credit = creditMap.get("credit");
+    System.out.println("Received credit: " + credit);
+    userServiceImpl.updateCredit(id, Double.parseDouble(credit));
+    return ResponseEntity.ok().build();
+  }
+
 
 
   @CrossOrigin(origins = "http://localhost:4200")
