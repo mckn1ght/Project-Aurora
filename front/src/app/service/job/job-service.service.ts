@@ -22,6 +22,7 @@ import {
   workflow,
   countCreatedBy,
   getByExpertiseArea,
+  jobPicture,
 } from 'src/app/constants';
 import { Job } from 'src/app/models/job';
 
@@ -249,5 +250,23 @@ export class JobService {
       `${BACKEND_API_URL}${jobEndpoint}/update/${jobId}`,
       job
     );
+  }
+
+  uploadJobPictures(jobId: number, pictures: File[]): Observable<any> {
+    const formData = new FormData();
+    for (const picture of pictures) {
+      formData.append('pictures', picture, picture.name);
+    }
+    return this.http
+      .post(`${BACKEND_API_URL}${jobPicture}/upload/${jobId}`, formData, {
+        reportProgress: true,
+        observe: 'events', // If you want to track the progress of the upload
+      })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error uploading pictures:', error);
+          return throwError(error);
+        })
+      );
   }
 }

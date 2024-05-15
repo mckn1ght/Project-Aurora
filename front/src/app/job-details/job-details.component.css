@@ -144,3 +144,19 @@ footer {
 .homepage {
   margin-bottom: 150px; /* ensures space for the fixed footer */
 }
+
+.credit {
+  color: green;
+}
+
+.notEnoughCredits {
+  color: red;
+  padding-left: 50px;
+}
+
+.button.disabled,
+.button:disabled {
+  background-color: #cccccc; /* Gray background */
+  color: #666666; /* Darker text to indicate it's disabled */
+  cursor: not-allowed; /* Change cursor to indicate disabled state */
+}

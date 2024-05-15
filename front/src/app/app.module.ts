@@ -44,6 +44,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { ConfirmDialogModule } from 'primeng/confirmdialog'; // Import the ConfirmDialogModule
 import { ConfirmationService } from 'primeng/api';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
     ButtonModule,
     AccordionModule,
     ConfirmDialogModule,
+    FileUploadModule,
   ],
   providers: [ConfirmationService],
   bootstrap: [AppComponent], //, MyJobsComponent - > eroare my-jobs-component not found NG System

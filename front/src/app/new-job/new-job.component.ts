@@ -34,6 +34,7 @@ export class NewJobComponent {
   newJobForm: FormGroup;
   minDate: string;
   selectedExpertiseAreas: any[] = [];
+  selectedFiles: File[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +48,6 @@ export class NewJobComponent {
       description: ['', [Validators.required, Validators.minLength(25)]],
       expertiseAreas: ['', [Validators.required]],
       location: ['', [Validators.required, Validators.minLength(5)]],
-      // phoneNumber: ['', [Validators.required]],
       dueDate: ['', Validators.required],
     });
     const currentDate = new Date();
@@ -58,61 +58,45 @@ export class NewJobComponent {
     this.loadExpertiseAreas();
     this.authService.getLoggedInUser().subscribe((user) => {
       this.loggedInUser = user;
-      if (this.loggedInUser) {
-        const userId = this.loggedInUser.id;
-      }
     });
   }
 
-  // addJob() {
-  //   this.error = '';
-  //   this.newJob.creationDate = new Date();
-  //   this.newJob.lastUpdated = new Date();
-  //   this.newJob.createdByUser = this.loggedInUser?.id;
-  //   if (this.newJobForm.valid) {
-  //     this.jobService.addJob(this.newJob).subscribe(
-  //       (response) => {
-  //         console.log('Job added successfully:', response);
-  //         this.insertExpertiseAreas(
-  //           response.jobId,
-  //           this.newJobForm.value.expertiseAreas
-  //         );
-  //         this.router.navigate(['/jobs']);
-  //       },
-  //       (error) => {
-  //         console.error('Error adding job:', error.error);
-  //         this.error = error.error
-  //           ? error.error
-  //           : 'An error occurred while adding the job.';
-  //       }
-  //     );
-  //   } else {
-  //     console.error('Job posting failed. Problem during API call:', Error);
-  //   }
-  // }
+  onFileSelected(event: any) {
+    console.log('File selection event:', event); // Log the event structure
+    this.selectedFiles = event.currentFiles || event.files; // Adjust based on the event structure
+    console.log('Files selected:', this.selectedFiles); // Log selected files
+  }
 
   addJob() {
     this.error = '';
     this.newJob.creationDate = new Date();
     this.newJob.lastUpdated = new Date();
     this.newJob.createdByUser = this.loggedInUser?.id;
+
+    console.log('Selected files before job creation:', this.selectedFiles); // Check selected files
+
     if (this.newJobForm.valid) {
       this.jobService.addJob(this.newJob).subscribe(
         (response) => {
           console.log('Job added successfully:', response);
-          this.insertExpertiseAreas(
-            response.jobId,
-            this.newJobForm.value.expertiseAreas
-          ).subscribe({
-            next: (resp) => {
-              console.log('Expertise areas added successfully:', resp);
-              this.router.navigate(['/my-jobs']);
-            },
-            error: (err) => {
-              console.error('Error while adding expertise areas:', err);
-              this.error = 'Failed to add expertise areas.';
-            },
-          });
+          const jobId = response.jobId;
+          this.insertExpertiseAreas(jobId, this.newJobForm.value.expertiseAreas)
+            .pipe(
+              catchError((err) => {
+                console.error('Error while adding expertise areas:', err);
+                this.error = 'Failed to add expertise areas.';
+                return EMPTY;
+              })
+            )
+            .subscribe(() => {
+              if (this.selectedFiles && this.selectedFiles.length > 0) {
+                console.log('Preparing to upload pictures for job ID:', jobId); // Log before uploading
+                this.uploadPictures(jobId, this.selectedFiles);
+              } else {
+                console.log('No files to upload, navigating to my jobs'); // Log if no files to upload
+                this.router.navigate(['/my-jobs']);
+              }
+            });
         },
         (error) => {
           console.error('Error adding job:', error);
@@ -122,6 +106,21 @@ export class NewJobComponent {
     } else {
       console.error('Job posting failed. Problem during API call:', Error);
     }
+  }
+
+  uploadPictures(jobId: number, pictures: File[]) {
+    console.log('Uploading pictures:', pictures); // Log before uploading
+    this.jobService.uploadJobPictures(jobId, pictures).subscribe(
+      (response) => {
+        console.log('Pictures uploaded successfully:', response);
+        this.router.navigate(['/my-jobs']);
+      },
+      (error) => {
+        console.error('Error uploading pictures:', error);
+        this.error = 'Failed to upload pictures.';
+        this.router.navigate(['/my-jobs']);
+      }
+    );
   }
 
   loadExpertiseAreas(): void {
@@ -134,27 +133,6 @@ export class NewJobComponent {
       }
     );
   }
-
-  // insertExpertiseAreas(jobId: number, expertiseAreas: any[]) {
-  //   if (expertiseAreas.length === 0) {
-  //     console.log('No expertise areas to insert.');
-  //     return;
-  //   }
-
-  //   this.expertiseAreaService
-  //     .addJobExpertiseArea(jobId, expertiseAreas)
-  //     .subscribe(
-  //       (response) => {
-  //         console.log(
-  //           'Expertise areas added to the job successfully:',
-  //           response
-  //         );
-  //       },
-  //       (error) => {
-  //         console.error('Error adding expertise areas to the job:', error);
-  //       }
-  //     );
-  // }
 
   insertExpertiseAreas(jobId: number, expertiseAreas: any[]): Observable<any> {
     if (expertiseAreas.length === 0) {

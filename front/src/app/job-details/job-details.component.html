@@ -99,19 +99,27 @@
 <div class="popup" [ngStyle]="{ display: popupVisible ? 'block' : 'none' }">
   <div class="popup-content">
     <span (click)="closePopup()" class="close">&times;</span>
+    <div class="credit">Credite disponibile: {{ loggedInUser?.credit }}</div>
     <h2>Introduceti suma</h2>
-    <form>
+    <form (submit)="addBid()">
       <label for="bidAmount">Suma licitata:</label>
       <input
         pInputText
-        type="text"
+        type="number"
         id="bidAmount"
         name="bidAmount"
         [(ngModel)]="bidAmount"
         class="bidInput"
-        appDoubleNumberInput
       />
-      <button type="submit" class="button" (click)="addBid()">
+      <div *ngIf="loggedInUser?.credit! < bidAmount" class="notEnoughCredits">
+        Nu dispuneti de credite suficiente.
+      </div>
+      <button
+        type="submit"
+        class="button"
+        [disabled]="loggedInUser?.credit! < bidAmount || !bidAmount"
+      >
+        <!-- Disabled condition -->
         Trimite solicitare
       </button>
     </form>

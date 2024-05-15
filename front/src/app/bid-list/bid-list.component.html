@@ -1,3 +1,24 @@
+<header class="top-menu">
+  <div class="logo">
+    <img
+      class="logoImage"
+      src="../../assets/icons/fossil.shell@2x.png"
+      alt="Logo"
+      style="display: inline-block"
+    />
+    <h1 style="display: inline-block">Project Aurora</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/landing">Landing</a></li>
+      <li><a href="/profile">Profil</a></li>
+      <li><a href="/login">Logout</a></li>
+      <li><a href="/my-jobs">My Jobs</a></li>
+    </ul>
+  </nav>
+</header>
+
 <div class="centered-container">
   <h2 class="h2 title">{{ selectedJob?.title }}</h2>
   <h2 class="h2 description">{{ selectedJob?.description }}</h2>
@@ -11,7 +32,7 @@
           Specialist: {{ userDetails[i]?.firstName }}
           {{ userDetails[i]?.lastName }}
         </p>
-        <p>Bid: {{ bid.amount }}</p>
+        <p>Bid: {{ bid.amount }} credite</p>
         <p>Bid Created at: {{ bid.createdAt | date : "short" }}</p>
         <p>Phone Number: {{ userDetails[i]?.phoneNumber }}</p>
         <p>Email: {{ userDetails[i]?.email }}</p>
@@ -39,3 +60,10 @@
     </p-card>
   </div>
 </div>
+
+<footer>
+  <p>
+    &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+    {{ appVersion }}
+  </p>
+</footer>

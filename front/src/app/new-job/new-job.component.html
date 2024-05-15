@@ -160,6 +160,22 @@
 
       <div class="card">
         <div class="form-group">
+          <label for="pictures">Selectati imaginile:</label>
+          <p-fileUpload
+            name="pictures"
+            [multiple]="true"
+            (onSelect)="onFileSelected($event)"
+            [maxFileSize]="1000000"
+            accept="image/*"
+            mode="advanced"
+            [auto]="false"
+            [customUpload]="false"
+          ></p-fileUpload>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="form-group">
           <label for="location">Locatie:</label>
           <input
             type="text"

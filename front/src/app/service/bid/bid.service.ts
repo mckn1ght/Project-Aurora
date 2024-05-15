@@ -14,6 +14,7 @@ import {
   job,
   setBidStatus,
 } from 'src/app/constants';
+import { Bid } from 'src/app/models/bid';
 
 @Injectable({
   providedIn: 'root',
@@ -93,5 +94,10 @@ export class BidService {
         return throwError('Error accepting bid: ' + error.statusText);
       })
     );
+  }
+
+  getByBidId(bidId: number): Observable<any> {
+    const url = `${BACKEND_API_URL}${bidEndpoint}/getById/${bidId}`;
+    return this.http.get(url);
   }
 }

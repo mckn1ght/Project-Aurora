@@ -42,4 +42,5 @@ V0.2.0-SHAPSHOT
 &emsp;&emsp;-Added the resources table that holds the information about the location of all user's resources  
 &emsp;&emsp;-Change avatar functionality  
 &emsp;&emsp;-Added editable fields for jobs and users in Admin Panel  
+&emsp;&emsp;-Added the ability to upload job pictures  
     

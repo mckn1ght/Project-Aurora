@@ -36,6 +36,9 @@ export const withBids = '/withBids';
 export const countCreatedBy = '/countCreatedBy/';
 export const getByExpertiseArea = '/getByExpertiseArea/';
 
+//JobPicture
+export const jobPicture = '/jobPicture';
+
 //Bid
 export const bidEndpoint = '/bid';
 export const getAllByBiddingSpecialist = '/biddingSpecialist/';

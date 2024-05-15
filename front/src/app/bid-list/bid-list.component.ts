@@ -7,6 +7,7 @@ import { JobService } from '../service/job/job-service.service';
 import { UserService } from '../service/user/user.service';
 import { forkJoin, map, of, switchMap } from 'rxjs';
 import { User } from '../models/user';
+import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 
 @Component({
   selector: 'app-bid-list',
@@ -22,6 +23,9 @@ export class BidListComponent implements OnInit {
   rejectStatus: string = 'rejected';
   acceptedStatus: string = 'accepted';
   activeBidCount = 0;
+
+  appEnvironment: String = APPLICATION_ENVIRONMENT;
+  appVersion: String = APPLICATION_VERSION;
 
   constructor(
     private route: ActivatedRoute,

@@ -133,27 +133,68 @@ export class MyJobsComponent implements OnInit {
   }
 
   deleteBid(bidId: number): void {
-    this.bidService.deleteBid(bidId).subscribe(
-      () => {
-        console.log('Licitatie stearsa cu succes.');
+    // Fetch the bid first
+    this.bidService.getByBidId(bidId).subscribe(
+      (bid: any) => {
+        const jobId = bid.jobId; // Assuming the job ID is stored in the 'jobId' property of the bid object
 
-        this.router
-          .navigateByUrl('/', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/my-jobs']);
-          });
+        // Now, delete the bid
+        this.bidService.deleteBid(bidId).subscribe(
+          () => {
+            console.log('Licitatie stearsa cu succes.');
+
+            // Fetch active bids for this job
+            this.bidService
+              .getActiveBidsByJob(jobId)
+              .subscribe((activeBids: any[]) => {
+                console.log('Active bids:', activeBids);
+                // If no active bids, set the workflow status of the job to 'New'
+                if (Number(activeBids) === 0) {
+                  console.log('IOn IF');
+                  this.jobService.setWorkflowStatus(jobId, 'New').subscribe(
+                    () => {
+                      console.log(
+                        'Workflow status updated to "New" for job:',
+                        jobId
+                      );
+                      this.navigateToJobs();
+                    },
+                    (error) => {
+                      console.error(
+                        'Error updating workflow status for job:',
+                        error
+                      );
+                      this.navigateToJobs();
+                    }
+                  );
+                } else {
+                  console.log('else IF');
+                  // If there are still active bids, navigate without changing the workflow status
+                  this.navigateToJobs();
+                }
+              });
+          },
+          (error) => {
+            console.error('Eroare stergere licitatie:', error);
+          }
+        );
       },
       (error) => {
-        console.error('Eroare stergere licitatie:', error);
+        console.error('Error fetching bid:', error);
       }
     );
+  }
+
+  navigateToJobs() {
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate(['/my-jobs']));
   }
 
   deleteJob(jobId: number): void {
     this.jobService.deleteJob(jobId).subscribe(
       () => {
         console.log('Solicitare stearsa cu succes.');
-
         this.router
           .navigateByUrl('/', { skipLocationChange: true })
           .then(() => {

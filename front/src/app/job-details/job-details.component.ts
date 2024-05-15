@@ -226,4 +226,16 @@ export class JobDetailsComponent implements OnInit {
       error: (error) => console.error('Error fetching expertise areas:', error),
     });
   }
+
+  updateCredit(item: any): void {
+    this.userService
+      .updateCredit(item.id, item.credit - this.bidAmount)
+      .subscribe({
+        next: () => {
+          console.log('Credit updated successfully');
+          this.authService.refreshUserData(); // Refresh the user data from the server
+        },
+        error: (error) => console.error('Error updating credit:', error),
+      });
+  }
 }
