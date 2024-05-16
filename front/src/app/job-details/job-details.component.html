@@ -70,8 +70,25 @@
         <p>No expertise areas found for this job.</p>
       </ng-template>
     </div>
+    <div class="details-section" *ngIf="jobPictures.length > 0">
+      <h3>Job Pictures</h3>
+      <div class="pictures-container">
+        <img
+          *ngFor="let picture of jobPictures"
+          [src]="'http://localhost:8080' + picture"
+          alt="Job Picture"
+          class="job-picture"
+          (click)="openModal('http://localhost:8080' + picture)"
+        />
+      </div>
+    </div>
 
-    <!-- job-details.component.html -->
+    <!-- The Modal -->
+    <div id="myModal" class="modal" (click)="closeModal($event)">
+      <span class="close">&times;</span>
+      <img class="modal-content" id="img01" />
+      <div id="caption"></div>
+    </div>
 
     <div class="job-ddetails" *ngIf="job">
       <button

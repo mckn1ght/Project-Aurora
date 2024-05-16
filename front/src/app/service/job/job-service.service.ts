@@ -269,4 +269,8 @@ export class JobService {
         })
       );
   }
+
+  getJobPictures(jobId: number): Observable<any> {
+    return this.http.get(BACKEND_API_URL + jobPicture + '/jobId/' + jobId);
+  }
 }

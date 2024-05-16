@@ -33,6 +33,8 @@ export class JobDetailsComponent implements OnInit {
   popupVisible: boolean = false;
   bidAmount: number = 0;
 
+  jobPictures: string[] = [];
+
   newBid: any = {
     jobId: '',
     specialistId: '',
@@ -59,6 +61,7 @@ export class JobDetailsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       if (id) {
+        this.loadJobPictures(id);
         this.fetchJobDetails(id);
         this.loadExpertiseAreas(id);
       } else {
@@ -79,11 +82,30 @@ export class JobDetailsComponent implements OnInit {
         });
       }
     });
-
-    // console.log(
-    //   JSON.stringify(this.authService.getLoggedInUser()) + ' @@@@@@@@'
-    // );
   }
+
+  loadJobPictures(jobId: number) {
+    this.jobService.getJobPictures(jobId).subscribe(
+      (pictures) => {
+        console.log(pictures); // Inspect the structure of the returned data
+        this.jobPictures = pictures.map((pic: any) => {
+          if (pic.url) {
+            return `/uploads/jobs/${pic.url.split('/').pop()}`;
+          } else {
+            console.error('Unexpected picture format:', pic);
+            return '';
+          }
+        });
+      },
+      (error) => {
+        console.error('Error fetching job pictures:', error);
+      }
+    );
+  }
+
+  // console.log(
+  //   JSON.stringify(this.authService.getLoggedInUser()) + ' @@@@@@@@'
+  // );
 
   assignToMe(jobId: number, specialistId: number) {
     this.jobService.assignJobToSpecialist(jobId, specialistId).subscribe(
@@ -237,5 +259,27 @@ export class JobDetailsComponent implements OnInit {
         },
         error: (error) => console.error('Error updating credit:', error),
       });
+  }
+
+  openModal(src: string): void {
+    const modal = document.getElementById('myModal') as HTMLElement;
+    const modalImg = document.getElementById('img01') as HTMLImageElement;
+    const captionText = document.getElementById('caption') as HTMLElement;
+
+    modal.style.display = 'block';
+    modalImg.src = src;
+    captionText.innerHTML = src;
+
+    const span = document.getElementsByClassName('close')[0] as HTMLElement;
+    span.onclick = () => {
+      modal.style.display = 'none';
+    };
+  }
+
+  closeModal(event: Event): void {
+    const modal = document.getElementById('myModal') as HTMLElement;
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
   }
 }

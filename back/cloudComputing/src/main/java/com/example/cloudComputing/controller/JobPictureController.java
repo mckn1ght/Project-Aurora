@@ -28,6 +28,33 @@ public class JobPictureController {
 
   private static final String UPLOAD_DIR = "uploads/jobs/";
 
+//  @PostMapping("/upload/{jobId}")
+//  public ResponseEntity<String> uploadJobPictures(@PathVariable int jobId, @RequestParam("pictures") MultipartFile[] pictures) {
+//    System.out.println("Uploading pictures for job ID: " + jobId); // Log job ID
+//    try {
+//      for (int i = 0; i < pictures.length; i++) {
+//        MultipartFile picture = pictures[i];
+//        System.out.println("Processing file: " + picture.getOriginalFilename()); // Log file name
+//        JobPictureDto jobPictureDto = new JobPictureDto();
+//        jobPictureDto.setJobId(jobId);
+//        jobPictureDto.setUrl(saveFile(jobId, picture, i + 1)); // Implement saveFile method to save the file and return the URL
+//        jobPictureServiceImpl.add(jobPictureDto);
+//      }
+//      return ResponseEntity.ok("Pictures uploaded successfully");
+//    } catch (IOException e) {
+//      System.err.println("Error uploading pictures: " + e.getMessage()); // Log error
+//      return ResponseEntity.status(500).body("Failed to upload pictures: " + e.getMessage());
+//    } catch (Exception e) {
+//      System.err.println("General error: " + e.getMessage()); // Log general error
+//      return ResponseEntity.status(500).body("General error: " + e.getMessage());
+//    }
+//  }
+
+  @GetMapping("/jobId/{jobId}")
+  public ResponseEntity<List<JobPictureDto>> getAllByJobId(@PathVariable int jobId) {
+    return ResponseEntity.ok(jobPictureServiceImpl.getAllByJobId(jobId));
+  }
+
   @PostMapping("/upload/{jobId}")
   public ResponseEntity<String> uploadJobPictures(@PathVariable int jobId, @RequestParam("pictures") MultipartFile[] pictures) {
     System.out.println("Uploading pictures for job ID: " + jobId); // Log job ID
@@ -50,11 +77,6 @@ public class JobPictureController {
     }
   }
 
-  @GetMapping("/jobId/{jobId}")
-  public ResponseEntity<List<JobPictureDto>> getAllByJobId(@PathVariable int jobId) {
-    return ResponseEntity.ok(jobPictureServiceImpl.getAllByJobId(jobId));
-  }
-
   private String saveFile(int jobId, MultipartFile file, int pictureIndex) throws IOException {
     // Get the application's base directory
     String baseDir = System.getProperty("user.dir");
@@ -73,8 +95,8 @@ public class JobPictureController {
     file.transferTo(dest);
     System.out.println("File saved to: " + filePath); // Log file path
 
-    // Return the URL or path where the file is saved
-    return filePath;
+    // Return the relative URL
+    return UPLOAD_DIR + fileName; // This should be the relative path accessible by the frontend
   }
 
   private String getFileExtension(String fileName) {
@@ -84,4 +106,5 @@ public class JobPictureController {
     int dotIndex = fileName.lastIndexOf('.');
     return (dotIndex == -1) ? "" : fileName.substring(dotIndex);
   }
+
 }
