@@ -9,7 +9,15 @@
         style="display: inline-block"
       />
       <h1 style="display: inline-block">Project Aurora</h1>
+      <button
+        class="add-request-button add-request-button-spec"
+        *ngIf="loggedInUser?.specialistId == null"
+        (click)="createNewSpecialist()"
+      >
+        Devino specialist!
+      </button>
     </div>
+
     <nav>
       <ul>
         <li><a href="/home">Home</a></li>
@@ -20,7 +28,7 @@
         <button
           class="add-request-button"
           *ngIf="loggedInUser?.specialistId == null"
-          (click)="navigateToNewJob()"
+          (click)="createNewSpecialist()"
         >
           Publica un anunt
         </button>

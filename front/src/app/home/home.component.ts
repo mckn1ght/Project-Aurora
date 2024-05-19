@@ -51,9 +51,12 @@ export class HomeComponent {
   }
 
   navigateToJobSearch() {
-    console.log('searchInput: ' + this.searchInput);
     this.router.navigate(['/job-list'], {
       queryParams: { searchInput: this.searchInput },
     });
+  }
+
+  createNewSpecialist() {
+    this.router.navigate(['/newSpecialist']);
   }
 }

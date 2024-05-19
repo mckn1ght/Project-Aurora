@@ -23,9 +23,20 @@ public class SpecialistExpertiseAreaServiceImpl implements SpecialistExpertiseAr
   @Autowired
   private SpecialistExpertiseAreaMapper specialistExpertiseAreaMapper;
 
-  public SpecialistExpertiseAreaDto add(SpecialistExpertiseAreaDto specialistExpertiseAreaDto) {
-    return specialistExpertiseAreaMapper.mapToSpecialistExpertiseAreaDto(specialistExpertiseAreaRepository.save(specialistExpertiseAreaMapper.mapToSpecialistExpertiseArea(specialistExpertiseAreaDto)));
+//  public SpecialistExpertiseAreaDto add(SpecialistExpertiseAreaDto specialistExpertiseAreaDto) {
+//    return specialistExpertiseAreaMapper.mapToSpecialistExpertiseAreaDto(specialistExpertiseAreaRepository.save(specialistExpertiseAreaMapper.mapToSpecialistExpertiseArea(specialistExpertiseAreaDto)));
+//  }
+
+  public void add(Long specialistId, List<Integer> expertiseAreas) {
+    System.out.println("Adding expertise areas to specialist.");
+    for (Integer expertiseAreaId : expertiseAreas) {
+      SpecialistExpertiseAreaDto specialistExpertiseAreaDto = new SpecialistExpertiseAreaDto();
+      specialistExpertiseAreaDto.setSpecialistId(Math.toIntExact(specialistId));
+      specialistExpertiseAreaDto.setExpertiseAreaId(expertiseAreaId);
+      specialistExpertiseAreaRepository.save(specialistExpertiseAreaMapper.mapToSpecialistExpertiseArea(specialistExpertiseAreaDto));
+    }
   }
+
 
   public List<SpecialistExpertiseAreaDto> getAll() {
     List<SpecialistExpertiseAreaDto> specialistExpertiseAreaDtos = specialistExpertiseAreaRepository.findAll().stream().map(specialistExpertiseAreaDto ->

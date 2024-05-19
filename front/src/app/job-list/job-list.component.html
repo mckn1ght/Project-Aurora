@@ -28,6 +28,23 @@
           <div class="job-description">{{ job.description }}</div>
           <div class="job-expertise">{{ job.expertiseArea }}</div>
           <div class="job-due-date">Due Date: {{ job.dueDate | date }}</div>
+          <div
+            class="job-pictures"
+            *ngIf="job.pictures && job.pictures.length > 0"
+          >
+            <div class="details-section">
+              <h3>Job Pictures</h3>
+              <div class="pictures-container">
+                <img
+                  *ngFor="let picture of job.pictures"
+                  [src]="'http://localhost:8080' + picture"
+                  alt="Job Picture"
+                  class="job-picture"
+                  (click)="openModal('http://localhost:8080' + picture)"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -41,6 +58,7 @@
     </div>
   </div>
 </div>
+
 <div>
   <footer>
     <p>
@@ -48,4 +66,11 @@
       {{ appVersion }}
     </p>
   </footer>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal" (click)="closeModal()">
+  <span class="close" (click)="closeModal()">&times;</span>
+  <img class="modal-content" id="img01" />
+  <div id="caption"></div>
 </div>

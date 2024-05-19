@@ -40,4 +40,26 @@ export class ExpertiseAreaService {
         })
       );
   }
+
+  addSpecialistExpertiseArea(
+    specialistId: number,
+    expertiseAreas: any[]
+  ): Observable<any> {
+    const payload = {
+      specialistId: specialistId,
+      expertiseAreas: expertiseAreas.map((area) => area.id), // Only send the IDs
+    };
+
+    console.log('Sending payload to backend:', payload);
+
+    return this.http
+      .post<any>(`${BACKEND_API_URL}/specialistExpertiseArea/add`, payload)
+      .pipe(
+        catchError((error) => {
+          console.error('Error adding specialist expertise areas:', error);
+          console.error('Full error response:', error);
+          throw error; // Rethrow the error to propagate it to the caller
+        })
+      );
+  }
 }

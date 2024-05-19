@@ -1,0 +1,74 @@
+<header class="top-menu">
+  <div class="logo">
+    <img
+      class="logoImage"
+      src="../../assets/icons/fossil.shell@2x.png"
+      alt="Logo"
+      style="display: inline-block"
+    />
+    <h1 style="display: inline-block">Project Aurora</h1>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/landing">Landing</a></li>
+      <li><a href="/profile">Profil</a></li>
+      <li><a href="/login">Logout</a></li>
+      <li><a href="/my-jobs">My Jobs</a></li>
+    </ul>
+  </nav>
+</header>
+<div
+  class="form-group"
+  [ngClass]="{
+    'has-error':
+      newSpecialistForm.get('expertiseAreas')?.invalid &&
+      newSpecialistForm.get('expertiseAreas')?.touched
+  }"
+>
+  <label for="expertiseAreas">Arii de activitate:</label>
+  <p-multiSelect
+    id="expertiseAreas"
+    name="expertiseAreas"
+    formControlName="expertiseAreas"
+    [options]="expertiseAreasList"
+    defaultLabel="Alegeti cel putin un domeniu de activitate"
+    [style]="{ width: '100%' }"
+    optionLabel="name"
+    selectedItemsLabel="{0} Expertise Areas Selected"
+    [showClear]="true"
+    [panelStyle]="{
+      'border-color':
+        newSpecialistForm.get('expertiseAreas')?.invalid &&
+        newSpecialistForm.get('expertiseAreas')?.touched
+          ? 'red'
+          : ''
+    }"
+    [style.border-color]="
+      newSpecialistForm.get('expertiseAreas')?.invalid &&
+      newSpecialistForm.get('expertiseAreas')?.touched
+        ? 'red'
+        : ''
+    "
+  ></p-multiSelect>
+</div>
+<div
+  class="errorLabel"
+  *ngIf="
+    newSpecialistForm.get('expertiseAreas')?.invalid &&
+    newSpecialistForm.get('expertiseAreas')?.touched
+  "
+>
+  Alegeti minim un domeniu de activitate
+</div>
+<div class="divs">
+  <p-button class="submit">Inregistreaza</p-button>
+</div>
+
+<footer>
+  <p>
+    &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+    {{ appVersion }}
+  </p>
+</footer>

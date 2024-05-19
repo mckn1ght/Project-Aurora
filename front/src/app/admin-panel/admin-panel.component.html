@@ -70,23 +70,24 @@
                   ].includes(bodyKey)
                 "
               >
-                <div *ngIf="!item.editing">
+                <ng-container *ngIf="!isEditing('job', item.id)">
                   {{ item[bodyKey] }}
                   <button
                     pButton
                     type="button"
                     icon="pi pi-pencil"
                     class="p-button-rounded p-button-success"
-                    (click)="enableEdit(item)"
+                    (click)="enableEdit('job', item.id)"
                   ></button>
-                </div>
-                <input
-                  *ngIf="item.editing"
-                  [(ngModel)]="item[bodyKey]"
-                  class="p-inputtext p-component"
-                  style="width: 100%"
-                  [type]="bodyKey === 'email' ? 'email' : 'text'"
-                />
+                </ng-container>
+                <ng-container *ngIf="isEditing('job', item.id)">
+                  <input
+                    [(ngModel)]="item[bodyKey]"
+                    class="p-inputtext p-component"
+                    style="width: 100%"
+                    [type]="bodyKey === 'email' ? 'email' : 'text'"
+                  />
+                </ng-container>
               </ng-container>
 
               <!-- Editable fields for user -->
@@ -98,23 +99,24 @@
                   )
                 "
               >
-                <div *ngIf="!item.editing">
+                <ng-container *ngIf="!isEditing('user', item.id)">
                   {{ item[bodyKey] }}
                   <button
                     pButton
                     type="button"
                     icon="pi pi-pencil"
                     class="p-button-rounded p-button-success"
-                    (click)="enableEdit(item)"
+                    (click)="enableEdit('user', item.id)"
                   ></button>
-                </div>
-                <input
-                  *ngIf="item.editing"
-                  [(ngModel)]="item[bodyKey]"
-                  class="p-inputtext p-component"
-                  style="width: 100%"
-                  [type]="bodyKey === 'email' ? 'email' : 'text'"
-                />
+                </ng-container>
+                <ng-container *ngIf="isEditing('user', item.id)">
+                  <input
+                    [(ngModel)]="item[bodyKey]"
+                    class="p-inputtext p-component"
+                    style="width: 100%"
+                    [type]="bodyKey === 'email' ? 'email' : 'text'"
+                  />
+                </ng-container>
               </ng-container>
 
               <ng-container
@@ -131,7 +133,9 @@
                   ) &&
                   !(
                     table === 'user' &&
-                    ['username', 'email', 'phoneNumber'].includes(bodyKey)
+                    ['username', 'email', 'phoneNumber', 'credit'].includes(
+                      bodyKey
+                    )
                   )
                 "
               >
@@ -139,21 +143,37 @@
               </ng-container>
             </td>
             <td>
-              <button
-                pButton
-                type="button"
-                icon="pi pi-trash"
-                class="p-button-danger"
-                (click)="deleteEntry(table, item.id)"
-              ></button>
-              <button
-                *ngIf="item.editing"
-                pButton
-                type="button"
-                icon="pi pi-check"
-                class="p-button-rounded p-button-success"
-                (click)="table === 'job' ? saveJob(item) : saveUser(item)"
-              ></button>
+              <div class="button-container">
+                <button
+                  *ngIf="isEditing(table, item.id)"
+                  pButton
+                  type="button"
+                  icon="pi pi-check"
+                  class="p-button-rounded p-button-success"
+                  (click)="
+                    table === 'job'
+                      ? saveJob(item)
+                      : table === 'user'
+                      ? saveUser(item)
+                      : ''
+                  "
+                ></button>
+                <p-button
+                  *ngIf="isEditing(table, item.id)"
+                  icon="pi pi-times"
+                  [rounded]="true"
+                  severity="danger"
+                  [outlined]="true"
+                  (click)="disableEdit(table, item.id)"
+                ></p-button>
+                <button
+                  pButton
+                  type="button"
+                  icon="pi pi-trash"
+                  class="p-button-danger"
+                  (click)="deleteEntry(table, item.id)"
+                ></button>
+              </div>
             </td>
           </tr>
         </ng-template>

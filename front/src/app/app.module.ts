@@ -45,6 +45,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog'; // Import the Confi
 import { ConfirmationService } from 'primeng/api';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { NewSpecialistComponent } from './new-specialist/new-specialist.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     OnlyNumbersDirective,
     AdminPanelComponent,
     UploadAvatarComponent,
+    NewSpecialistComponent,
   ],
   imports: [
     BrowserModule,

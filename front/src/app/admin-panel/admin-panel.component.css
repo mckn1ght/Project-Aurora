@@ -82,3 +82,13 @@ p-accordion {
 p-table {
   width: 100%; /* Ensure table uses full width */
 }
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-container .p-button {
+  margin: 0 5px;
+}

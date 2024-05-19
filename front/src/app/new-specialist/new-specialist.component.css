@@ -1,0 +1,73 @@
+.top-menu {
+  background-color: #f5f2f2d5;
+  padding: 1px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.top-menu nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.top-menu nav li {
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.top-menu nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+footer {
+  text-align: center;
+  background-color: #f5f2f2d5;
+  color: #0c0101;
+  padding: 0px;
+  position: fixed;
+  font-size: 11px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  max-width: 50%;
+  margin-left: 25%;
+}
+
+.submit {
+  width: 150%;
+  margin-left: 46%;
+}
+
+.divs {
+  margin-top: 20px;
+}

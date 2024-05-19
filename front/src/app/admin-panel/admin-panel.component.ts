@@ -14,7 +14,6 @@ import { Job } from '../models/job';
   styleUrls: ['./admin-panel.component.css'],
 })
 export class AdminPanelComponent implements OnInit {
-  // data: Record<string, any[]> = {};
   data: Record<string, any[]> = {
     bid: [],
     expertiseArea: [],
@@ -26,6 +25,19 @@ export class AdminPanelComponent implements OnInit {
     user: [],
     resource: [],
   };
+
+  editingStates: Record<string, Set<number>> = {
+    bid: new Set<number>(),
+    expertiseArea: new Set<number>(),
+    job: new Set<number>(),
+    jobExpertiseArea: new Set<number>(),
+    review: new Set<number>(),
+    specialist: new Set<number>(),
+    specialistExpertiseArea: new Set<number>(),
+    user: new Set<number>(),
+    resource: new Set<number>(),
+  };
+
   newCredit: number = 0;
   userId: number = 0;
   loggedInUser: User | null = null;
@@ -101,35 +113,20 @@ export class AdminPanelComponent implements OnInit {
       this.userService.updateCredit(user.id, user.credit).subscribe({
         next: () => {
           console.log('Credit updated successfully for user ID:', user.id);
-          this;
-          // You might want to refresh the data or indicate success in the UI
         },
         error: (error) => {
           console.error('Failed to update credit', error);
-          // Handle errors here, such as displaying a user-facing message
         },
       });
     }
   }
 
-  // saveCredit(item: any): void {
-  //   this.userService.updateCredit(item.id, item.credit).subscribe({
-  //     next: () => {
-  //       console.log('Credit updated successfully');
-  //       item.editing = false; // Disable editing mode on successful update
-  //       this.fetchUserData();
-  //       this.refreshUser();
-  //     },
-  //     error: (error) => console.error('Error updating credit:', error),
-  //   });
-  // }
-
   saveCredit(item: any): void {
     this.userService.updateCredit(item.id, item.credit).subscribe({
       next: () => {
         console.log('Credit updated successfully');
-        item.editing = false; // Disable editing mode on successful update
         this.authService.refreshUserData(); // Refresh the user data from the server
+        this.disableEdit('user', item.id);
       },
       error: (error) => console.error('Error updating credit:', error),
     });
@@ -142,24 +139,13 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  refreshUser() {
-    this.authService.getLoggedInUser().subscribe((user) => {
-      console.log(user);
-      this.loggedInUser = user;
-      if (this.loggedInUser) {
-        const userId = this.loggedInUser.id;
-      }
-    });
-  }
-
   saveUser(item: any): void {
-    // Example of handling response after updating user details
     this.userService.updateUser(item).subscribe({
       next: (updatedUser) => {
         console.log('User updated successfully');
         this.authService.setLoggedInUser(updatedUser); // Updated user with potentially new username
         this.authService.refreshUserData(); // Optionally refresh if needed
-        item.editing = false;
+        this.disableEdit('user', item.id);
       },
       error: (error) => console.error('Error updating user:', error),
     });
@@ -169,21 +155,23 @@ export class AdminPanelComponent implements OnInit {
     this.jobService.updateJob(job.id, job).subscribe({
       next: (updatedJob) => {
         console.log('Job updated successfully:', updatedJob);
-        job.editing = false;
-        // Handle successful update (e.g., update the UI or give feedback)
+        this.disableEdit('job', job.id);
       },
       error: (error) => {
         console.error('Error updating job:', error);
-        // Handle error (e.g., show an error message)
       },
     });
   }
 
-  disableEdit(item: any): void {
-    item.editing = false;
+  disableEdit(table: string, itemId: number): void {
+    this.editingStates[table].delete(itemId);
   }
 
-  enableEdit(item: any): void {
-    item.editing = true; // Enables the edit mode
+  enableEdit(table: string, itemId: number): void {
+    this.editingStates[table].add(itemId);
+  }
+
+  isEditing(table: string, itemId: number): boolean {
+    return this.editingStates[table].has(itemId);
   }
 }

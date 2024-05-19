@@ -187,3 +187,7 @@ button:hover {
 
   z-index: -1;
 }
+
+.add-request-button-spec {
+  margin-left: 10px;
+}

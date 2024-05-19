@@ -273,4 +273,15 @@ export class JobService {
   getJobPictures(jobId: number): Observable<any> {
     return this.http.get(BACKEND_API_URL + jobPicture + '/jobId/' + jobId);
   }
+
+  //gets all jobs in the job list
+  getJobsWithPictures(jobs: Job[]): Observable<any[]> {
+    return forkJoin(
+      jobs.map((job) =>
+        this.getJobPictures(job.id).pipe(
+          map((pictures) => ({ ...job, pictures }))
+        )
+      )
+    );
+  }
 }
