@@ -19,11 +19,8 @@ public class Specialist {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "expertiseArea")
-  private int expertiseArea;
-
-  @Column(name = "coverageArea")
-  private String coverageArea;
+  @Column(name = "rating", nullable = false, columnDefinition = "int default 5")
+  private int rating = 5;
 
 }
 

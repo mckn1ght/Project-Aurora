@@ -1,7 +1,9 @@
 package com.example.cloudComputing.controller;
 
 import com.example.cloudComputing.dto.SpecialistDto;
+import com.example.cloudComputing.entity.Specialist;
 import com.example.cloudComputing.mapper.SpecialistMapper;
+import com.example.cloudComputing.serviceImpl.SpecialistExpertiseAreaServiceImpl;
 import com.example.cloudComputing.serviceImpl.SpecialistServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Validated
@@ -24,12 +29,29 @@ public class SpecialistController {
   @Autowired
   SpecialistMapper specialistMapper;
 
-  @CrossOrigin(origins = "http://localhost:4200")
+  @Autowired
+  private SpecialistExpertiseAreaServiceImpl specialistExpertiseAreaServiceImpl;
+
+
   @PostMapping("/add")
-  public ResponseEntity<String> addSpecialist(@Valid @RequestBody SpecialistDto specialistDto) {
-      ResponseEntity.ok(specialistServiceImpl.add(specialistDto));
-      return ResponseEntity.ok("{\"message\": \"Specialist added successful\"}");
+  public ResponseEntity<Map<String, Object>> addSpecialist(@RequestParam Long userId, @RequestBody List<Integer> expertiseAreaIds) {
+    try {
+      // Logging the received data
+      System.out.println("Received userId: " + userId);
+      System.out.println("Received expertiseAreaIds: " + expertiseAreaIds);
+
+      Specialist newSpecialist = specialistServiceImpl.add(userId);
+      specialistExpertiseAreaServiceImpl.add(newSpecialist.getId().intValue(), expertiseAreaIds);
+      Map<String, Object> response = new HashMap<>();
+      response.put("message", "Specialist added successfully");
+      response.put("specialistId", newSpecialist.getId());
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      e.printStackTrace();  // Print stack trace for better debugging
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("message", "Error adding specialist"));
+    }
   }
+
 
   @RequestMapping("/getById/{id}")
   public ResponseEntity<SpecialistDto> getById(@PathVariable Long id) {
@@ -39,22 +61,6 @@ public class SpecialistController {
   @GetMapping("/all")
   public List<SpecialistDto> getAll() {
     return specialistServiceImpl.getAll();
-  }
-
-  @GetMapping("/expertiseArea/{expertiseArea}")
-  public ResponseEntity<List<SpecialistDto>> getAllByExpertiseArea(@PathVariable int expertiseArea) {
-    return ResponseEntity.ok(specialistServiceImpl.getAllByExpertiseArea(expertiseArea));
-  }
-
-  @GetMapping("/coverageArea/{coverageArea}")
-  public ResponseEntity<List<SpecialistDto>> getAllByCoverageArea(@PathVariable String coverageArea) {
-    return ResponseEntity.ok(specialistServiceImpl.getAllByCoverageArea(coverageArea));
-  }
-
-  @GetMapping("/coverageArea/{coverageArea}/{expertiseArea}")
-  public ResponseEntity<List<SpecialistDto>> getAllByExpertiseAreaAndCoverageArea(@PathVariable int expertiseArea,
-                                                                                  @PathVariable String coverageArea) {
-    return ResponseEntity.ok(specialistServiceImpl.getAllByExpertiseAreaAndCoverageArea(expertiseArea, coverageArea ));
   }
 
 }

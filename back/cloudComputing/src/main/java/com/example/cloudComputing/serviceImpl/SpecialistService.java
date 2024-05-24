@@ -2,20 +2,15 @@ package com.example.cloudComputing.serviceImpl;
 
 import com.example.cloudComputing.dto.SpecialistDto;
 import com.example.cloudComputing.dto.UserDto;
+import com.example.cloudComputing.entity.Specialist;
 
 import java.util.List;
 
 public interface SpecialistService {
-  SpecialistDto add(SpecialistDto specialistDto);
+  Specialist add(Long userId);
 
   List<SpecialistDto> getAll();
 
   SpecialistDto getById(Long id);
-
-  List<SpecialistDto> getAllByCoverageArea(String coverageArea);
-
-  List<SpecialistDto> getAllByExpertiseArea(int expertiseArea);
-
-  List<SpecialistDto> getAllByExpertiseAreaAndCoverageArea(int expertiseArea, String coverageArea);
 
 }

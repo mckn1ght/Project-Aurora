@@ -19,10 +19,6 @@ public class SpecialistDto {
 
   private Long id;
 
-  @NotNull(message = "Expertise Area is mandatory!")
-  private int expertiseArea;
-
-  @NotNull(message = "Coverage Area is mandatory!")
-  private String coverageArea;
+  private int rating;
 
 }

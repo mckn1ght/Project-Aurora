@@ -29,7 +29,7 @@ public class SpecialistExpertiseAreaController {
   @PostMapping("/add")
   public ResponseEntity<?> addspecialistExpertiseArea(@RequestBody AddSpecialistExpertiseRequest request) {
     try{
-      specialistExpertiseAreaServiceImpl.add(request.getSpecialistId(), request.getExpertiseAreas());
+      specialistExpertiseAreaServiceImpl.add(request.getSpecialistId().intValue(), request.getExpertiseAreas());
       return ResponseEntity.ok("{\"message\": \"Expertise Areas added successfully to the Specialist\"}");
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Error adding expertise areas");

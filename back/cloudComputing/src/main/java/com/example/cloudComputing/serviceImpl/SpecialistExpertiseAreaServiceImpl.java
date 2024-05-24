@@ -2,6 +2,7 @@ package com.example.cloudComputing.serviceImpl;
 
 import com.example.cloudComputing.dto.JobExpertiseAreaDto;
 import com.example.cloudComputing.dto.SpecialistExpertiseAreaDto;
+import com.example.cloudComputing.entity.SpecialistExpertiseArea;
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaFoundException;
 import com.example.cloudComputing.exception.job.NoJobFoundException;
 import com.example.cloudComputing.mapper.SpecialistExpertiseAreaMapper;
@@ -27,15 +28,19 @@ public class SpecialistExpertiseAreaServiceImpl implements SpecialistExpertiseAr
 //    return specialistExpertiseAreaMapper.mapToSpecialistExpertiseAreaDto(specialistExpertiseAreaRepository.save(specialistExpertiseAreaMapper.mapToSpecialistExpertiseArea(specialistExpertiseAreaDto)));
 //  }
 
-  public void add(Long specialistId, List<Integer> expertiseAreas) {
-    System.out.println("Adding expertise areas to specialist.");
-    for (Integer expertiseAreaId : expertiseAreas) {
-      SpecialistExpertiseAreaDto specialistExpertiseAreaDto = new SpecialistExpertiseAreaDto();
-      specialistExpertiseAreaDto.setSpecialistId(Math.toIntExact(specialistId));
-      specialistExpertiseAreaDto.setExpertiseAreaId(expertiseAreaId);
-      specialistExpertiseAreaRepository.save(specialistExpertiseAreaMapper.mapToSpecialistExpertiseArea(specialistExpertiseAreaDto));
+
+
+  public void add(int specialistId, List<Integer> expertiseAreaIds) {
+    for (Integer expertiseAreaId : expertiseAreaIds) {
+      SpecialistExpertiseArea sea = new SpecialistExpertiseArea();
+      sea.setSpecialistId(specialistId);
+      sea.setExpertiseAreaId(expertiseAreaId);
+      specialistExpertiseAreaRepository.save(sea);
     }
   }
+
+
+
 
 
   public List<SpecialistExpertiseAreaDto> getAll() {

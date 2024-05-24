@@ -27,12 +27,8 @@ export class HomeComponent {
 
   ngOnInit() {
     this.loadExpertiseAreas();
-    this.authService.getLoggedInUser().subscribe((user) => {
-      this.loggedInUser = user;
-      if (this.loggedInUser) {
-        const userId = this.loggedInUser.id;
-      }
-    });
+
+    this.refreshLoggedInUser();
   }
 
   loadExpertiseAreas() {
@@ -58,5 +54,11 @@ export class HomeComponent {
 
   createNewSpecialist() {
     this.router.navigate(['/newSpecialist']);
+  }
+
+  refreshLoggedInUser() {
+    this.authService.getLoggedInUser().subscribe((user) => {
+      this.loggedInUser = user;
+    });
   }
 }

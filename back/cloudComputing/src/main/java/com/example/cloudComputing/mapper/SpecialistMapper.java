@@ -15,16 +15,14 @@ public class SpecialistMapper {
   public Specialist mapToSpecialist(SpecialistDto specialistDto) {
     return Specialist.builder()
       .id(specialistDto.getId())
-      .expertiseArea(specialistDto.getExpertiseArea())
-      .coverageArea(specialistDto.getCoverageArea())
+      .rating(specialistDto.getRating())
       .build();
   }
 
   public SpecialistDto mapToSpecialistDto(Specialist specialist) {
     return SpecialistDto.builder()
       .id(specialist.getId())
-      .expertiseArea(specialist.getExpertiseArea())
-      .coverageArea(specialist.getCoverageArea())
+      .rating(specialist.getRating())
       .build();
   }
 

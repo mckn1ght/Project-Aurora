@@ -19,12 +19,4 @@ public interface SpecialistRepository extends JpaRepository<Specialist, Long> {
   @Override
   Specialist getReferenceById(Long aLong);
 
-  List<Specialist> getAllByCoverageArea(String coverageArea);
-
-  List<Specialist> getAllByExpertiseArea(int expertiseArea);
-
-  List<Specialist> getAllByExpertiseAreaAndCoverageArea(int expertiseArea, String coverageArea);
-
-//  List<Specialist> findDistinctByBidsIn(List<Bid> bids);
-
 }

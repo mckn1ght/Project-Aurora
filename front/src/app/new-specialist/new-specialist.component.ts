@@ -1,35 +1,34 @@
-import { Component } from '@angular/core';
-import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExpertiseAreaService } from '../service/expertiseArea/expertise-area.service';
 import { AuthService } from '../service/auth/auth.service';
 import { User } from '../models/user';
+import { SpecialistService } from '../service/specialist/specialist-service';
 import { EMPTY, Observable, catchError, tap, throwError } from 'rxjs';
+import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-specialist',
   templateUrl: './new-specialist.component.html',
   styleUrls: ['./new-specialist.component.css'],
 })
-export class NewSpecialistComponent {
-  appEnvironment: String = APPLICATION_ENVIRONMENT;
-  appVersion: String = APPLICATION_VERSION;
+export class NewSpecialistComponent implements OnInit {
   newSpecialistForm: FormGroup;
   expertiseAreasList: any[] = [];
-  selectedExpertiseAreas: any[] = [];
   loggedInUser: User | null = null;
+  appEnvironment: String = APPLICATION_ENVIRONMENT;
+  appVersion: String = APPLICATION_VERSION;
 
   constructor(
     private formBuilder: FormBuilder,
     private expertiseAreaService: ExpertiseAreaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private specialistService: SpecialistService,
+    private router: Router
   ) {
     this.newSpecialistForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.minLength(10)]],
-      description: ['', [Validators.required, Validators.minLength(25)]],
       expertiseAreas: ['', [Validators.required]],
-      location: ['', [Validators.required, Validators.minLength(5)]],
-      dueDate: ['', Validators.required],
     });
   }
 
@@ -37,6 +36,10 @@ export class NewSpecialistComponent {
     this.loadExpertiseAreas();
     this.authService.getLoggedInUser().subscribe((user) => {
       this.loggedInUser = user;
+      console.log('Logged in user:', this.loggedInUser);
+      if (!this.loggedInUser) {
+        console.error('User is not logged in');
+      }
     });
   }
 
@@ -51,31 +54,42 @@ export class NewSpecialistComponent {
     );
   }
 
-  insertExpertiseAreas(
-    specialistId: number,
-    expertiseAreas: any[]
-  ): Observable<any> {
-    if (expertiseAreas.length === 0) {
-      console.log('No expertise areas to insert.');
-      return EMPTY;
+  addSpecialist() {
+    console.log('Form Submitted');
+    if (this.newSpecialistForm.invalid) {
+      console.warn('Form is invalid');
+      return;
     }
 
-    return this.expertiseAreaService
-      .addSpecialistExpertiseArea(specialistId, expertiseAreas)
+    if (!this.loggedInUser) {
+      console.warn('User is not logged in');
+      return;
+    }
+
+    const selectedExpertiseAreas =
+      this.newSpecialistForm.get('expertiseAreas')?.value;
+    console.log('Selected Expertise Areas:', selectedExpertiseAreas);
+
+    // Transform the array of objects into an array of integers
+    const expertiseAreaIds = selectedExpertiseAreas.map((area: any) => area.id);
+    console.log('Expertise Area IDs:', expertiseAreaIds);
+
+    this.specialistService
+      .addSpecialist(this.loggedInUser.id!, expertiseAreaIds)
       .pipe(
-        tap((response) =>
-          console.log(
-            'Expertise areas added to the specialist successfully:',
-            response
-          )
-        ),
+        tap((response) => {
+          console.log('Specialist added successfully:', response);
+          // Refresh logged-in user details before redirecting to home
+          this.authService.getLoggedInUser().subscribe((user) => {
+            this.loggedInUser = user;
+            this.router.navigate(['/login']);
+          });
+        }),
         catchError((error) => {
-          console.error(
-            'Error adding expertise areas to the specialist:',
-            error
-          );
-          return throwError(() => new Error('Failed to add expertise areas'));
+          console.error('Error adding specialist:', error);
+          return throwError(() => new Error('Failed to add specialist'));
         })
-      );
+      )
+      .subscribe();
   }
 }

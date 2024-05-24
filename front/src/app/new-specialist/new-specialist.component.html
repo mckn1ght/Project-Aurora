@@ -11,60 +11,57 @@
 
   <nav>
     <ul>
-      <li><a href="/home">Home</a></li>
-      <li><a href="/landing">Landing</a></li>
-      <li><a href="/profile">Profil</a></li>
-      <li><a href="/login">Logout</a></li>
-      <li><a href="/my-jobs">My Jobs</a></li>
+      <li><a routerLink="/home">Home</a></li>
+      <li><a routerLink="/landing">Landing</a></li>
+      <li><a routerLink="/profile">Profile</a></li>
+      <li><a routerLink="/login">Logout</a></li>
+      <li><a routerLink="/my-jobs">My Jobs</a></li>
     </ul>
   </nav>
 </header>
-<div
-  class="form-group"
-  [ngClass]="{
-    'has-error':
-      newSpecialistForm.get('expertiseAreas')?.invalid &&
-      newSpecialistForm.get('expertiseAreas')?.touched
-  }"
->
-  <label for="expertiseAreas">Arii de activitate:</label>
-  <p-multiSelect
-    id="expertiseAreas"
-    name="expertiseAreas"
-    formControlName="expertiseAreas"
-    [options]="expertiseAreasList"
-    defaultLabel="Alegeti cel putin un domeniu de activitate"
-    [style]="{ width: '100%' }"
-    optionLabel="name"
-    selectedItemsLabel="{0} Expertise Areas Selected"
-    [showClear]="true"
-    [panelStyle]="{
-      'border-color':
+
+<form [formGroup]="newSpecialistForm" (ngSubmit)="addSpecialist()">
+  <div
+    class="form-group"
+    [ngClass]="{
+      'has-error':
         newSpecialistForm.get('expertiseAreas')?.invalid &&
         newSpecialistForm.get('expertiseAreas')?.touched
-          ? 'red'
-          : ''
     }"
-    [style.border-color]="
+  >
+    <label for="expertiseAreas">Arii de activitate:</label>
+    <p-multiSelect
+      id="expertiseAreas"
+      name="expertiseAreas"
+      formControlName="expertiseAreas"
+      [options]="expertiseAreasList"
+      placeholder="Alegeti cel putin un domeniu de activitate"
+      [style]="{ width: '100%' }"
+      optionLabel="name"
+      selectedItemsLabel="{0} Expertise Areas Selected"
+      [showClear]="true"
+      [panelStyle]="{
+        'border-color':
+          newSpecialistForm.get('expertiseAreas')?.invalid &&
+          newSpecialistForm.get('expertiseAreas')?.touched
+            ? 'red'
+            : ''
+      }"
+    ></p-multiSelect>
+  </div>
+  <div
+    class="errorLabel"
+    *ngIf="
       newSpecialistForm.get('expertiseAreas')?.invalid &&
       newSpecialistForm.get('expertiseAreas')?.touched
-        ? 'red'
-        : ''
     "
-  ></p-multiSelect>
-</div>
-<div
-  class="errorLabel"
-  *ngIf="
-    newSpecialistForm.get('expertiseAreas')?.invalid &&
-    newSpecialistForm.get('expertiseAreas')?.touched
-  "
->
-  Alegeti minim un domeniu de activitate
-</div>
-<div class="divs">
-  <p-button class="submit">Inregistreaza</p-button>
-</div>
+  >
+    Alegeti minim un domeniu de activitate
+  </div>
+  <div class="buttonTrimite">
+    <button type="submit" pButton label="Inregistreaza"></button>
+  </div>
+</form>
 
 <footer>
   <p>
