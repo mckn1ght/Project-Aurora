@@ -66,6 +66,11 @@
             : this.loggedInUser?.specialistId
         }}
       </p>
+      <p *ngIf="loggedInUser?.specialistId != null">Zone expertiza:</p>
+
+      <ul>
+        <li *ngFor="let area of expertiseAreas">{{ area }}</li>
+      </ul>
       <div class="hr-design"></div>
       <!-- Decorative line -->
       <h2>Contact Information</h2>

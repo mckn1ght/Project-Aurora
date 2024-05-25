@@ -67,6 +67,11 @@ header {
 .job-list {
   list-style-type: none;
   padding: 0;
+  margin: 0;
+}
+
+.job-item {
+  margin-bottom: 20px; /* Space between job items */
 }
 
 .job-item {
@@ -76,6 +81,7 @@ header {
   margin-bottom: 20px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   overflow: hidden; /* Hide content that goes beyond the box */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
 }
 
 .job-item:hover {
@@ -109,7 +115,6 @@ header {
 
 .noJob {
   text-align: center;
-  margin-top: 20%;
 }
 
 .pictures-container {
@@ -183,4 +188,39 @@ header {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/images/job-list_background3.webp");
+  background-size: cover;
+  background-repeat: repeat-y;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.job-item .job-title,
+.job-item .job-description,
+.job-item .job-expertise,
+.job-item .job-due-date,
+.listaAnunturi {
+  text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.5); /* Subtle text shadow */
+}
+
+.listaAnunturi {
+  text-align: center;
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+.job-listing-card {
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Space inside the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-bottom: 20px; /* Remove extra space below the card */
 }

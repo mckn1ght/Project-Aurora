@@ -29,6 +29,9 @@ public class ExpertiseArea {
   @ManyToMany(mappedBy = "expertiseAreas")
   private Set<Job> jobs;
 
+  @ManyToMany(mappedBy = "expertiseAreas")
+  private Set<Specialist> specialists;
+
 }
 
 

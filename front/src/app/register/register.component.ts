@@ -28,6 +28,7 @@ export class RegisterComponent {
     lastName: '',
     email: '',
     phoneNumber: '',
+    credit: 100,
   };
 
   error = '';

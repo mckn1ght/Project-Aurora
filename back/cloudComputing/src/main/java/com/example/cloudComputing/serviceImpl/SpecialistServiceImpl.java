@@ -8,6 +8,7 @@ import com.example.cloudComputing.exception.specialist.NoSpecialistExpertiseArea
 import com.example.cloudComputing.exception.specialist.NoSpecialistFoundException;
 import com.example.cloudComputing.exception.specialist.NoSpecialistIdFoundException;
 import com.example.cloudComputing.mapper.SpecialistMapper;
+import com.example.cloudComputing.repository.ExpertiseAreaRepository;
 import com.example.cloudComputing.repository.SpecialistRepository;
 import com.example.cloudComputing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,13 @@ public class SpecialistServiceImpl implements SpecialistService {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private ExpertiseAreaRepository expertiseAreaRepository;
+
 
   public Specialist add(Long userId) {
     Specialist specialist = new Specialist();
-    specialist.setRating(5); // Ensure default rating is set
+    specialist.setRating(5);
     Specialist savedSpecialist = specialistRepository.save(specialist);
 
     User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
@@ -59,6 +63,10 @@ public class SpecialistServiceImpl implements SpecialistService {
       throw new NoSpecialistIdFoundException(String.format(NO_SPECIALIST_ID_FOUND, id));
     }
   }
+
+  public List<String> getExpertiseAreaNamesBySpecialistId(Long specialistId) {
+    return expertiseAreaRepository.findExpertiseAreaNamesBySpecialistId(specialistId);}
+
 
 }
 

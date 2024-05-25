@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResourceService } from '../service/resource/resource.service';
 import { Resource } from '../models/resource';
+import { SpecialistService } from '../service/specialist/specialist-service';
 // import { Resource } from '../../../../back/cloudComputing/uploads/avatars/';
 
 @Component({
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit {
   avatarLocation: string = '';
   resource: Resource = new Resource();
   selectedFile: File | null = null;
-  // editForm: FormGroup;
+  expertiseAreas: string[] = [];
 
   constructor(
     private authService: AuthService,
@@ -38,7 +39,8 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    private specialistService: SpecialistService
   ) {
     // this.editForm = this.formBuilder.group({
     //   // password: [
@@ -75,6 +77,10 @@ export class ProfileComponent implements OnInit {
         this.fetchJobsCreatedByUser();
         this.countJobsCreatedByUser();
         this.fetchAvatarLocation();
+        console.log(this.loggedInUser.specialistId);
+        if (this.loggedInUser.specialistId) {
+          this.fetchSpecialistExpertiseAreas(this.loggedInUser.specialistId);
+        }
       }
     });
   }
@@ -196,6 +202,19 @@ export class ProfileComponent implements OnInit {
           this.fetchAvatarLocation(); // Refresh the displayed avatar
         },
         error: (error) => console.error('Error updating avatar:', error),
+      });
+  }
+
+  fetchSpecialistExpertiseAreas(specialistId: number) {
+    this.specialistService
+      .getExpertiseAreasBySpecialistId(specialistId)
+      .subscribe({
+        next: (areas) => {
+          this.expertiseAreas = areas;
+          console.log(this.expertiseAreas);
+        },
+        error: (error) =>
+          console.error('Error fetching expertise areas:', error),
       });
   }
 }

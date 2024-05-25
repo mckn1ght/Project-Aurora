@@ -63,6 +63,15 @@ public class SpecialistController {
     return specialistServiceImpl.getAll();
   }
 
+
+  @GetMapping("/{specialistId}/expertiseAreas/")
+  public ResponseEntity<List<String>> getExpertiseAreaNames(@PathVariable Long specialistId) {
+    List<String> expertiseAreaNames = specialistServiceImpl.getExpertiseAreaNamesBySpecialistId(specialistId);
+    if (expertiseAreaNames.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(expertiseAreaNames);
+  }
 }
 
 

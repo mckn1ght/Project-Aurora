@@ -24,4 +24,7 @@ public interface ExpertiseAreaRepository extends JpaRepository<ExpertiseArea, Lo
   @Query("SELECT e.name FROM ExpertiseArea e JOIN e.jobs j WHERE j.id = :jobId")
   List<String> findExpertiseAreaNamesByJobId(Long jobId);
 
+  @Query("SELECT e.name FROM ExpertiseArea e JOIN e.specialists j WHERE j.id = :jobId")
+  List<String> findExpertiseAreaNamesBySpecialistId(Long jobId);
+
 }

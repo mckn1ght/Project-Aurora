@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,6 +23,15 @@ public class Specialist {
   @Column(name = "rating", nullable = false, columnDefinition = "int default 5")
   private int rating = 5;
 
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+    name = "specialist_expertiseArea",
+    joinColumns = @JoinColumn(name = "specialistID"),
+    inverseJoinColumns = @JoinColumn(name = "expertiseAreaID")
+  )
+  private Set<ExpertiseArea> expertiseAreas;
 }
+
+
 
 

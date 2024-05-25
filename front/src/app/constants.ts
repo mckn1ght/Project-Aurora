@@ -17,6 +17,8 @@ export const updatePhoneNumber = '/updatePhoneNumber/';
 
 //ExpertiseArea
 export const expertiseAreaEndpoint = '/expertiseArea';
+export const specialistExpertiseAreas =
+  '/specialistExpertiseArea/specialistId/';
 
 //Job_ExpertiseArea
 export const jobExpertiseArea = '/jobExpertiseArea';

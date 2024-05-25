@@ -20,43 +20,44 @@
   </header>
 
   <div class="container">
-    <form [formGroup]="newJobForm" (ngSubmit)="addJob()">
-      <div class="card">
-        <div class="form-group">
-          <label for="title">Titlu:</label>
-          <input
-            type="text"
-            formControlName="title"
-            id="title"
-            name="title"
-            [(ngModel)]="newJob.title"
-            required
-            [ngClass]="{
-              'error-border':
-                newJobForm.get('title')?.invalid &&
+    <div class="form-card">
+      <form [formGroup]="newJobForm" (ngSubmit)="addJob()">
+        <div class="card">
+          <div class="form-group">
+            <label for="title">Titlu:</label>
+            <input
+              type="text"
+              formControlName="title"
+              id="title"
+              name="title"
+              [(ngModel)]="newJob.title"
+              required
+              [ngClass]="{
+                'error-border':
+                  newJobForm.get('title')?.invalid &&
+                  newJobForm.get('title')?.touched
+              }"
+            />
+            <div
+              *ngIf="
+                newJobForm.get('title')?.hasError('required') &&
                 newJobForm.get('title')?.touched
-            }"
-          />
-          <div
-            *ngIf="
-              newJobForm.get('title')?.hasError('required') &&
-              newJobForm.get('title')?.touched
-            "
-            class="errorLabel"
-          >
-            Titlul este obligatoriu
+              "
+              class="errorLabel"
+            >
+              Titlul este obligatoriu
+            </div>
+            <div
+              *ngIf="
+                newJobForm.get('title')?.hasError('minlength') &&
+                newJobForm.get('title')?.touched
+              "
+              class="errorLabel"
+            >
+              Titlul trebuie să aibă cel puțin 10 caractere
+            </div>
           </div>
-          <div
-            *ngIf="
-              newJobForm.get('title')?.hasError('minlength') &&
-              newJobForm.get('title')?.touched
-            "
-            class="errorLabel"
-          >
-            Titlul trebuie să aibă cel puțin 10 caractere
-          </div>
-        </div>
-        <!-- 
+          <!-- 
         <div class="form-group">
           <label for="expertiseArea">Domeniu de activitate:</label>
           <select
@@ -77,132 +78,132 @@
             </option>
           </select>
         </div> -->
-        <div
-          class="form-group"
-          [ngClass]="{
-            'has-error':
-              newJobForm.get('expertiseAreas')?.invalid &&
-              newJobForm.get('expertiseAreas')?.touched
-          }"
-        >
-          <label for="expertiseAreas">Arii de activitate:</label>
-          <p-multiSelect
-            id="expertiseAreas"
-            name="expertiseAreas"
-            formControlName="expertiseAreas"
-            [options]="expertiseAreasList"
-            defaultLabel="Alegeti cel putin un domeniu de activitate"
-            [style]="{ width: '100%' }"
-            optionLabel="name"
-            selectedItemsLabel="{0} Expertise Areas Selected"
-            [showClear]="true"
-            [panelStyle]="{
-              'border-color':
+          <div
+            class="form-group"
+            [ngClass]="{
+              'has-error':
+                newJobForm.get('expertiseAreas')?.invalid &&
+                newJobForm.get('expertiseAreas')?.touched
+            }"
+          >
+            <label for="expertiseAreas">Arii de activitate:</label>
+            <p-multiSelect
+              id="expertiseAreas"
+              name="expertiseAreas"
+              formControlName="expertiseAreas"
+              [options]="expertiseAreasList"
+              defaultLabel="Alegeti cel putin un domeniu de activitate"
+              [style]="{ width: '100%' }"
+              optionLabel="name"
+              selectedItemsLabel="{0} Expertise Areas Selected"
+              [showClear]="true"
+              [panelStyle]="{
+                'border-color':
+                  newJobForm.get('expertiseAreas')?.invalid &&
+                  newJobForm.get('expertiseAreas')?.touched
+                    ? 'red'
+                    : ''
+              }"
+              [style.border-color]="
                 newJobForm.get('expertiseAreas')?.invalid &&
                 newJobForm.get('expertiseAreas')?.touched
                   ? 'red'
                   : ''
-            }"
-            [style.border-color]="
+              "
+            ></p-multiSelect>
+          </div>
+          <div
+            class="errorLabel"
+            *ngIf="
               newJobForm.get('expertiseAreas')?.invalid &&
               newJobForm.get('expertiseAreas')?.touched
-                ? 'red'
-                : ''
             "
-          ></p-multiSelect>
+          >
+            Alegeti minim un domeniu de activitate
+          </div>
         </div>
-        <div
-          class="errorLabel"
-          *ngIf="
-            newJobForm.get('expertiseAreas')?.invalid &&
-            newJobForm.get('expertiseAreas')?.touched
-          "
-        >
-          Alegeti minim un domeniu de activitate
-        </div>
-      </div>
 
-      <div class="card">
-        <div class="form-group">
-          <label for="description">Detalii:</label>
-          <textarea
-            id="description"
-            name="description"
-            formControlName="description"
-            required
-            [(ngModel)]="newJob.description"
-            [ngClass]="{
-              'error-border':
-                newJobForm.get('description')?.invalid &&
+        <div class="card">
+          <div class="form-group">
+            <label for="description">Detalii:</label>
+            <textarea
+              id="description"
+              name="description"
+              formControlName="description"
+              required
+              [(ngModel)]="newJob.description"
+              [ngClass]="{
+                'error-border':
+                  newJobForm.get('description')?.invalid &&
+                  newJobForm.get('description')?.touched
+              }"
+            ></textarea>
+            <div
+              class="errorLabel"
+              *ngIf="
+                newJobForm.get('description')?.hasError('required') &&
                 newJobForm.get('description')?.touched
-            }"
-          ></textarea>
-          <div
-            class="errorLabel"
-            *ngIf="
-              newJobForm.get('description')?.hasError('required') &&
-              newJobForm.get('description')?.touched
-            "
-          >
-            Introduceti detaliile anuntului
-          </div>
-          <div
-            *ngIf="
-              newJobForm.get('description')?.hasError('minlength') &&
-              newJobForm.get('description')?.touched
-            "
-            class="errorLabel"
-          >
-            Descrierea trebuie să aibă cel puțin 25 caractere
+              "
+            >
+              Introduceti detaliile anuntului
+            </div>
+            <div
+              *ngIf="
+                newJobForm.get('description')?.hasError('minlength') &&
+                newJobForm.get('description')?.touched
+              "
+              class="errorLabel"
+            >
+              Descrierea trebuie să aibă cel puțin 25 caractere
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <div class="form-group">
-          <label for="pictures">Selectati imaginile:</label>
-          <p-fileUpload
-            name="pictures"
-            [multiple]="true"
-            (onSelect)="onFileSelected($event)"
-            [maxFileSize]="1000000"
-            accept="image/*"
-            mode="advanced"
-            [auto]="false"
-            [customUpload]="false"
-          ></p-fileUpload>
+        <div class="card">
+          <div class="form-group">
+            <label for="pictures">Selectati imaginile:</label>
+            <p-fileUpload
+              name="pictures"
+              [multiple]="true"
+              (onSelect)="onFileSelected($event)"
+              [maxFileSize]="1000000"
+              accept="image/*"
+              mode="advanced"
+              [auto]="false"
+              [customUpload]="false"
+            ></p-fileUpload>
+          </div>
         </div>
-      </div>
 
-      <div class="card">
-        <div class="form-group">
-          <label for="location">Locatie:</label>
-          <input
-            type="text"
-            id="location"
-            formControlName="location"
-            name="location"
-            [(ngModel)]="newJob.location"
-            required
-            [ngClass]="{
-              'error-border':
-                newJobForm.get('location')?.invalid &&
+        <div class="card">
+          <div class="form-group">
+            <label for="location">Locatie:</label>
+            <input
+              type="text"
+              id="location"
+              formControlName="location"
+              name="location"
+              [(ngModel)]="newJob.location"
+              required
+              [ngClass]="{
+                'error-border':
+                  newJobForm.get('location')?.invalid &&
+                  newJobForm.get('location')?.touched
+              }"
+            />
+            <div
+              class="errorLabel"
+              *ngIf="
+                newJobForm.get('location')?.hasError('required') &&
                 newJobForm.get('location')?.touched
-            }"
-          />
-          <div
-            class="errorLabel"
-            *ngIf="
-              newJobForm.get('location')?.hasError('required') &&
-              newJobForm.get('location')?.touched
-            "
-          >
-            Va rog introduceti o locatie
+              "
+            >
+              Va rog introduceti o locatie
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- <div class="card">
+        <!-- <div class="card">
       <div class="form-group">
         <label for="phoneNumber">Numar de contact:</label>
         <input
@@ -229,39 +230,41 @@
         </div>
       </div>
     </div> -->
-      <div>
-        <div class="form-group">
-          <label for="dueDate">Data dorita de rezolvare a solicitarii:</label>
-          <input
-            type="date"
-            id="dueDate"
-            name="dueDate"
-            formControlName="dueDate"
-            [(ngModel)]="newJob.dueDate"
-            required
-            [min]="minDate"
-            [ngClass]="{
-              'error-border':
-                newJobForm.get('dueDate')?.invalid &&
+        <div>
+          <div class="form-group">
+            <label for="dueDate">Data dorita de rezolvare a solicitarii:</label>
+            <input
+              type="date"
+              id="dueDate"
+              name="dueDate"
+              formControlName="dueDate"
+              [(ngModel)]="newJob.dueDate"
+              required
+              [min]="minDate"
+              [ngClass]="{
+                'error-border':
+                  newJobForm.get('dueDate')?.invalid &&
+                  newJobForm.get('dueDate')?.touched
+              }"
+            />
+            <div
+              class="errorLabel"
+              *ngIf="
+                newJobForm.get('dueDate')?.hasError('required') &&
                 newJobForm.get('dueDate')?.touched
-            }"
-          />
-          <div
-            class="errorLabel"
-            *ngIf="
-              newJobForm.get('dueDate')?.hasError('required') &&
-              newJobForm.get('dueDate')?.touched
-            "
-          >
-            Selectati data pana la care doriti sa fie realizata cererea
+              "
+            >
+              Selectati data pana la care doriti sa fie realizata cererea
+            </div>
           </div>
         </div>
-      </div>
-
-      <button type="submit" [disabled]="!newJobForm.valid">
-        Publica Anunt
-      </button>
-    </form>
+        <div class="submit">
+          <button type="submit" [disabled]="!newJobForm.valid">
+            Publica Anunt
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

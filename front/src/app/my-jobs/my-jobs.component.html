@@ -17,11 +17,11 @@
     </ul>
   </nav>
 </header>
-
+<div class="background"></div>
 <!-- NEW USER JOBS(NOT IN BIDDING) -->
 <div *ngIf="this.loggedInUser.specialistId == null">
   <div class="createdByUser-jobs">
-    <h2>Solicitari Nou Create</h2>
+    <h2 class="title">Solicitari Nou Create</h2>
 
     <ng-container
       *ngIf="
@@ -83,7 +83,9 @@
         </ng-template>
         <ng-template pTemplate="empty">
           <tr>
-            <td colspan="2" style="text-align: center">No jobs available</td>
+            <td colspan="2" class="no-created-jobs" style="text-align: center">
+              No jobs available
+            </td>
           </tr>
         </ng-template>
       </p-table>
@@ -161,7 +163,7 @@
 <!-- CREATED BY USER si PRELUATE / IN EXEC -->
 <div *ngIf="this.loggedInUser.specialistId == null">
   <div class="createdByUser-jobs">
-    <h2>Solicitari in curs de executie</h2>
+    <h2 class="title">Solicitari in curs de executie</h2>
 
     <ng-container
       *ngIf="jobsCreatedByUser.length === 0; else showJobsCreatedByUserTable"
@@ -230,7 +232,7 @@
 <!-- Specialist BIDS -->
 <div *ngIf="this.loggedInUser.specialistId !== null">
   <div class="bidding-jobs">
-    <h2>Solicitari in curs de licitatie</h2>
+    <h2 class="title">Solicitari in curs de licitatie</h2>
     <ng-container
       *ngIf="bidsWithJobDetails.length === 0; else showBiddingTable"
     >
@@ -308,12 +310,12 @@
 <!-- CREATED BY USER With Active Bids-->
 <div *ngIf="loggedInUser.specialistId == null">
   <div class="createdByUser-jobs">
-    <h2>Solicitari in licitatie</h2>
+    <h2 class="title">Solicitari in licitatie</h2>
 
     <ng-container
       *ngIf="bidsWithJobDetails.length === 0; else showJobsCreatedByUserTable"
     >
-      <p class="no-created-jobs">Nu aveti solicitari in curs de executie</p>
+      <p class="no-created-jobs">Nu aveti solicitari in curs de licitatie</p>
     </ng-container>
     <ng-template #showJobsCreatedByUserTable>
       <p-table

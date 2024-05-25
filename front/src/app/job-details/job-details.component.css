@@ -237,3 +237,16 @@ footer {
   text-decoration: none;
   cursor: pointer;
 }
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/images/job-details_background.webp");
+  background-size: cover;
+  background-repeat: repeat-y;
+  opacity: 0.6;
+  z-index: -1;
+}

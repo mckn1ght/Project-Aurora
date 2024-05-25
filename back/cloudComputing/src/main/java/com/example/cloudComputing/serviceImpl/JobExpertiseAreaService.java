@@ -11,7 +11,6 @@ public interface JobExpertiseAreaService {
 
   List<JobExpertiseAreaDto> getByJobId(Long id);
   List<JobExpertiseAreaDto> getByExpertiseAreaId(Long id);
-
   List<JobExpertiseAreaDto> getAll();
 
 

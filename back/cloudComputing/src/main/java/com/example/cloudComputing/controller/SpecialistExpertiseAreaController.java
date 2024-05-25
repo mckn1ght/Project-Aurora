@@ -44,10 +44,11 @@ public class SpecialistExpertiseAreaController {
     return specialistExpertiseAreaServiceImpl.getAll();
   }
 
-  @GetMapping("/specialistId/{id}")
+  @GetMapping("/specialistId/{specialistId}")
   public ResponseEntity<List<SpecialistExpertiseAreaDto>> getAllWithSpecialistId(@PathVariable Long specialistId) {
     return ResponseEntity.ok(specialistExpertiseAreaServiceImpl.getBySpecialistId(specialistId));
   }
+
 
   @GetMapping("/expertiseAreaId/{Id}")
   public ResponseEntity<List<SpecialistExpertiseAreaDto>> getAllWithExpAreaId(@PathVariable Long expertiseAreaId) {

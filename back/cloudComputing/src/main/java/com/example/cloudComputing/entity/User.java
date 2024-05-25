@@ -47,8 +47,8 @@ public class User {
   @Column(name = "last_updated")
   private Date last_updated;
 
-  @Column(name = "credit")
-  private double credit;
+  @Column(name = "credit", nullable = false, columnDefinition = "int default 100")
+  private double credit = 100;
 
   @Column(name = "isAdmin")
   private boolean isAdmin;

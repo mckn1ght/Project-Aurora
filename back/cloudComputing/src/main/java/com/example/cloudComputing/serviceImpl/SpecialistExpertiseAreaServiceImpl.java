@@ -6,6 +6,7 @@ import com.example.cloudComputing.entity.SpecialistExpertiseArea;
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaFoundException;
 import com.example.cloudComputing.exception.job.NoJobFoundException;
 import com.example.cloudComputing.mapper.SpecialistExpertiseAreaMapper;
+import com.example.cloudComputing.repository.ExpertiseAreaRepository;
 import com.example.cloudComputing.repository.SpecialistExpertiseAreaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class SpecialistExpertiseAreaServiceImpl implements SpecialistExpertiseAr
 
   @Autowired
   private SpecialistExpertiseAreaMapper specialistExpertiseAreaMapper;
+
+  @Autowired
+  private ExpertiseAreaRepository expertiseAreaRepository;
 
 //  public SpecialistExpertiseAreaDto add(SpecialistExpertiseAreaDto specialistExpertiseAreaDto) {
 //    return specialistExpertiseAreaMapper.mapToSpecialistExpertiseAreaDto(specialistExpertiseAreaRepository.save(specialistExpertiseAreaMapper.mapToSpecialistExpertiseArea(specialistExpertiseAreaDto)));
@@ -70,5 +74,8 @@ public class SpecialistExpertiseAreaServiceImpl implements SpecialistExpertiseAr
       return specialistExpertiseAreaDtos;
     }
 
-}
+  public List<String> getExpertiseAreaNamesBySpecialistId(Long specialistId) {
+    return expertiseAreaRepository.findExpertiseAreaNamesBySpecialistId(specialistId);}
+
+  }
 
