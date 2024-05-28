@@ -154,6 +154,58 @@ export class JobDetailsComponent implements OnInit {
     }
   }
 
+  // addBid() {
+  //   if (this.activeBidCount < 5) {
+  //     this.showBidAmountPopUp = true;
+  //     if (this.job) {
+  //       this.newBid.jobId = this.job.id;
+  //       this.newBid.specialistId = this.loggedInUser?.specialistId;
+  //       this.newBid.amount = this.bidAmount;
+  //       this.newBid.status = 'active';
+
+  //       this.bidService.addBid(this.newBid).subscribe(
+  //         (response) => {
+  //           console.log('Bid added successfully.', response);
+  //           // Subtract credit from the user
+  //           if (this.loggedInUser) {
+  //             this.userService
+  //               .subtractCredit(this.loggedInUser.id!, this.bidAmount)
+  //               .subscribe(
+  //                 () => {
+  //                   console.log('Credit subtracted successfully');
+  //                   this.authService.refreshUserData(); // Refresh the user data from the server
+  //                   this.jobService
+  //                     .setWorkflowStatus(this.job?.id, 'In Licitatie')
+  //                     .subscribe(
+  //                       () => {
+  //                         console.log('Workflow status updated successfully.');
+  //                         this.router.navigate(['/my-jobs']);
+  //                       },
+  //                       (error) => {
+  //                         console.error(
+  //                           'Error updating workflow status:',
+  //                           error
+  //                         );
+  //                       }
+  //                     );
+  //                 },
+  //                 (error) => {
+  //                   console.error('Error subtracting credit:', error);
+  //                 }
+  //               );
+  //           }
+  //         },
+  //         (error) => {
+  //           console.error('Error adding bid:', error);
+  //         }
+  //       );
+  //     } else {
+  //       this.displayToast('Ati atins numarul maxim de licitatii concomitente.');
+  //     }
+  //     this.closePopup();
+  //   }
+  // }
+
   getActiveBids() {
     this.authService.getLoggedInUser().subscribe((loggedInUser) => {
       if (loggedInUser && loggedInUser.specialistId !== undefined) {

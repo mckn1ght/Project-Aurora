@@ -19,50 +19,53 @@
     </ul>
   </nav>
 </header>
-
-<form [formGroup]="newSpecialistForm" (ngSubmit)="addSpecialist()">
-  <div
-    class="form-group"
-    [ngClass]="{
-      'has-error':
-        newSpecialistForm.get('expertiseAreas')?.invalid &&
-        newSpecialistForm.get('expertiseAreas')?.touched
-    }"
-  >
-    <label for="expertiseAreas">Arii de activitate:</label>
-    <p-multiSelect
-      id="expertiseAreas"
-      name="expertiseAreas"
-      formControlName="expertiseAreas"
-      [options]="expertiseAreasList"
-      placeholder="Alegeti cel putin un domeniu de activitate"
-      [style]="{ width: '100%' }"
-      optionLabel="name"
-      selectedItemsLabel="{0} Expertise Areas Selected"
-      [showClear]="true"
-      [panelStyle]="{
-        'border-color':
+<div class="background"></div>
+<div class="center-screen">
+  <div class="form-card">
+    <form [formGroup]="newSpecialistForm" (ngSubmit)="addSpecialist()">
+      <div
+        class="form-group"
+        [ngClass]="{
+          'has-error':
+            newSpecialistForm.get('expertiseAreas')?.invalid &&
+            newSpecialistForm.get('expertiseAreas')?.touched
+        }"
+      >
+        <label for="expertiseAreas">Arii de activitate:</label>
+        <p-multiSelect
+          id="expertiseAreas"
+          name="expertiseAreas"
+          formControlName="expertiseAreas"
+          [options]="expertiseAreasList"
+          placeholder="Alegeti cel putin un domeniu de activitate"
+          [style]="{ width: '100%' }"
+          optionLabel="name"
+          selectedItemsLabel="{0} Expertise Areas Selected"
+          [showClear]="true"
+          [panelStyle]="{
+            'border-color':
+              newSpecialistForm.get('expertiseAreas')?.invalid &&
+              newSpecialistForm.get('expertiseAreas')?.touched
+                ? 'red'
+                : ''
+          }"
+        ></p-multiSelect>
+      </div>
+      <div
+        class="errorLabel"
+        *ngIf="
           newSpecialistForm.get('expertiseAreas')?.invalid &&
           newSpecialistForm.get('expertiseAreas')?.touched
-            ? 'red'
-            : ''
-      }"
-    ></p-multiSelect>
+        "
+      >
+        Alegeti minim un domeniu de activitate
+      </div>
+      <div class="buttonTrimite">
+        <button type="submit" pButton label="Inregistreaza"></button>
+      </div>
+    </form>
   </div>
-  <div
-    class="errorLabel"
-    *ngIf="
-      newSpecialistForm.get('expertiseAreas')?.invalid &&
-      newSpecialistForm.get('expertiseAreas')?.touched
-    "
-  >
-    Alegeti minim un domeniu de activitate
-  </div>
-  <div class="buttonTrimite">
-    <button type="submit" pButton label="Inregistreaza"></button>
-  </div>
-</form>
-
+</div>
 <footer>
   <p>
     &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}

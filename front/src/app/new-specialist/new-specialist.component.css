@@ -70,7 +70,9 @@ header {
 
 .buttonTrimite {
   margin-top: 20px;
-  margin-left: 45%;
+
+  text-align: center;
+  justify-content: center;
 }
 
 .errorLabel {
@@ -82,7 +84,40 @@ header {
   font-size: small;
   margin-top: 5px;
   width: fit-content; /* This limits the width of the element to its content */
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 .error-border {
   border-color: red;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/assets/images/new-specialist_background.webp");
+  background-size: cover;
+  background-repeat: repeat-y;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.form-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  align-content: center;
+  width: 50%;
+}
+
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

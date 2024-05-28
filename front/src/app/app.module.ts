@@ -46,6 +46,7 @@ import { ConfirmationService } from 'primeng/api';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { NewSpecialistComponent } from './new-specialist/new-specialist.component';
+import { JobDetailInWorkComponent } from './job-detail-in-work/job-detail-in-work.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { NewSpecialistComponent } from './new-specialist/new-specialist.componen
     AdminPanelComponent,
     UploadAvatarComponent,
     NewSpecialistComponent,
+    JobDetailInWorkComponent,
   ],
   imports: [
     BrowserModule,

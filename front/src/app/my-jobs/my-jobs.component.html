@@ -123,7 +123,7 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-job let-i="index">
-          <tr (click)="goToJobDetails(job.id)">
+          <tr (click)="navigateToJobDetailsFull(job.id)">
             <td>{{ job.id }}</td>
             <td>{{ job.title }}</td>
             <td>{{ job.description }}</td>
@@ -193,7 +193,7 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-job let-i="index">
-          <tr (click)="goToJobDetails(job.id)">
+          <tr (click)="navigateToJobDetailsFull(job.id)">
             <td>{{ job.id }}</td>
             <td>{{ job.title }}</td>
             <td>{{ job.description }}</td>

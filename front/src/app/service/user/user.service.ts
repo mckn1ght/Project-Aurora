@@ -78,4 +78,20 @@ export class UserService {
       user
     );
   }
+
+  addCredit(userId: number, credit: number): Observable<any> {
+    return this.http.put(
+      `${BACKEND_API_URL}${userEndpoint}/addCredit/${userId}`,
+      { credit: credit.toString() },
+      this.httpOptions
+    );
+  }
+
+  subtractCredit(userId: number, credit: number): Observable<any> {
+    return this.http.put(
+      `${BACKEND_API_URL}${userEndpoint}/subtractCredit/${userId}`,
+      { credit: credit.toString() },
+      this.httpOptions
+    );
+  }
 }

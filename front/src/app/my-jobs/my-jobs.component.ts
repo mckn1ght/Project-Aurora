@@ -344,4 +344,21 @@ export class MyJobsComponent implements OnInit {
     });
     console.log(this.uniqueBidsWithJobDetails);
   }
+
+  navigateToJobDetailsFull(jobId: number) {
+    this.jobService.getJobDetails(jobId).subscribe((job: Job) => {
+      console.log(this.loggedInUser.id + ' ' + job.createdByUser);
+      console.log(
+        this.loggedInUser.specialistId + ' ' + job.assignedToSpecialist
+      );
+      if (
+        this.loggedInUser.id === job.createdByUser ||
+        this.loggedInUser.specialistId === job.assignedToSpecialist
+      ) {
+        this.router.navigate(['/app-job-detail-in-work', jobId]);
+      } else {
+        alert('Nu aveti permisiunea sa vedeti acest job.');
+      }
+    });
+  }
 }

@@ -155,6 +155,27 @@ public UserDto add(UserDto userDto) {
     return userRepository.save(existingUser);
   }
 
+  @Transactional
+  public void addCredit(Long userId, double credit) {
+    User user = userRepository.findById(userId)
+      .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));
+    System.out.println("Current credit: " + user.getCredit());
+    user.setCredit(user.getCredit() + credit);
+    userRepository.save(user);
+    System.out.println("Updated credit: " + user.getCredit());
+  }
+
+  @Transactional
+  public void subtractCredit(Long userId, double credit) {
+    User user = userRepository.findById(userId)
+      .orElseThrow(() -> new NoUserFoundException(String.format(NO_USER_ID_FOUND, userId)));
+    System.out.println("Current credit: " + user.getCredit());
+    user.setCredit(user.getCredit() - credit);
+    userRepository.save(user);
+    System.out.println("Updated credit: " + user.getCredit());
+  }
+
+
 
 }
 

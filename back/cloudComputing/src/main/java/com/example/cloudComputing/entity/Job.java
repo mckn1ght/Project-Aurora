@@ -70,4 +70,5 @@ public class Job {
     inverseJoinColumns = @JoinColumn(name = "expertiseAreaID")
   )
   private Set<ExpertiseArea> expertiseAreas;
+
 }

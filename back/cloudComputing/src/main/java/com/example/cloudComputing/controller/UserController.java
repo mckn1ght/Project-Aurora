@@ -150,6 +150,31 @@ public class UserController {
       return ResponseEntity.badRequest().build();
     }
   }
+
+  @PutMapping(path = "/addCredit/{id}", consumes = "application/json")
+  @Transactional
+  public ResponseEntity<Void> addCredit(
+    @PathVariable Long id,
+    @RequestBody Map<String, String> creditMap
+  ) {
+    String credit = creditMap.get("credit");
+    System.out.println("Received credit to add: " + credit);
+    userServiceImpl.addCredit(id, Double.parseDouble(credit));
+    return ResponseEntity.ok().build();
+  }
+
+  @PutMapping(path = "/subtractCredit/{id}", consumes = "application/json")
+  @Transactional
+  public ResponseEntity<Void> subtractCredit(
+    @PathVariable Long id,
+    @RequestBody Map<String, String> creditMap
+  ) {
+    String credit = creditMap.get("credit");
+    System.out.println("Received credit to subtract: " + credit);
+    userServiceImpl.subtractCredit(id, Double.parseDouble(credit));
+    return ResponseEntity.ok().build();
+  }
+
 }
 
 

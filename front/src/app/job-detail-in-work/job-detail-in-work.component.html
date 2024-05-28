@@ -1,0 +1,59 @@
+<div class="job-detail-container">
+  <div class="job-main">
+    <div class="job-header">
+      <h2>{{ job?.title }}</h2>
+      <p>{{ job?.description }}</p>
+    </div>
+    <div class="details-section" *ngIf="jobPictures.length > 0">
+      <h3>Job Pictures</h3>
+      <div class="pictures-container">
+        <img
+          *ngFor="let picture of jobPictures"
+          [src]="'http://localhost:8080' + picture"
+          alt="Job Picture"
+          class="job-picture"
+          (click)="openModal('http://localhost:8080' + picture)"
+        />
+      </div>
+    </div>
+    <div class="comments-section">
+      <h3>Comments</h3>
+      <div class="comment" *ngFor="let comment of comments">
+        <p>
+          <strong>{{ comment.user?.username }}</strong
+          >: {{ comment.content }}
+        </p>
+        <span>{{ comment.timestamp | date : "short" }}</span>
+      </div>
+      <div class="new-comment">
+        <textarea
+          [(ngModel)]="newCommentContent"
+          placeholder="Add a comment..."
+        ></textarea>
+        <button (click)="addComment()">Post Comment</button>
+      </div>
+    </div>
+  </div>
+  <div class="job-sidebar">
+    <div class="job-details">
+      <h3>Detalii job</h3>
+      <p>
+        <strong>Creation Date:</strong> {{ job?.creationDate | date : "short" }}
+      </p>
+      <p><strong>Due Date:</strong> {{ job?.dueDate | date : "short" }}</p>
+      <p>
+        <strong>Last Updated:</strong> {{ job?.lastUpdated | date : "short" }}
+      </p>
+      <p><strong>Workflow Step:</strong> {{ job?.currentWorkflowStep }}</p>
+      <p>
+        <strong>Assigned To:</strong>
+        {{ job?.assignedToSpecialist ?? "Not assigned" }}
+      </p>
+    </div>
+  </div>
+</div>
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01" />
+  <div id="caption"></div>
+</div>
