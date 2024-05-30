@@ -4,6 +4,9 @@ import com.example.cloudComputing.dto.CommentDto;
 import com.example.cloudComputing.entity.Comment;
 import com.example.cloudComputing.entity.Job;
 import com.example.cloudComputing.entity.User;
+import com.example.cloudComputing.exception.comment.NoCommentFoundException;
+import com.example.cloudComputing.exception.job.NoJobFoundException;
+import com.example.cloudComputing.exception.user.NoUserFoundException;
 import com.example.cloudComputing.mapper.CommentMapper;
 import com.example.cloudComputing.repository.ExpertiseAreaRepository;
 import com.example.cloudComputing.repository.CommentRepository;
@@ -38,23 +41,35 @@ public class CommentServiceImpl implements CommentService {
   @Autowired
   private UserRepository userRepository;
 
+  @Transactional
   public Comment addComment(Long jobId, Long userId, String content) {
-    // Fetch existing Job and User entities
-    Job job = jobRepository.findById(jobId).orElseThrow(() -> new IllegalArgumentException("Invalid job ID"));
-    User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+    Job job = jobRepository.findById(jobId).orElseThrow(() -> new NoJobFoundException("Job not found"));
+    User user = userRepository.findById(userId).orElseThrow(() -> new NoUserFoundException("User not found"));
 
-    // Create and populate the Comment entity
     Comment comment = new Comment();
     comment.setJob(job);
     comment.setUser(user);
     comment.setContent(content);
     comment.setTimestamp(LocalDateTime.now());
-
-    // Save and return the Comment entity
     return commentRepository.save(comment);
   }
+
   public List<Comment> getCommentsByJobId(Long jobId) {
     return commentRepository.findByJobId(jobId);
+  }
+
+  @Transactional
+  public void deleteComment(Long commentId) {
+    commentRepository.deleteById(commentId);
+  }
+
+  @Transactional
+  public Comment updateComment(Long commentId, String content) {
+    Comment comment = commentRepository.findById(commentId)
+      .orElseThrow(() -> new NoCommentFoundException("Comment not found"));
+    comment.setContent(content);
+    comment.setTimestamp(LocalDateTime.now());
+    return commentRepository.save(comment);
   }
 }
 

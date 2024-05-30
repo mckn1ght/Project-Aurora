@@ -7,6 +7,7 @@ import { User } from '../models/user';
 import { Comment } from '../models/comment';
 import { AuthService } from '../service/auth/auth.service';
 import { CommentService } from '../service/comment/comment.service';
+import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 
 @Component({
   selector: 'app-job-detail-in-work',
@@ -19,6 +20,12 @@ export class JobDetailInWorkComponent implements OnInit {
   newCommentContent: string = '';
   loggedInUser: User | null = null;
   jobPictures: string[] = [];
+  specialistName: string = '';
+  appEnvironment: String = APPLICATION_ENVIRONMENT;
+  appVersion: String = APPLICATION_VERSION;
+
+  editCommentContent: string = '';
+  editCommentId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +46,7 @@ export class JobDetailInWorkComponent implements OnInit {
           console.log(`Logged-in user: ${JSON.stringify(this.loggedInUser)}`);
           this.fetchJobDetails(jobId);
           this.loadJobPictures(jobId);
+          this.loadComments(jobId);
         });
       } else {
         console.warn('No job ID found in route parameters.');
@@ -58,6 +66,7 @@ export class JobDetailInWorkComponent implements OnInit {
             this.loggedInUser?.specialistId === this.job?.assignedToSpecialist
           ) {
             console.log('User has permission to view the job.');
+            this.loadSpecialistName(this.job.assignedToSpecialist);
           } else {
             console.warn('User does not have permission to view the job.');
             this.router.navigate(['/landing']);
@@ -83,8 +92,8 @@ export class JobDetailInWorkComponent implements OnInit {
   addComment() {
     if (this.loggedInUser && this.job) {
       const commentPayload = {
-        job: this.job,
-        user: this.loggedInUser,
+        jobId: this.job.id,
+        userId: this.loggedInUser.id,
         content: this.newCommentContent,
       };
       this.commentService.addComment(commentPayload).subscribe(
@@ -137,6 +146,62 @@ export class JobDetailInWorkComponent implements OnInit {
     const modal = document.getElementById('myModal') as HTMLElement;
     if (event.target === modal) {
       modal.style.display = 'none';
+    }
+  }
+
+  loadSpecialistName(specialistId: number | undefined) {
+    if (specialistId) {
+      this.userService.getSpecialistName(specialistId).subscribe(
+        (user: User) => {
+          this.specialistName = `${user.firstName} ${user.lastName}`;
+          console.log('Specialist name:', this.specialistName);
+        },
+        (error) => {
+          console.error('Error fetching specialist name:', error);
+        }
+      );
+    }
+  }
+
+  deleteComment(commentId: number) {
+    if (confirm('Doriti sa stergeti acest comentariu?')) {
+      this.commentService.deleteComment(commentId).subscribe(
+        () => {
+          this.comments = this.comments.filter(
+            (comment) => comment.id !== commentId
+          );
+        },
+        (error) => {
+          console.error('Error deleting comment:', error);
+        }
+      );
+    }
+  }
+
+  editComment(comment: Comment) {
+    this.editCommentId = comment.id;
+    this.editCommentContent = comment.content;
+  }
+
+  updateComment() {
+    if (this.editCommentId && this.editCommentContent.trim() !== '') {
+      this.commentService
+        .updateComment(this.editCommentId, this.editCommentContent)
+        .subscribe(
+          (updatedComment) => {
+            const index = this.comments.findIndex(
+              (comment) => comment.id === this.editCommentId
+            );
+            if (index !== -1) {
+              this.comments[index] = updatedComment;
+            }
+            this.editCommentId = null;
+            this.editCommentContent = '';
+          },
+          (error) => {
+            console.error('Error updating comment:', error);
+          }
+        );
     }
   }
 }

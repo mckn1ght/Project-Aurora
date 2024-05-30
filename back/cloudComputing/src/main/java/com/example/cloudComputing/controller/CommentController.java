@@ -29,6 +29,7 @@ public class CommentController {
 
   @PostMapping("/add")
   public ResponseEntity<CommentDto> addComment(@RequestBody Map<String, Object> payload) {
+    System.out.println("Received payload: " + payload); // Debugging log
     Long jobId = ((Number) payload.get("jobId")).longValue();
     Long userId = ((Number) payload.get("userId")).longValue();
     String content = (String) payload.get("content");
@@ -46,6 +47,24 @@ public class CommentController {
 
     return ResponseEntity.ok(commentDtos);
   }
+
+  @DeleteMapping("/delete/{commentId}")
+  public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+    commentServiceImpl.deleteComment(commentId);
+    return ResponseEntity.ok().build();
+  }
+
+  @PutMapping("/update/{commentId}")
+  public ResponseEntity<CommentDto> updateComment(
+    @PathVariable Long commentId, @RequestBody Map<String, Object> payload) {
+    String content = (String) payload.get("content");
+
+    Comment updatedComment = commentServiceImpl.updateComment(commentId, content);
+    CommentDto commentDto = commentMapper.mapToCommentDto(updatedComment);
+
+    return ResponseEntity.ok(commentDto);
+  }
+
 
 
 }

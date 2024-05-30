@@ -2,6 +2,7 @@ package com.example.cloudComputing.controller;
 
 import com.example.cloudComputing.exception.bid.NoBidFoundException;
 import com.example.cloudComputing.exception.bid.NoBidIdFoundException;
+import com.example.cloudComputing.exception.comment.NoCommentFoundException;
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaFoundException;
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaIdFoundException;
 import com.example.cloudComputing.exception.expertiseArea.NoExpertiseAreaNameFoundException;
@@ -36,7 +37,7 @@ public class ExceptionControllerAdvice {
     NoJobsCreatedAfterDateException.class, NoJobsWithDueDateException.class, NoJobsAfterDueDateException.class,
     NoJobsBeforeDueDateException.class, NoJobsLastUpdatedOnDateException.class, NoJobsLastUpdatedBeforeDateException.class,
     NoJobsLastUpdatedAfterDateException.class, NoJobsOnWorkflowStepException.class, NoBidFoundException.class,
-    NoBidIdFoundException.class, NoResourceFoundException.class
+    NoBidIdFoundException.class, NoResourceFoundException.class, NoCommentFoundException.class
   })
 
   public ResponseEntity<String> handleControllerExceptions(Exception exception) {
