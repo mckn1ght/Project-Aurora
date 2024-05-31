@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JobPictureRepository extends JpaRepository<JobPicture, Long> {
@@ -13,7 +14,13 @@ public interface JobPictureRepository extends JpaRepository<JobPicture, Long> {
 
   List<JobPicture> getAllByJobId(int id);
 
-  JobPicture getByUrl(String url);
+  JobPicture findByUrl(String url);
+
+  boolean existsByUrlAndJobId(String url, int jobId);
+
+  Optional<JobPicture> findById(int id);
+
+  void deleteById(int id);
 
 }
 

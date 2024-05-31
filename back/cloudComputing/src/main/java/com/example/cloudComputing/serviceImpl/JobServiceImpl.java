@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -267,7 +268,7 @@ public class JobServiceImpl implements JobService {
   public List<String> getExpertiseAreaNamesByJobId(Long jobId) {
     return expertiseAreaRepository.findExpertiseAreaNamesByJobId(jobId);
   }
-  
+
   public Job updateJob(Long jobId, Job updatedJob) {
     return jobRepository.findById(jobId)
       .map(job -> {
@@ -276,8 +277,10 @@ public class JobServiceImpl implements JobService {
         job.setLocation(updatedJob.getLocation());
         job.setAssignedToSpecialist(updatedJob.getAssignedToSpecialist());
         job.setCurrentWorkflowStep(updatedJob.getCurrentWorkflowStep());
+        job.setLastUpdated(LocalDate.now());
         return jobRepository.save(job);
       }).orElse(null);
   }
+
 }
 

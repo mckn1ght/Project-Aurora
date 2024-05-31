@@ -8,6 +8,7 @@ import { Comment } from '../models/comment';
 import { AuthService } from '../service/auth/auth.service';
 import { CommentService } from '../service/comment/comment.service';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-job-detail-in-work',
@@ -26,6 +27,11 @@ export class JobDetailInWorkComponent implements OnInit {
 
   editCommentContent: string = '';
   editCommentId: number | null = null;
+
+  editJobMode: boolean = false;
+  editJobTitle: string = '';
+  editJobDescription: string = '';
+  selectedFiles: File[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -203,5 +209,74 @@ export class JobDetailInWorkComponent implements OnInit {
           }
         );
     }
+  }
+
+  updateJobDetails() {
+    if (this.job) {
+      const updatedJob = {
+        ...this.job,
+        title: this.editJobTitle,
+        description: this.editJobDescription,
+      };
+      this.jobService.updateJob(this.job.id, updatedJob).subscribe(
+        (job) => {
+          this.job = job;
+          this.editJobMode = false;
+        },
+        (error) => {
+          console.error('Error updating job details:', error);
+        }
+      );
+    }
+  }
+
+  isJobCreator(): boolean {
+    return this.loggedInUser?.id === this.job?.createdByUser;
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFiles = Array.from(event.target.files);
+  }
+
+  uploadPictures() {
+    if (this.job && this.selectedFiles.length > 0) {
+      this.jobService
+        .uploadJobPictures(this.job.id, this.selectedFiles)
+        .subscribe(
+          (event) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              const progress = Math.round((100 * event.loaded) / event.total);
+              console.log(`Upload is ${progress}% complete.`);
+            } else if (event instanceof HttpResponse) {
+              console.log('Upload complete:', event.body);
+              if (
+                typeof event.body === 'string' &&
+                event.body.includes('Pictures uploaded successfully')
+              ) {
+                this.loadJobPictures(this.job!.id); // Refresh the pictures
+                window.location.reload();
+              }
+            }
+          },
+          (error) => {
+            console.error('Error uploading pictures:', error);
+            window.location.reload();
+          }
+        );
+    }
+  }
+
+  deletePicture(pictureUrl: string, index: number) {
+    this.jobService.deleteJobPicture(pictureUrl).subscribe(
+      () => {
+        // Remove the picture from the array after deletion
+        this.jobPictures.splice(index, 1);
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error deleting picture:', error);
+        window.location.reload();
+      }
+    );
   }
 }

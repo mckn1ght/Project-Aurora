@@ -1,7 +1,11 @@
 // job.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Observable, catchError, forkJoin, of, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -283,5 +287,12 @@ export class JobService {
         )
       )
     );
+  }
+
+  deleteJobPicture(pictureUrl: string): Observable<any> {
+    const params = new HttpParams().set('url', pictureUrl);
+    return this.http.delete(`http://localhost:8080/jobPicture/delete`, {
+      params,
+    });
   }
 }
