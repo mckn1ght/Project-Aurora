@@ -56,9 +56,20 @@
   cursor: pointer;
 }
 
+.workflowButtons {
+  background-color: #007bff;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .new-comment button:hover,
 .deleteButton:hover,
-.editButton:hover {
+.editButton:hover,
+.workflowButtons:hover {
   background-color: #0056b3;
 }
 

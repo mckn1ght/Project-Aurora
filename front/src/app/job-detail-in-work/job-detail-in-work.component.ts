@@ -33,6 +33,12 @@ export class JobDetailInWorkComponent implements OnInit {
   editJobDescription: string = '';
   selectedFiles: File[] = [];
 
+  markedForValidation: boolean = false;
+  markedAsValidated: boolean = false;
+  canceledJob: boolean = false;
+
+  creatortName: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -62,10 +68,22 @@ export class JobDetailInWorkComponent implements OnInit {
   }
 
   fetchJobDetails(jobId: number) {
+    this.canceledJob = false;
     if (this.loggedInUser) {
       this.jobService.getJobDetails(jobId).subscribe(
         (job: Job) => {
           this.job = job;
+          if (this.job.currentWorkflowStep == 'Canceled') {
+            this.canceledJob = true;
+            this.markedAsValidated = true;
+            this.markedForValidation = true;
+          } else if (this.job.currentWorkflowStep == 'Preluat') {
+            this.markedAsValidated = false;
+            this.markedForValidation = false;
+          } else if (this.job.currentWorkflowStep == 'Preluat') {
+            this.markedAsValidated = false;
+            this.markedForValidation = false;
+          }
           console.log(`Fetched job details: ${JSON.stringify(this.job)}`);
           if (
             this.loggedInUser?.id === this.job?.createdByUser ||
@@ -73,6 +91,7 @@ export class JobDetailInWorkComponent implements OnInit {
           ) {
             console.log('User has permission to view the job.');
             this.loadSpecialistName(this.job.assignedToSpecialist);
+            this.loadCreatortName(this.job.createdByUser);
           } else {
             console.warn('User does not have permission to view the job.');
             this.router.navigate(['/landing']);
@@ -164,6 +183,20 @@ export class JobDetailInWorkComponent implements OnInit {
         },
         (error) => {
           console.error('Error fetching specialist name:', error);
+        }
+      );
+    }
+  }
+
+  loadCreatortName(userId: number | undefined) {
+    if (userId) {
+      this.userService.getUserFirstNameLastName(userId).subscribe(
+        (user: User) => {
+          this.creatortName = `${user.firstName} ${user.lastName}`;
+          console.log('User name:', this.creatortName);
+        },
+        (error) => {
+          console.error('Error fetching user full name:', error);
         }
       );
     }
@@ -275,6 +308,72 @@ export class JobDetailInWorkComponent implements OnInit {
       },
       (error) => {
         console.error('Error deleting picture:', error);
+        window.location.reload();
+      }
+    );
+  }
+
+  markForValidation(jobId: number) {
+    console.log('markForValidation called');
+    this.jobService
+      .setWorkflowStatus(jobId, 'Waiting for validation')
+      .subscribe(
+        (response) => {
+          console.log(response.message);
+          this.markedForValidation = true;
+          this.fetchJobDetails(this.job!.id);
+          window.location.reload();
+        },
+        (error) => {
+          console.error('Error setting workflow status:', error);
+          window.location.reload();
+        }
+      );
+  }
+
+  markAsValidated(jobId: number) {
+    console.log('markAsValidated called');
+    this.jobService.setWorkflowStatus(jobId, 'Validated').subscribe(
+      (response) => {
+        console.log(response.message);
+        this.markedAsValidated = true;
+        this.fetchJobDetails(this.job!.id);
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error setting workflow status:', error);
+        window.location.reload();
+      }
+    );
+  }
+
+  cancelJob(jobId: number) {
+    console.log('cancelJob called');
+    this.jobService.setWorkflowStatus(jobId, 'Canceled').subscribe(
+      (response) => {
+        console.log(response.message);
+        this.fetchJobDetails(this.job!.id);
+        window.location.reload();
+        // Additional logic if needed
+      },
+      (error) => {
+        console.error('Error setting workflow status:', error);
+        window.location.reload();
+      }
+    );
+  }
+
+  returnToSpecialist(jobId: number) {
+    this.jobService.setWorkflowStatus(jobId, 'Preluat').subscribe(
+      (response) => {
+        console.log(response.message);
+        this.markedForValidation = false;
+        this.markedAsValidated = false;
+        this.fetchJobDetails(this.job!.id);
+        window.location.reload();
+      },
+      (error) => {
+        console.error('Error setting workflow status:', error);
         window.location.reload();
       }
     );

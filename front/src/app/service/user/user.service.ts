@@ -48,6 +48,12 @@ export class UserService {
       .pipe(map((user: User) => user));
   }
 
+  getUserFirstNameLastName(id: any): Observable<User> {
+    return this.http
+      .get<User>(BACKEND_API_URL + userEndpoint + getById + id)
+      .pipe(map((user: User) => user));
+  }
+
   // Service
   updateEmail(id: number, email: string): Observable<any> {
     return this.http.put(
