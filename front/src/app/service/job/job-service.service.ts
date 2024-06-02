@@ -27,6 +27,10 @@ import {
   countCreatedBy,
   getByExpertiseArea,
   jobPicture,
+  countJobsFinishedBySpecialist,
+  countJobsFinishedByUser,
+  countJobsCanceledByUser,
+  countActiveJobsInWorkBySpecialist,
 } from 'src/app/constants';
 import { Job } from 'src/app/models/job';
 
@@ -230,12 +234,39 @@ export class JobService {
       BACKEND_API_URL + jobEndpoint + countCreatedBy + userId + '/'
     );
   }
-  // getByExpertiseArea(expertiseAreaId: number) {
-  //   return this.http.get(
-  //     BACKEND_API_URL + jobEndpoint + getByExpertiseArea + expertiseAreaId
-  //   );
 
-  // }
+  countJobsFinishedBySpecialist(specialistId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL +
+        jobEndpoint +
+        countJobsFinishedBySpecialist +
+        specialistId +
+        '/'
+    );
+  }
+
+  countJobsFinishedByUser(userId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + jobEndpoint + countJobsFinishedByUser + userId + '/'
+    );
+  }
+
+  countJobsCanceledByUser(userId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL + jobEndpoint + countJobsCanceledByUser + userId + '/'
+    );
+  }
+
+  countActiveJobsInWorkBySpecialist(specialistId: number): Observable<any> {
+    return this.http.get(
+      BACKEND_API_URL +
+        jobEndpoint +
+        countActiveJobsInWorkBySpecialist +
+        specialistId +
+        '/'
+    );
+  }
+
   getByExpertiseArea(expertiseAreaId: number): Observable<Job[]> {
     const apiUrl = BACKEND_API_URL + jobEndpoint;
     console.log(`${apiUrl}${getByExpertiseArea}${expertiseAreaId}`);

@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   loggedInUser: User | null = null;
   createdDate: string = '';
   jobsCreatedByUser: Job[] = [];
+  specialistActiveJobs: number = 0;
   counterTotalJobs: number = 0;
   editMode: boolean = false;
   newEmail: string = '';
@@ -32,6 +33,9 @@ export class ProfileComponent implements OnInit {
   resource: Resource = new Resource();
   selectedFile: File | null = null;
   expertiseAreas: string[] = [];
+  counterTotalFinishedJobsBySpecialist: number = 0;
+  counterTotalFinishedJobsByUser: number = 0;
+  counterTotalCanceledJobsByUser: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -76,6 +80,9 @@ export class ProfileComponent implements OnInit {
         this.createdDate = this.formatEuropeanDate(String(user.created));
         this.fetchJobsCreatedByUser();
         this.countJobsCreatedByUser();
+        this.countJobsFinishedBySpecialist();
+        this.countJobsFinishedByUser();
+        this.countActiveJobsInWorkBySpecialist();
         this.fetchAvatarLocation();
         console.log(this.loggedInUser.specialistId);
         if (this.loggedInUser.specialistId) {
@@ -114,6 +121,54 @@ export class ProfileComponent implements OnInit {
         .countJobsCreatedByUser(this.loggedInUser.id)
         .subscribe((jobs: number) => {
           this.counterTotalJobs = jobs;
+        });
+    }
+  }
+
+  countJobsFinishedBySpecialist() {
+    if (
+      this.loggedInUser &&
+      this.loggedInUser.id &&
+      this.loggedInUser.specialistId
+    ) {
+      this.jobService
+        .countJobsFinishedBySpecialist(this.loggedInUser.specialistId)
+        .subscribe((jobs: number) => {
+          this.counterTotalFinishedJobsBySpecialist = jobs;
+        });
+    }
+  }
+
+  countActiveJobsInWorkBySpecialist() {
+    if (
+      this.loggedInUser &&
+      this.loggedInUser.id &&
+      this.loggedInUser.specialistId
+    ) {
+      this.jobService
+        .countActiveJobsInWorkBySpecialist(this.loggedInUser.specialistId)
+        .subscribe((jobs: number) => {
+          this.specialistActiveJobs = jobs;
+        });
+    }
+  }
+
+  countJobsFinishedByUser() {
+    if (this.loggedInUser && this.loggedInUser.id) {
+      this.jobService
+        .countJobsFinishedByUser(this.loggedInUser.id)
+        .subscribe((jobs: number) => {
+          this.counterTotalFinishedJobsByUser = jobs;
+        });
+    }
+  }
+
+  countJobsCanceledByUser() {
+    if (this.loggedInUser && this.loggedInUser.id) {
+      this.jobService
+        .countJobsCanceledByUser(this.loggedInUser.id)
+        .subscribe((jobs: number) => {
+          this.counterTotalCanceledJobsByUser = jobs;
         });
     }
   }

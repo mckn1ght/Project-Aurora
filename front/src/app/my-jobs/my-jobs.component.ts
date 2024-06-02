@@ -55,12 +55,10 @@ export class MyJobsComponent implements OnInit {
           this.fetchJobsCreatedByUser();
           this.fetchJobsCreatedByUserWithBids();
           this.fetchAllNewCreatedByUser();
-          console.log(this.bidsWithJobDetails);
         }
       }
     });
   }
-
   fetchActiveJobs() {
     if (this.loggedInUser && this.loggedInUser.specialistId !== undefined) {
       this.jobService
@@ -86,7 +84,8 @@ export class MyJobsComponent implements OnInit {
                 if (
                   job.currentWorkflowStep !== 'New' &&
                   job.currentWorkflowStep !== 'Preluat' &&
-                  bid.status !== 'rejected'
+                  bid.status !== 'rejected' &&
+                  bid.status !== 'accepted'
                 ) {
                   // Modify 'ExcludedStatus' with your desired status
                   this.userService.getById(job.createdByUser).subscribe(

@@ -25,7 +25,13 @@
   <div class="job-detail-container">
     <div class="job-main">
       <div class="job-header">
-        <div *ngIf="editJobMode && !canceledJob">
+        <div
+          *ngIf="
+            editJobMode &&
+            !canceledJob &&
+            job?.currentWorkflowStep !== 'Validated'
+          "
+        >
           <div>
             <input
               type="text"
@@ -55,7 +61,7 @@
           <p class="description">{{ job?.description }}</p>
           <button
             class="editButton"
-            *ngIf="isJobCreator() || (loggedInUser?.admin && !canceledJob)"
+            *ngIf="!canceledJob && job?.currentWorkflowStep !== 'Validated'"
             (click)="
               editJobMode = true;
               this.editJobDescription = this.job?.description!;
@@ -69,7 +75,11 @@
       <div>
         <input type="file" (change)="onFileSelected($event)" multiple />
         <button
-          *ngIf="this.selectedFiles.length > 0 && !canceledJob"
+          *ngIf="
+            this.selectedFiles.length > 0 &&
+            !canceledJob &&
+            job?.currentWorkflowStep !== 'Validated'
+          "
           class="editButton"
           (click)="uploadPictures()"
         >
@@ -78,7 +88,11 @@
       </div>
       <div
         class="details-section"
-        *ngIf="jobPictures.length > 0 && !canceledJob"
+        *ngIf="
+          jobPictures.length > 0 &&
+          !canceledJob &&
+          job?.currentWorkflowStep !== 'Validated'
+        "
       >
         <h3>Imagini Solicitare</h3>
         <div class="pictures-container">
@@ -92,7 +106,11 @@
               class="job-picture"
             />
             <button
-              *ngIf="editJobMode == true && !canceledJob"
+              *ngIf="
+                editJobMode &&
+                !canceledJob &&
+                job?.currentWorkflowStep !== 'Validated'
+              "
               class="deleteButton"
               (click)="deletePicture(picture, i)"
             >
@@ -104,7 +122,7 @@
       <div class="comments-section">
         <h3>Commentarii</h3>
         <div class="comment" *ngFor="let comment of comments">
-          <div *ngIf="editCommentId !== comment.id && !canceledJob">
+          <div *ngIf="editCommentId !== comment.id">
             <strong>{{ comment.user?.username }} :</strong>
             <p class="comment-content">
               {{ comment.content }}
@@ -113,8 +131,10 @@
             <button
               class="deleteButton"
               *ngIf="
-                loggedInUser?.id === comment.user?.id ||
-                (loggedInUser?.admin && !canceledJob)
+                (loggedInUser?.id === comment.user?.id ||
+                  loggedInUser?.admin) &&
+                !canceledJob &&
+                job?.currentWorkflowStep !== 'Validated'
               "
               (click)="deleteComment(comment.id)"
             >
@@ -123,8 +143,10 @@
             <button
               class="editButton"
               *ngIf="
-                loggedInUser?.id === comment.user?.id ||
-                (loggedInUser?.admin && !canceledJob)
+                (loggedInUser?.id === comment.user?.id ||
+                  loggedInUser?.admin) &&
+                !canceledJob &&
+                job?.currentWorkflowStep !== 'Validated'
               "
               (click)="editComment(comment)"
             >
@@ -132,7 +154,11 @@
             </button>
           </div>
           <div
-            *ngIf="editCommentId === comment.id && !canceledJob"
+            *ngIf="
+              editCommentId === comment.id &&
+              !canceledJob &&
+              job?.currentWorkflowStep !== 'Validated'
+            "
             class="edit-comment"
           >
             <textarea
@@ -148,7 +174,10 @@
             </button>
           </div>
         </div>
-        <div class="new-comment">
+        <div
+          class="new-comment"
+          *ngIf="!canceledJob && job?.currentWorkflowStep !== 'Validated'"
+        >
           <textarea
             [(ngModel)]="newCommentContent"
             placeholder="Adauga un commentariu..."
@@ -181,8 +210,9 @@
           class="workflowButtons"
           *ngIf="
             !markedForValidation &&
-            this.loggedInUser?.specialistId == this.job?.assignedToSpecialist &&
-            !canceledJob
+            loggedInUser?.specialistId === job?.assignedToSpecialist &&
+            !canceledJob &&
+            job?.currentWorkflowStep !== 'Validated'
           "
           (click)="markForValidation(this.job!.id)"
         >
@@ -192,8 +222,9 @@
           class="workflowButtons"
           *ngIf="
             markedForValidation &&
-            this.loggedInUser?.specialistId == this.job?.assignedToSpecialist &&
-            !canceledJob
+            loggedInUser?.specialistId === job?.assignedToSpecialist &&
+            !canceledJob &&
+            job?.currentWorkflowStep !== 'Validated'
           "
           (click)="returnToSpecialist(this.job!.id)"
         >
@@ -203,9 +234,11 @@
           class="workflowButtons"
           *ngIf="
             markedForValidation &&
-            this.job?.createdByUser == this.loggedInUser!.id &&
-            !canceledJob
+            job?.createdByUser === loggedInUser!.id &&
+            !canceledJob &&
+            job?.currentWorkflowStep !== 'Validated'
           "
+          (click)="markAsValidated(this.job!.id)"
         >
           Marcheaza ca validat
         </button>
@@ -213,9 +246,11 @@
           class="workflowButtons"
           *ngIf="
             markedForValidation &&
-            this.job?.createdByUser == this.loggedInUser!.id &&
-            !canceledJob
+            job?.createdByUser === loggedInUser!.id &&
+            !canceledJob &&
+            job?.currentWorkflowStep !== 'Validated'
           "
+          (click)="returnToSpecialist(this.job!.id)"
         >
           Reintoarce solicitare in lucru
         </button>
@@ -224,9 +259,11 @@
           *ngIf="
             !markedForValidation &&
             !markedAsValidated &&
-            this.job?.createdByUser == this.loggedInUser!.id &&
-            !canceledJob
+            job?.createdByUser === loggedInUser!.id &&
+            !canceledJob &&
+            job?.currentWorkflowStep !== 'Validated'
           "
+          (click)="cancelJob(this.job!.id)"
         >
           Anuleaza Solicitare
         </button>

@@ -26,7 +26,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
   List<Job> getAllByCreatedByUser(int id);
 
-  List<Job> getAllByAssignedToSpecialist(int id);
+  @Query("SELECT j FROM Job j WHERE j.assignedToSpecialist = :userId AND j.currentWorkflowStep IN ('Preluat', 'Waiting for validation')")
+  List<Job> getAllByAssignedToSpecialist(int userId);
 
   List<Job> getAllByCreationDate(LocalDate date);
 
@@ -49,10 +50,10 @@ public interface JobRepository extends JpaRepository<Job, Long> {
   List<Job> getAllByCurrentWorkflowStep(String step);
 
   @Query(value = "SELECT DISTINCT j.*, b.* FROM job j INNER JOIN bid b ON j.id = b.jobID WHERE j.createdByUser = :userId AND " +
-    "j.currentWorkflowStep NOT IN ('Preluat', 'In executie', 'New') AND b.status IN ('active')", nativeQuery = true)
+    "j.currentWorkflowStep NOT IN ('Preluat', 'In executie', 'New', 'Waiting for Validation') AND b.status IN ('active') ", nativeQuery = true)
   List<Object[]> findJobsAndBidsCreatedByUser(Long userId);
 
-  @Query("SELECT j FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('Preluat', 'In executie')")
+  @Query("SELECT j FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('Preluat', 'In executie', 'Waiting for Validation')")
   List<Job> findJobsCreatedByUserWithStatus(@Param("userId") Long userId);
 
   @Query("SELECT j FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('New')")
@@ -60,6 +61,17 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
   @Query("SELECT COUNT(j) FROM Job j WHERE j.createdByUser = :userId")
   int countJobsCreatedByUser(@Param("userId") Long userId);
+
+  @Query("SELECT COUNT(j) FROM Job j WHERE j.assignedToSpecialist = :specialistId AND j.currentWorkflowStep IN ('Validated')")
+  int countJobsFinishedBySpecialist(@Param("specialistId") Long specialistId);
+  @Query("SELECT COUNT(j) FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('Validated')")
+  int countJobsFinishedByUser(@Param("userId") Long userId);
+
+  @Query("SELECT COUNT(j) FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('Canceled')")
+  int countJobsCanceledByUser(@Param("userId") Long userId);
+
+  @Query("SELECT COUNT(j) FROM Job j WHERE j.assignedToSpecialist = :specialistId AND j.currentWorkflowStep IN ('Preluat')")
+  int countActiveJobsInWorkBySpecialist(@Param("specialistId") Long specialistId);
 
   List<Job> findByExpertiseAreasId(int expertiseAreaId);
 }

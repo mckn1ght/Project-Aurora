@@ -37,6 +37,11 @@ export const workflow = '/workflow/';
 export const withBids = '/withBids';
 export const countCreatedBy = '/countCreatedBy/';
 export const getByExpertiseArea = '/getByExpertiseArea/';
+export const countJobsFinishedBySpecialist = '/countJobsFinishedBySpecialist/';
+export const countJobsFinishedByUser = '/countJobsFinishedByUser/';
+export const countJobsCanceledByUser = '/countJobsCanceledByUser/';
+export const countActiveJobsInWorkBySpecialist =
+  '/countActiveJobsInWorkBySpecialist/';
 
 //JobPicture
 export const jobPicture = '/jobPicture';

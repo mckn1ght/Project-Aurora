@@ -80,9 +80,9 @@ export class JobDetailInWorkComponent implements OnInit {
           } else if (this.job.currentWorkflowStep == 'Preluat') {
             this.markedAsValidated = false;
             this.markedForValidation = false;
-          } else if (this.job.currentWorkflowStep == 'Preluat') {
+          } else if (this.job.currentWorkflowStep == 'Waiting for validation') {
             this.markedAsValidated = false;
-            this.markedForValidation = false;
+            this.markedForValidation = true;
           }
           console.log(`Fetched job details: ${JSON.stringify(this.job)}`);
           if (

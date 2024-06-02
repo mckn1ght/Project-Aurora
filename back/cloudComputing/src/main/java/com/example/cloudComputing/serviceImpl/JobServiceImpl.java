@@ -251,6 +251,25 @@ public class JobServiceImpl implements JobService {
     return totalJobs;
   }
 
+  public int countJobsFinishedBySpecialist(Long specialistId) {
+    int totalJobs = jobRepository.countJobsFinishedBySpecialist(specialistId);
+    return totalJobs;
+  }
+
+  public int countJobsFinishedByUser(Long userId) {
+    int totalJobs = jobRepository.countJobsFinishedByUser(userId);
+    return totalJobs;
+  }
+
+  public int countJobsCanceledByUser(Long userId) {
+    int totalJobs = jobRepository.countJobsCanceledByUser(userId);
+    return totalJobs;
+  }
+  public int countActiveJobsInWorkBySpecialist(Long userId) {
+    int totalJobs = jobRepository.countActiveJobsInWorkBySpecialist(userId);
+    return totalJobs;
+  }
+
   public void setWorkflowStatus(long jobId, String workflowStatus) {
     Job job = jobRepository.findById(jobId).orElse(null);
     if (job != null) {

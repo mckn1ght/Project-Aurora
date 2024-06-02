@@ -187,6 +187,25 @@ public class JobController {
     return jobServiceImpl.countJobsCreatedByUser(userId);
   }
 
+  @GetMapping("/countJobsFinishedBySpecialist/{specialistId}/")
+  public int countJobsFinishedBySpecialist(@PathVariable Long specialistId) {
+    return jobServiceImpl.countJobsFinishedBySpecialist(specialistId);
+  }
+
+  @GetMapping("/countActiveJobsInWorkBySpecialist/{specialistId}/")
+  public int countActiveJobsInWorkBySpecialist(@PathVariable Long specialistId) {
+    return jobServiceImpl.countActiveJobsInWorkBySpecialist(specialistId);
+  }
+  @GetMapping("/countJobsFinishedByUser/{userId}/")
+  public int countJobsFinishedByUser(@PathVariable Long userId) {
+    return jobServiceImpl.countJobsFinishedByUser(userId);
+  }
+
+  @GetMapping("/countJobsCanceledByUser/{userId}/")
+  public int countJobsCanceledByUser(@PathVariable Long userId) {
+    return jobServiceImpl.countJobsCanceledByUser(userId);
+  }
+
   @GetMapping("/getByExpertiseArea/{expertiseAreaId}")
   public List<Job> getJobsByExpertiseAreaId(@PathVariable int expertiseAreaId) {
     return jobServiceImpl.getJobsByExpertiseAreaId(expertiseAreaId);

@@ -131,12 +131,26 @@
         <strong>Cont creat:</strong>
         {{ createdDate }}
       </p>
-      <p>
+      <p *ngIf="loggedInUser!.specialistId == null">
         <strong>Total solicitari in lucru:</strong>
         {{ jobsCreatedByUser.length }}
       </p>
-      <p><strong>Total solicitari incheiate: </strong> -</p>
-      <p><strong>Total solicitari anulate: </strong> -</p>
+      <p *ngIf="loggedInUser!.specialistId != null">
+        <strong>Total solicitari in lucru:</strong>
+        {{ specialistActiveJobs }}
+      </p>
+      <p *ngIf="loggedInUser!.specialistId != null">
+        <strong>Total solicitari incheiate de specialist: </strong>
+        {{ counterTotalFinishedJobsBySpecialist }}
+      </p>
+      <p *ngIf="loggedInUser!.specialistId == null">
+        <strong>Total solicitari incheiate de utilizator: </strong>
+        {{ counterTotalFinishedJobsByUser }}
+      </p>
+      <p *ngIf="loggedInUser!.specialistId == null">
+        <strong>Total solicitari anulate: </strong>
+        {{ counterTotalCanceledJobsByUser }}
+      </p>
       <p><strong>Total solicitari:</strong> {{ counterTotalJobs }}</p>
     </div>
   </div>
