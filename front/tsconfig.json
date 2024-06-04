@@ -21,12 +21,12 @@
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
     "strictPropertyInitialization": true,
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0" //Jenkins
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": false
+    "strictTemplates": false //Jenkins
   }
 }
