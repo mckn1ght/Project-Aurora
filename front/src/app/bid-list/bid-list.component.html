@@ -21,8 +21,8 @@
 
 <div class="centered-container">
   <div class="background"></div>
-  <h2 class="h2 title">{{ selectedJob.title }}</h2>
-  <h2 class="h2 description">{{ selectedJob.description }}</h2>
+  <h2 class="h2 title">{{ selectedJob?.title }}</h2>
+  <h2 class="h2 description">{{ selectedJob?.description }}</h2>
 </div>
 
 <div class="card-container">
@@ -30,14 +30,14 @@
     <p-card [subheader]="" [style]="{ width: '18rem' }">
       <ng-template pTemplate="content">
         <p>
-          Specialist: {{ userDetails[i].firstName }}
-          {{ userDetails[i].lastName }}
+          Specialist: {{ userDetails[i]?.firstName }}
+          {{ userDetails[i]?.lastName }}
         </p>
         <p>Bid: {{ bid.amount }} credite</p>
         <p>Bid Created at: {{ bid.createdAt | date : "short" }}</p>
-        <p>Phone Number: {{ userDetails[i].phoneNumber }}</p>
-        <p>Email: {{ userDetails[i].email }}</p>
-        <p>Username {{ userDetails[i].username }}</p>
+        <p>Phone Number: {{ userDetails[i]?.phoneNumber }}</p>
+        <p>Email: {{ userDetails[i]?.email }}</p>
+        <p>Username {{ userDetails[i]?.username }}</p>
         <!-- Display more user details here -->
       </ng-template>
       <ng-template pTemplate="footer">
