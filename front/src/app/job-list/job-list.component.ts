@@ -63,10 +63,26 @@ export class JobListComponent implements OnInit {
     );
   }
 
+  // getJobsByExpertiseArea(expertiseAreaId: number): void {
+  //   this.jobService.getByExpertiseArea(expertiseAreaId).subscribe(
+  //     (jobs) => {
+  //       this.activeJobs = jobs;
+  //       this.loadAllJobPictures();
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching jobs by expertise area:', error);
+  //     }
+  //   );
+  // }
+
   getJobsByExpertiseArea(expertiseAreaId: number): void {
     this.jobService.getByExpertiseArea(expertiseAreaId).subscribe(
       (jobs) => {
-        this.activeJobs = jobs;
+        this.activeJobs = jobs.filter(
+          (job) =>
+            job.currentWorkflowStep === 'New' ||
+            job.currentWorkflowStep === 'In Licitatie'
+        );
         this.loadAllJobPictures();
       },
       (error) => {

@@ -61,7 +61,11 @@
           <p class="description">{{ job?.description }}</p>
           <button
             class="editButton"
-            *ngIf="!canceledJob && job?.currentWorkflowStep !== 'Validated'"
+            *ngIf="
+              !canceledJob &&
+              job?.currentWorkflowStep !== 'Validated' &&
+              isJobCreator()
+            "
             (click)="
               editJobMode = true;
               this.editJobDescription = this.job?.description!;

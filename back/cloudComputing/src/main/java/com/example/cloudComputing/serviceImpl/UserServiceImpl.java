@@ -28,10 +28,6 @@ public class UserServiceImpl implements UserService {
 
   private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
-//  public UserDto add(UserDto userDto) {
-//    return userMapper.mapToUserDto(userRepository.save(userMapper.mapToUser(userDto)));
-//  }
 @Transactional
 public UserDto add(UserDto userDto) {
   User user = userRepository.save(userMapper.mapToUser(userDto));
