@@ -193,3 +193,25 @@ header {
   opacity: 0.6;
   z-index: -1;
 }
+
+.btns {
+  display: block;
+  width: 20%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btns:hover {
+  background-color: #0056b3;
+}
+
+.btns.inactive {
+  background-color: #d3d3d3;
+  color: #ffffff;
+  cursor: not-allowed;
+}

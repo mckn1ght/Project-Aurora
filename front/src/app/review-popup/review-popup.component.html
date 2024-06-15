@@ -1,0 +1,30 @@
+<div class="popup-container">
+  <h2>Review Specialist</h2>
+  <div class="rating-container">
+    <label for="stars">Rating:</label>
+    <div class="stars">
+      <span
+        *ngFor="let star of starsArray; let i = index"
+        (click)="rate(i + 1)"
+        (mouseover)="hoverRate(i + 1)"
+        (mouseleave)="resetRate()"
+        [class.filled]="i < stars"
+        [class.hovered]="i < hoverStars"
+        class="star"
+        >&#9733;</span
+      >
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="title">Titlu:</label>
+    <input id="title" [(ngModel)]="title" type="text" />
+  </div>
+  <div class="form-group">
+    <label for="description">Descriere:</label>
+    <textarea id="description" [(ngModel)]="description"></textarea>
+  </div>
+  <div class="form-group">
+    <button (click)="submitReview()">Submit</button>
+    <button (click)="closePopup()">Cancel</button>
+  </div>
+</div>

@@ -48,6 +48,6 @@ export class DataService {
   }
 
   delete(tableName: string, id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${tableName}/delete/${id}`);
+    return this.http.delete(`${this.apiUrl}/${tableName}/deleteById/${id}`);
   }
 }

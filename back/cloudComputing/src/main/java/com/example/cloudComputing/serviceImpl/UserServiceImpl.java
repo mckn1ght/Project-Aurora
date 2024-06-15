@@ -171,6 +171,9 @@ public UserDto add(UserDto userDto) {
     System.out.println("Updated credit: " + user.getCredit());
   }
 
+  public void deleteById(Long userId) {
+    userRepository.deleteById(userId);
+  }
 
 
 }

@@ -175,6 +175,16 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @DeleteMapping("/deleteById/{userId}")
+  public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+    try {
+      userServiceImpl.deleteById(userId);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
 }
 
 

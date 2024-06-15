@@ -33,4 +33,7 @@ public class ReviewDto {
   @Column(name = "description")
   @NotNull(message = "The review must have a description.")
   private String description;
+
+  @Column(name = "jobId")
+  private int jobId;
 }

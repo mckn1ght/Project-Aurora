@@ -15,10 +15,11 @@ import {
   getBySpecialistId,
   updateEmail,
   updatePhoneNumber,
+  deleteById,
 } from 'src/app/constants';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from 'src/app/models/user';
-import { map } from 'rxjs';
+import { catchError, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -99,5 +100,15 @@ export class UserService {
       { credit: credit.toString() },
       this.httpOptions
     );
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    return this.http
+      .delete(BACKEND_API_URL + userEndpoint + deleteById + userId)
+      .pipe(
+        catchError((error) => {
+          throw error;
+        })
+      );
   }
 }

@@ -47,7 +47,8 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
   List<Job> getAllByLastUpdatedAfter(LocalDate date);
 
-  List<Job> getAllByCurrentWorkflowStep(String step);
+  @Query("SELECT j FROM Job j WHERE j.currentWorkflowStep IN ('New', 'In Licitatie')")
+  List<Job> getAllByCurrentWorkflowStep();
 
   @Query(value = "SELECT DISTINCT j.*, b.* FROM job j INNER JOIN bid b ON j.id = b.jobID WHERE j.createdByUser = :userId AND " +
     "j.currentWorkflowStep NOT IN ('Preluat', 'In executie', 'New', 'Waiting for Validation') AND b.status IN ('active') ", nativeQuery = true)

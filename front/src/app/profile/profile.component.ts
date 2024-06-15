@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { ResourceService } from '../service/resource/resource.service';
 import { Resource } from '../models/resource';
 import { SpecialistService } from '../service/specialist/specialist-service';
+import { ReviewService } from '../service/review/review.service';
 // import { Resource } from '../../../../back/cloudComputing/uploads/avatars/';
 
 @Component({
@@ -36,6 +37,8 @@ export class ProfileComponent implements OnInit {
   counterTotalFinishedJobsBySpecialist: number = 0;
   counterTotalFinishedJobsByUser: number = 0;
   counterTotalCanceledJobsByUser: number = 0;
+  reviewScore: number | null = null;
+  reviewCount: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -44,7 +47,8 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private resourceService: ResourceService,
-    private specialistService: SpecialistService
+    private specialistService: SpecialistService,
+    private reviewService: ReviewService
   ) {
     // this.editForm = this.formBuilder.group({
     //   // password: [
@@ -87,6 +91,7 @@ export class ProfileComponent implements OnInit {
         console.log(this.loggedInUser.specialistId);
         if (this.loggedInUser.specialistId) {
           this.fetchSpecialistExpertiseAreas(this.loggedInUser.specialistId);
+          this.loadReviewScoreAndCount(this.loggedInUser.specialistId);
         }
       }
     });
@@ -271,5 +276,44 @@ export class ProfileComponent implements OnInit {
         error: (error) =>
           console.error('Error fetching expertise areas:', error),
       });
+  }
+
+  loadReviewScore(specialistId: number) {
+    this.reviewService.getAverageRating(specialistId).subscribe(
+      (score) => {
+        this.reviewScore = score;
+      },
+      (error) => {
+        console.error('Error fetching review score:', error);
+        this.reviewScore = null;
+      }
+    );
+  }
+
+  navigateToReviews(specialistId: number | undefined): void {
+    if (specialistId) {
+      this.router.navigate(['/specialist-reviews', specialistId]);
+    }
+  }
+  loadReviewScoreAndCount(specialistId: number) {
+    this.reviewService.getAverageRating(specialistId).subscribe(
+      (score) => {
+        this.reviewScore = score;
+      },
+      (error) => {
+        console.error('Error fetching review score:', error);
+        this.reviewScore = null;
+      }
+    );
+
+    this.reviewService.countReceivedBySpecialst(specialistId).subscribe(
+      (count) => {
+        this.reviewCount = count;
+      },
+      (error) => {
+        console.error('Error fetching review count:', error);
+        this.reviewCount = 0;
+      }
+    );
   }
 }

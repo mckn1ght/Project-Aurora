@@ -44,9 +44,19 @@ export class JobService {
     return this.http.post(BACKEND_API_URL + jobEndpoint + addEnpoint, job);
   }
 
+  // getAllNewJobs(): Observable<any> {
+  //   return this.http.get(
+  //     BACKEND_API_URL + jobEndpoint + allJobsInWorkflow + 'New'
+  //   );
+  // }
+
   getAllNewJobs(): Observable<any> {
+    return this.http.get(BACKEND_API_URL + jobEndpoint + allJobsInWorkflow);
+  }
+
+  getAllInBiddingJobs(): Observable<any> {
     return this.http.get(
-      BACKEND_API_URL + jobEndpoint + allJobsInWorkflow + 'New'
+      BACKEND_API_URL + jobEndpoint + allJobsInWorkflow + 'In Licitatie'
     );
   }
 

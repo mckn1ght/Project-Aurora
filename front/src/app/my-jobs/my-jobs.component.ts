@@ -205,7 +205,8 @@ export class MyJobsComponent implements OnInit {
       }
     );
   }
-  openBidConfirmationDialog(bidId: number): void {
+
+  openBidConfirmationDialog(bidId: number, jobId: number): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',
       data: { message: 'Doriti sa renuntati la aceasta licitatie?' },
@@ -214,9 +215,11 @@ export class MyJobsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.deleteBid(bidId);
+        this.restoreCredit(jobId);
       }
     });
   }
+
   openCreatorJobConfirmationDialog(jobId: number): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '250px',
@@ -358,6 +361,20 @@ export class MyJobsComponent implements OnInit {
       } else {
         alert('Nu aveti permisiunea sa vedeti acest job.');
       }
+    });
+  }
+
+  restoreCredit(jobId: number): void {
+    let amount: number = 0;
+    this.bidService.getAcceptedBidByJobid(jobId).subscribe((bid: any) => {
+      amount = bid.amount;
+      this.userService.addCredit(this.loggedInUser!.id!, amount).subscribe({
+        next: () => {
+          console.log('Credit updated successfully');
+          this.authService.refreshUserData(); // Refresh the user data from the server
+        },
+        error: (error) => console.error('Error updating credit:', error),
+      });
     });
   }
 }

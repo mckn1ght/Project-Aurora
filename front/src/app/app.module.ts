@@ -47,6 +47,8 @@ import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { NewSpecialistComponent } from './new-specialist/new-specialist.component';
 import { JobDetailInWorkComponent } from './job-detail-in-work/job-detail-in-work.component';
+import { ReviewPopupComponent } from './review-popup/review-popup.component';
+import { ReviewListComponent } from './review-list/review-list.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { JobDetailInWorkComponent } from './job-detail-in-work/job-detail-in-wor
     UploadAvatarComponent,
     NewSpecialistComponent,
     JobDetailInWorkComponent,
+    ReviewPopupComponent,
+    ReviewListComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +106,7 @@ import { JobDetailInWorkComponent } from './job-detail-in-work/job-detail-in-wor
     AccordionModule,
     ConfirmDialogModule,
     FileUploadModule,
+    MatDialogModule,
   ],
   providers: [ConfirmationService],
   bootstrap: [AppComponent], //, MyJobsComponent - > eroare my-jobs-component not found NG System

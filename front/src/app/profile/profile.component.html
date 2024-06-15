@@ -67,6 +67,19 @@
             : this.loggedInUser?.specialistId
         }}
       </p>
+      <p *ngIf="reviewScore !== null">
+        <strong>Review Score:</strong>
+        {{ reviewScore ? reviewScore.toFixed(1) : "N/A" }}
+        <button
+          class="btns"
+          [class.inactive]="reviewCount === 0"
+          [disabled]="reviewCount === 0"
+          (click)="navigateToReviews(loggedInUser?.specialistId)"
+        >
+          View Reviews
+        </button>
+      </p>
+
       <p *ngIf="loggedInUser?.specialistId != null">Zone expertiza:</p>
 
       <ul>

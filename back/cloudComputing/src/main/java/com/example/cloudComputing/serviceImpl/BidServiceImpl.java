@@ -149,4 +149,7 @@ public class BidServiceImpl implements BidService {
     bidRepository.acceptBid(jobId, exceptBidId);
   }
 
+  public Bid getAcceptedBidByJobId(Long jobId) {
+    return bidRepository.getAcceptedBidByJobId(jobId);
+  }
 }

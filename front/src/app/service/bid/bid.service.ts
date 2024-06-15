@@ -100,4 +100,9 @@ export class BidService {
     const url = `${BACKEND_API_URL}${bidEndpoint}/getById/${bidId}`;
     return this.http.get(url);
   }
+
+  getAcceptedBidByJobid(jobId: number): Observable<Bid> {
+    const url = `${BACKEND_API_URL}${bidEndpoint}/getAcceptedByJobId/${jobId}`;
+    return this.http.get(url);
+  }
 }

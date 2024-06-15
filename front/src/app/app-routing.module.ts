@@ -14,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { NewSpecialistComponent } from './new-specialist/new-specialist.component';
 import { JobDetailInWorkComponent } from './job-detail-in-work/job-detail-in-work.component';
+import { ReviewListComponent } from './review-list/review-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'bid-list/:id', component: BidListComponent },
   { path: 'newSpecialist', component: NewSpecialistComponent },
   { path: 'app-job-detail-in-work/:id', component: JobDetailInWorkComponent },
+  { path: 'specialist-reviews/:specialistId', component: ReviewListComponent },
   { path: '**', redirectTo: '/landing', pathMatch: 'full' },
 ];
 

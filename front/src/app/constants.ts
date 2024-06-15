@@ -55,6 +55,7 @@ export const setBidStatus = '/status/';
 export const getActiveBidCountByJobId = '/getActiveBidCountByJobId/';
 export const job = '/job/';
 export const except = '/except/';
+export const acceptedBid = '/getAcceptedByJobId/';
 
 //Resource
 // @GetMapping("/getByUserId/{userId}")
@@ -62,6 +63,10 @@ export const except = '/except/';
 export const resourceEndpoint = '/resource';
 export const getByUserId = '/getByUserId/';
 export const type = '/type/';
+
+//Review
+export const reviewEndpoint = '/review';
+export const countReceivedBySpecialst = '/countReceivedBySpecialst/';
 
 //System
 export const MAX_LOGIN_ATTEMPTS = 3;

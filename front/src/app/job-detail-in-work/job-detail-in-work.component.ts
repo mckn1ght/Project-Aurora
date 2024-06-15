@@ -9,6 +9,9 @@ import { AuthService } from '../service/auth/auth.service';
 import { CommentService } from '../service/comment/comment.service';
 import { APPLICATION_ENVIRONMENT, APPLICATION_VERSION } from '../constants';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { ReviewPopupComponent } from '../review-popup/review-popup.component';
+import { ReviewService } from '../service/review/review.service';
 
 @Component({
   selector: 'app-job-detail-in-work',
@@ -45,7 +48,9 @@ export class JobDetailInWorkComponent implements OnInit {
     private jobService: JobService,
     private userService: UserService,
     private authService: AuthService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private reviewService: ReviewService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -331,20 +336,63 @@ export class JobDetailInWorkComponent implements OnInit {
       );
   }
 
+  // markAsValidated(jobId: number) {
+  //   console.log('markAsValidated called');
+  //   this.jobService.setWorkflowStatus(jobId, 'Validated').subscribe(
+  //     (response) => {
+  //       console.log(response.message);
+  //       this.markedAsValidated = true;
+  //       this.fetchJobDetails(this.job!.id);
+  //       window.location.reload();
+  //     },
+  //     (error) => {
+  //       console.error('Error setting workflow status:', error);
+  //       window.location.reload();
+  //     }
+  //   );
+  // }
+
   markAsValidated(jobId: number) {
     console.log('markAsValidated called');
-    this.jobService.setWorkflowStatus(jobId, 'Validated').subscribe(
-      (response) => {
-        console.log(response.message);
-        this.markedAsValidated = true;
-        this.fetchJobDetails(this.job!.id);
-        window.location.reload();
-      },
-      (error) => {
-        console.error('Error setting workflow status:', error);
-        window.location.reload();
+
+    const dialogRef = this.dialog.open(ReviewPopupComponent, {
+      width: '400px',
+      data: { jobId: jobId },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const reviewPayload = {
+          givenByUser: this.loggedInUser!.id,
+          receivedBySpecialist: this.job!.assignedToSpecialist,
+          stars: result.stars,
+          title: result.title,
+          description: result.description,
+          jobId: jobId,
+        };
+
+        this.reviewService.addReview(reviewPayload).subscribe(
+          () => {
+            console.log('Review submitted successfully.');
+            this.jobService.setWorkflowStatus(jobId, 'Validated').subscribe(
+              (response) => {
+                console.log(response.message);
+                this.markedAsValidated = true;
+                this.fetchJobDetails(this.job!.id);
+                window.location.reload();
+              },
+              (error) => {
+                console.error('Error setting workflow status:', error);
+                window.location.reload();
+              }
+            );
+          },
+          (error) => {
+            console.error('Error submitting review:', error);
+          }
+        );
       }
-    );
+    });
   }
 
   cancelJob(jobId: number) {

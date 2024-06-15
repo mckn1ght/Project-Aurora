@@ -3,6 +3,7 @@ package com.example.cloudComputing.repository;
 import com.example.cloudComputing.dto.ReviewDto;
 import com.example.cloudComputing.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
   List<Review> getAllByGivenByUser(int id);
 
+  @Query("SELECT r FROM Review r WHERE r.receivedBySpecialist = ?1")
   List<Review> getAllByReceivedBySpecialist(int id);
 
   List<Review> getAllByStars(int stars);
@@ -25,6 +27,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
   List<Review> getAllByStarsBefore(int stars);
 
   List<Review> getAllByStarsAfter(int stars);
+
+  int countAllByReceivedBySpecialist(Long specialistId);
 
 
 }

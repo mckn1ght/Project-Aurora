@@ -32,6 +32,9 @@ public class Review {
   @Column(name = "description")
   private String description;
 
+  @Column(name = "jobId")
+  private int jobId;
+
 }
 
 

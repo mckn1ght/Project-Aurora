@@ -103,4 +103,10 @@ public class BidController {
     bidServiceImpl.acceptBid(jobId, exceptBidId);
     return ResponseEntity.status(HttpStatus.OK).body("Bids accepted successfully");
   }
+
+  @GetMapping("/getAcceptedByJobId/{jobId}")
+  public ResponseEntity<Bid> getActiveBidCountByJobId(@PathVariable Long jobId) {
+    Bid bid = bidServiceImpl.getAcceptedBidByJobId(jobId);
+    return ResponseEntity.ok(bid);
+  }
 }

@@ -131,9 +131,9 @@ public class JobController {
     return ResponseEntity.ok(jobServiceImpl.getAllByLastUpdatedAfter(date));
   }
 
-  @GetMapping("/inWorkflowStep/{step}")
-  public ResponseEntity<List<JobDto>> getAllByCurrentWorkflowStep(@PathVariable String step) {
-    return ResponseEntity.ok(jobServiceImpl.getAllByCurrentWorkflowStep(step));
+  @GetMapping("/inWorkflowStep/")
+  public ResponseEntity<List<JobDto>> getAllByCurrentWorkflowStep() {
+    return ResponseEntity.ok(jobServiceImpl.getAllByCurrentWorkflowStep());
   }
   @GetMapping("/allNewCreatedByUser/{userId}")
   public ResponseEntity<List<JobDto>> getAllByCurrentWorkflowStep(@PathVariable Long userId) {

@@ -199,11 +199,11 @@ public class JobServiceImpl implements JobService {
     return jobDto;
   }
 
-  public List<JobDto> getAllByCurrentWorkflowStep(String step) {
-    List<JobDto> jobDto = jobRepository.getAllByCurrentWorkflowStep(step).stream()
+  public List<JobDto> getAllByCurrentWorkflowStep() {
+    List<JobDto> jobDto = jobRepository.getAllByCurrentWorkflowStep().stream()
       .map(job -> jobMapper.mapToJobDto(job)).collect(Collectors.toList());
     if (jobDto.isEmpty()) {
-      throw new NoJobsOnWorkflowStepException(String.format(NO_JOBS_ON_WORKFLOW_STEP, step));
+      throw new NoJobsOnWorkflowStepException(String.format(NO_JOBS_ON_WORKFLOW_STEP));
     }
     return jobDto;
   }

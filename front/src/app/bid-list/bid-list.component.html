@@ -30,14 +30,25 @@
     <p-card [subheader]="" [style]="{ width: '18rem' }">
       <ng-template pTemplate="content">
         <p>
-          Specialist: {{ userDetails[i]?.firstName }}
-          {{ userDetails[i]?.lastName }}
+          Specialist: {{ userDetails[i]?.user.firstName }}
+          {{ userDetails[i]?.user.lastName }}
         </p>
         <p>Bid: {{ bid.amount }} credite</p>
         <p>Bid Created at: {{ bid.createdAt | date : "short" }}</p>
-        <p>Phone Number: {{ userDetails[i]?.phoneNumber }}</p>
-        <p>Email: {{ userDetails[i]?.email }}</p>
-        <p>Username: {{ userDetails[i]?.username }}</p>
+        <p>Phone Number: {{ userDetails[i]?.user.phoneNumber }}</p>
+        <p>Email: {{ userDetails[i]?.user.email }}</p>
+        <p>Username: {{ userDetails[i]?.user.username }}</p>
+        <p>Rating: {{ userDetails[i]?.rating.toFixed(1) }} / 5.0</p>
+        <div class="button-container">
+          <button
+            class="btns"
+            [class.inactive]="userDetails[i]?.reviewCount === 0"
+            [disabled]="userDetails[i]?.reviewCount === 0"
+            (click)="navigateToReviews(bid.specialistId)"
+          >
+            View Reviews
+          </button>
+        </div>
         <!-- Display more user details here -->
       </ng-template>
       <ng-template pTemplate="footer">

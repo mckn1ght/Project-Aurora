@@ -70,4 +70,16 @@ public class ReviewController {
     return ResponseEntity.ok(reviewServiceImpl.getAllByStarsAfter(stars));
   }
 
+  @GetMapping("/averageRating/{specialistId}")
+  public ResponseEntity<Double> getAverageRating(@PathVariable int specialistId) {
+    Double averageRating = reviewServiceImpl.getAverageRating(specialistId);
+    return ResponseEntity.ok(averageRating);
+  }
+
+  @GetMapping("/countReceivedBySpecialst/{specialistId}")
+  public int countReceivedBySpecialst(@PathVariable Long specialistId) {
+    return reviewServiceImpl.countAllByReceivedSpecialist(specialistId);
+  }
+
+
 }

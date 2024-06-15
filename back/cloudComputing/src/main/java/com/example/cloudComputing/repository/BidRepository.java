@@ -39,4 +39,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     "WHERE b.jobId = :jobId")
   void acceptBid(@Param("jobId") Long jobId, @Param("exceptBidId") Long exceptBidId);
 
+  @Query("SELECT b FROM Bid b WHERE b.jobId = :jobId AND b.status = 'accepted'")
+  Bid getAcceptedBidByJobId(@Param("jobId") Long jobId);
 }

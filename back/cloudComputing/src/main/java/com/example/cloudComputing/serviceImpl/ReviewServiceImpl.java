@@ -88,6 +88,29 @@ public class ReviewServiceImpl implements ReviewService {
     return reviewDtos;
   }
 
+  public Double getAverageRating(int specialistId) {
+    List<Review> reviews = reviewRepository.getAllByReceivedBySpecialist(specialistId);
+    System.out.println("Reviews for Specialist ID " + specialistId + ": " + reviews);
+    if (reviews.isEmpty()) {
+      return 5.0; // Default rating when no reviews
+    }
+
+    double sum = 0.0;
+    for (Review review : reviews) {
+      sum += review.getStars();
+      System.out.println("Processing review: " + review);
+    }
+
+    double average = sum / reviews.size();
+    System.out.println("Calculated average: " + average);
+    return average;
+  }
+
+  public int countAllByReceivedSpecialist(Long specialistId) {
+   int cnt = reviewRepository.countAllByReceivedBySpecialist(specialistId);
+   return cnt;
+  }
+
 }
 
 

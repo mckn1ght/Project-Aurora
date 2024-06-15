@@ -43,7 +43,7 @@ public interface JobService {
 
   List<JobDto> getAllByLastUpdatedAfter(LocalDate date);
 
-  List<JobDto> getAllByCurrentWorkflowStep(String step);
+  List<JobDto> getAllByCurrentWorkflowStep();
   void assignJobToSpecialist(long jobId, int specialistId);
 
   Long add(JobDto jobDto);

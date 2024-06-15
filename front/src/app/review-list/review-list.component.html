@@ -1,0 +1,42 @@
+<header class="top-menu">
+  <div class="logo">
+    <img
+      class="logoImage"
+      src="../../assets/icons/fossil.shell@2x.png"
+      alt="Logo"
+      style="display: inline-block"
+    />
+    <h1 style="display: inline-block">Project Aurora</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/landing">Landing</a></li>
+      <li><a href="/profile">Profil</a></li>
+      <li><a href="/my-jobs">My Jobs</a></li>
+      <li><a href="/login">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="background"></div>
+<div class="review-list-container">
+  <h2>Reviews for Specialist: {{ specialistName }}</h2>
+  <div *ngFor="let reviewDetail of reviewDetails" class="review-card">
+    <h3>{{ reviewDetail.review.title }}</h3>
+    <p><strong>Rating:</strong> {{ reviewDetail.review.stars }} / 5</p>
+    <p><strong>Description:</strong> {{ reviewDetail.review.description }}</p>
+    <p>
+      <strong>Given By:</strong> {{ reviewDetail.givenByUser.firstName }}
+      {{ reviewDetail.givenByUser.lastName }}
+    </p>
+    <p><strong>Job Title:</strong> {{ reviewDetail.job.title }}</p>
+    <p><strong>Job Description:</strong> {{ reviewDetail.job.description }}</p>
+  </div>
+</div>
+
+<footer>
+  <p>
+    &copy; 2023 Project Aurora. All rights reserved | {{ appEnvironment }}
+    {{ appVersion }}
+  </p>
+</footer>

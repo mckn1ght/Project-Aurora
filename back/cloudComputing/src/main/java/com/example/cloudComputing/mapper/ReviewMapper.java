@@ -15,6 +15,7 @@ public class ReviewMapper {
       .stars(reviewDto.getStars())
       .title(reviewDto.getTitle())
       .description(reviewDto.getDescription())
+      .jobId(reviewDto.getJobId())
       .build();
   }
 
@@ -26,6 +27,7 @@ public class ReviewMapper {
       .stars(review.getStars())
       .title(review.getTitle())
       .description(review.getDescription())
+      .jobId(review.getJobId())
       .build();
   }
 }
