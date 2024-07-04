@@ -1,5 +1,23 @@
+<header class="top-menu">
+  <div class="logo">
+    <img
+      class="logoImage"
+      src="../../assets/icons/fossil.shell@2x.png"
+      alt="Logo"
+      style="display: inline-block"
+    />
+    <h1 style="display: inline-block">Project Aurora</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/landing">Landing</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </nav>
+</header>
 <div class="register-form">
   <div class="background"></div>
+
   <h2 class="registerLabel">Register</h2>
   <div class="login-container">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">

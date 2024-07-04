@@ -194,12 +194,15 @@
       <div class="job-details">
         <h3>Detalii job</h3>
         <p>
-          <strong>Data creare:</strong> {{ job?.creationDate | date : "short" }}
+          <strong>Data creare:</strong>
+          {{ job?.creationDate | date : "dd-MM-yyyy" }}
         </p>
-        <p><strong>Data Limita:</strong> {{ job?.dueDate | date : "short" }}</p>
+        <p>
+          <strong>Data Limita:</strong> {{ job?.dueDate | date : "dd-MM-yyyy" }}
+        </p>
         <p>
           <strong>Ultima Actualizare:</strong>
-          {{ job?.lastUpdated | date : "short" }}
+          {{ job?.lastUpdated | date : "dd-MM-yyyy" }}
         </p>
         <p>
           <strong>Creat de:</strong>

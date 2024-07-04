@@ -371,15 +371,49 @@ export class BidListComponent implements OnInit {
       );
   }
 
+  // rejectBid(bidId: number) {
+  //   this.bidService.setBidStatus(bidId, this.rejectStatus).subscribe(
+  //     (response) => {
+  //       console.log('Bid status updated successfully:', response);
+  //       this.getActiveBidsByJobId();
+  //       this.refreshPage();
+  //     },
+  //     (error) => {
+  //       console.error('Error updating bid status:', error);
+  //     }
+  //   );
+  // }
+
   rejectBid(bidId: number) {
-    this.bidService.setBidStatus(bidId, this.rejectStatus).subscribe(
-      (response) => {
-        console.log('Bid status updated successfully:', response);
-        this.getActiveBidsByJobId();
-        this.refreshPage();
+    // First, we need to get the bid details to know which specialist made the bid
+    this.bidService.getByBidId(bidId).subscribe(
+      (bid: Bid) => {
+        const creditAmount = bid.amount; // The amount of credit to restore, adjust as needed
+
+        // Restore the credit to the specialist by their ID
+        this.bidService
+          .restoreCreditBySpecialistId(bid.specialistId!, creditAmount!)
+          .subscribe(
+            () => {
+              // After restoring the credit, update the bid status
+              this.bidService.setBidStatus(bidId, this.rejectStatus).subscribe(
+                (response) => {
+                  console.log('Bid status updated successfully:', response);
+                  this.getActiveBidsByJobId();
+                  this.refreshPage();
+                },
+                (error) => {
+                  console.error('Error updating bid status:', error);
+                }
+              );
+            },
+            (error) => {
+              console.error('Error restoring credit:', error);
+            }
+          );
       },
       (error) => {
-        console.error('Error updating bid status:', error);
+        console.error('Error fetching bid details:', error);
       }
     );
   }

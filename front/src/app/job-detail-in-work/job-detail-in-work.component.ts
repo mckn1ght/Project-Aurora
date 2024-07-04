@@ -12,6 +12,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewPopupComponent } from '../review-popup/review-popup.component';
 import { ReviewService } from '../service/review/review.service';
+import { BidService } from '../service/bid/bid.service';
 
 @Component({
   selector: 'app-job-detail-in-work',
@@ -50,7 +51,8 @@ export class JobDetailInWorkComponent implements OnInit {
     private authService: AuthService,
     private commentService: CommentService,
     private reviewService: ReviewService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private bidService: BidService
   ) {}
 
   ngOnInit(): void {
@@ -338,62 +340,46 @@ export class JobDetailInWorkComponent implements OnInit {
 
   // markAsValidated(jobId: number) {
   //   console.log('markAsValidated called');
-  //   this.jobService.setWorkflowStatus(jobId, 'Validated').subscribe(
-  //     (response) => {
-  //       console.log(response.message);
-  //       this.markedAsValidated = true;
-  //       this.fetchJobDetails(this.job!.id);
-  //       window.location.reload();
-  //     },
-  //     (error) => {
-  //       console.error('Error setting workflow status:', error);
-  //       window.location.reload();
+
+  //   const dialogRef = this.dialog.open(ReviewPopupComponent, {
+  //     width: '400px',
+  //     data: { jobId: jobId },
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result) {
+  //       const reviewPayload = {
+  //         givenByUser: this.loggedInUser!.id,
+  //         receivedBySpecialist: this.job!.assignedToSpecialist,
+  //         stars: result.stars,
+  //         title: result.title,
+  //         description: result.description,
+  //         jobId: jobId,
+  //       };
+
+  //       this.reviewService.addReview(reviewPayload).subscribe(
+  //         () => {
+  //           console.log('Review submitted successfully.');
+  //           this.jobService.setWorkflowStatus(jobId, 'Validated').subscribe(
+  //             (response) => {
+  //               console.log(response.message);
+  //               this.markedAsValidated = true;
+  //               this.fetchJobDetails(this.job!.id);
+  //               window.location.reload();
+  //             },
+  //             (error) => {
+  //               console.error('Error setting workflow status:', error);
+  //               window.location.reload();
+  //             }
+  //           );
+  //         },
+  //         (error) => {
+  //           console.error('Error submitting review:', error);
+  //         }
+  //       );
   //     }
-  //   );
+  //   });
   // }
-
-  markAsValidated(jobId: number) {
-    console.log('markAsValidated called');
-
-    const dialogRef = this.dialog.open(ReviewPopupComponent, {
-      width: '400px',
-      data: { jobId: jobId },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const reviewPayload = {
-          givenByUser: this.loggedInUser!.id,
-          receivedBySpecialist: this.job!.assignedToSpecialist,
-          stars: result.stars,
-          title: result.title,
-          description: result.description,
-          jobId: jobId,
-        };
-
-        this.reviewService.addReview(reviewPayload).subscribe(
-          () => {
-            console.log('Review submitted successfully.');
-            this.jobService.setWorkflowStatus(jobId, 'Validated').subscribe(
-              (response) => {
-                console.log(response.message);
-                this.markedAsValidated = true;
-                this.fetchJobDetails(this.job!.id);
-                window.location.reload();
-              },
-              (error) => {
-                console.error('Error setting workflow status:', error);
-                window.location.reload();
-              }
-            );
-          },
-          (error) => {
-            console.error('Error submitting review:', error);
-          }
-        );
-      }
-    });
-  }
 
   cancelJob(jobId: number) {
     console.log('cancelJob called');
@@ -409,6 +395,107 @@ export class JobDetailInWorkComponent implements OnInit {
         window.location.reload();
       }
     );
+  }
+
+  markAsValidated(jobId: number): void {
+    console.log('markAsValidated called');
+
+    if (this.job) {
+      const dialogRef = this.dialog.open(ReviewPopupComponent, {
+        width: '400px',
+        data: { jobId: jobId },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result && this.loggedInUser) {
+          const reviewPayload = {
+            givenByUser: this.loggedInUser.id,
+            receivedBySpecialist: this.job!.assignedToSpecialist,
+            stars: result.stars,
+            title: result.title,
+            description: result.description,
+            jobId: jobId,
+          };
+
+          this.reviewService.addReview(reviewPayload).subscribe(
+            () => {
+              console.log('Review submitted successfully.');
+
+              // Fetch the accepted bid for the job
+              this.bidService.getAcceptedBidByJobid(this.job!.id).subscribe(
+                (bid) => {
+                  const bidPrice = bid.amount;
+
+                  // Subtract credits from the job creator
+                  this.userService
+                    .subtractCredit(this.job!.createdByUser, bidPrice!)
+                    .subscribe(
+                      () => {
+                        // Fetch the user associated with the specialist ID
+                        this.userService
+                          .getSpecialistName(this.job!.assignedToSpecialist)
+                          .subscribe(
+                            (specialistUser) => {
+                              // Add credits to the specialist user
+                              this.userService
+                                .addCredit(specialistUser.id!, bidPrice!)
+                                .subscribe(
+                                  () => {
+                                    // Set the workflow status to 'Validated'
+                                    this.jobService
+                                      .setWorkflowStatus(jobId, 'Validated')
+                                      .subscribe(
+                                        (response) => {
+                                          console.log(response.message);
+                                          this.markedAsValidated = true;
+                                          this.fetchJobDetails(this.job!.id);
+                                          window.location.reload();
+                                        },
+                                        (error) => {
+                                          console.error(
+                                            'Error setting workflow status:',
+                                            error
+                                          );
+                                          window.location.reload();
+                                        }
+                                      );
+                                  },
+                                  (error) => {
+                                    console.error(
+                                      'Error adding credits to specialist:',
+                                      error
+                                    );
+                                  }
+                                );
+                            },
+                            (error) => {
+                              console.error(
+                                'Error fetching specialist user:',
+                                error
+                              );
+                            }
+                          );
+                      },
+                      (error) => {
+                        console.error(
+                          'Error subtracting credits from job creator:',
+                          error
+                        );
+                      }
+                    );
+                },
+                (error) => {
+                  console.error('Error fetching accepted bid:', error);
+                }
+              );
+            },
+            (error) => {
+              console.error('Error submitting review:', error);
+            }
+          );
+        }
+      });
+    }
   }
 
   returnToSpecialist(jobId: number) {

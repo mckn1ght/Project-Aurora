@@ -44,15 +44,15 @@
     <div class="dates">
       <div class="details-section">
         <p class="label">Data crearii:</p>
-        <p class="value">{{ job.creationDate | date }}</p>
+        <p class="value">{{ job.creationDate | date : "dd-MM-yyyy" }}</p>
       </div>
       <div class="details-section">
         <p class="label">Data dorita pentru finalizare:</p>
-        <p class="value">{{ job.dueDate | date }}</p>
+        <p class="value">{{ job.dueDate | date : "dd-MM-yyyy" }}</p>
       </div>
       <div class="details-section">
         <p class="label">Ultima actualizare:</p>
-        <p class="value">{{ job.lastUpdated | date }}</p>
+        <p class="value">{{ job.lastUpdated | date : "dd-MM-yyyy" }}</p>
       </div>
     </div>
     <div class="details-section">

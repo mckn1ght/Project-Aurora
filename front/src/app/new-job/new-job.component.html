@@ -14,6 +14,7 @@
       <ul>
         <li><a href="/home">Home</a></li>
         <li><a href="/landing">Landing</a></li>
+        <li><a routerLink="/my-jobs">My Jobs</a></li>
         <li><a href="/login">Logout</a></li>
       </ul>
     </nav>
@@ -171,6 +172,7 @@
               mode="advanced"
               [auto]="false"
               [customUpload]="false"
+              [showUploadButton]="false"
             ></p-fileUpload>
           </div>
         </div>
@@ -230,31 +232,35 @@
         </div>
       </div>
     </div> -->
-        <div>
-          <div class="form-group">
-            <label for="dueDate">Data dorita de rezolvare a solicitarii:</label>
-            <input
-              type="date"
-              id="dueDate"
-              name="dueDate"
-              formControlName="dueDate"
-              [(ngModel)]="newJob.dueDate"
-              required
-              [min]="minDate"
-              [ngClass]="{
-                'error-border':
-                  newJobForm.get('dueDate')?.invalid &&
+        <div class="card">
+          <div>
+            <div class="form-group">
+              <label for="dueDate"
+                >Data dorita de rezolvare a solicitarii:</label
+              >
+              <input
+                type="date"
+                id="dueDate"
+                name="dueDate"
+                formControlName="dueDate"
+                [(ngModel)]="newJob.dueDate"
+                required
+                [min]="minDate"
+                [ngClass]="{
+                  'error-border':
+                    newJobForm.get('dueDate')?.invalid &&
+                    newJobForm.get('dueDate')?.touched
+                }"
+              />
+              <div
+                class="errorLabel"
+                *ngIf="
+                  newJobForm.get('dueDate')?.hasError('required') &&
                   newJobForm.get('dueDate')?.touched
-              }"
-            />
-            <div
-              class="errorLabel"
-              *ngIf="
-                newJobForm.get('dueDate')?.hasError('required') &&
-                newJobForm.get('dueDate')?.touched
-              "
-            >
-              Selectati data pana la care doriti sa fie realizata cererea
+                "
+              >
+                Selectati data pana la care doriti sa fie realizata cererea
+              </div>
             </div>
           </div>
         </div>

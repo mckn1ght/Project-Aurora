@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, switchMap, throwError } from 'rxjs';
 import {
   BACKEND_API_URL,
   addEnpoint,
@@ -15,12 +15,14 @@ import {
   setBidStatus,
 } from 'src/app/constants';
 import { Bid } from 'src/app/models/bid';
+import { User } from 'src/app/models/user';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BidService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   getAllBidsBySpecialist(id: number): Observable<any> {
     return this.http.get(
@@ -74,18 +76,6 @@ export class BidService {
     );
   }
 
-  // acceptBid(jobId: number, acceptedBidId: number): Observable<any> {
-  //   const url =
-  //     BACKEND_API_URL + bidEndpoint + job + jobId + except + acceptedBidId;
-  //   return this.http.put(url, null).pipe(
-  //     map((response) => {
-  //       return response; // Assuming the response contains a 'message' property
-  //     }),
-  //     catchError((error) => {
-  //       throw error; // Rethrow the error to be handled by the caller
-  //     })
-  //   );
-  // }
   acceptBid(jobId: number, acceptedBidId: number): Observable<string> {
     const url = `${BACKEND_API_URL}${bidEndpoint}/job/${jobId}/except/${acceptedBidId}`;
     console.log(url);
@@ -104,5 +94,29 @@ export class BidService {
   getAcceptedBidByJobid(jobId: number): Observable<Bid> {
     const url = `${BACKEND_API_URL}${bidEndpoint}/getAcceptedByJobId/${jobId}`;
     return this.http.get(url);
+  }
+
+  restoreCredit(userId: number, creditAmount: number): Observable<any> {
+    return this.userService.addCredit(userId, creditAmount).pipe(
+      catchError((error) => {
+        console.error('Error restoring credit:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  restoreCreditBySpecialistId(
+    specialistId: number,
+    creditAmount: number
+  ): Observable<any> {
+    return this.userService.getSpecialistName(specialistId).pipe(
+      switchMap((user: User) =>
+        this.userService.addCredit(user.id!, creditAmount)
+      ),
+      catchError((error) => {
+        console.error('Error restoring credit:', error);
+        return throwError(error);
+      })
+    );
   }
 }

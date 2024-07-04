@@ -45,7 +45,6 @@
             <th>Id Job</th>
             <th>Titlu</th>
             <th>Descriere</th>
-            <th>Creator</th>
             <th>Data Creare</th>
             <th>Ultima Actualizare</th>
             <th>Termen Limita de Rezolvare</th>
@@ -59,25 +58,20 @@
             <td>{{ job.id }}</td>
             <td>{{ job.title }}</td>
             <td>{{ job.description }}</td>
-            <td>{{ job.createdByUser }}</td>
-            <td>{{ job.creationDate }}</td>
-            <td>{{ job.lastUpdated }}</td>
-            <td>{{ job.dueDate }}</td>
+            <td>{{ job.creationDate | date : "dd-MM-yyyy" }}</td>
+            <td>{{ job.lastUpdated | date : "dd-MM-yyyy" }}</td>
+            <td>{{ job.dueDate | date : "dd-MM-yyyy" }}</td>
             <td>
               {{ job.currentWorkflowStep }}
-              <span class="workflow-info">
-                <i class="pi pi-info-circle" style="color: gray"></i
-              ></span>
+              <span class="workflow-info"> </span>
             </td>
             <td>
               <span class="workflow-actions">
-                <i class="pi pi-check" style="color: green"></i>
                 <i
                   class="pi pi-times"
                   style="color: red"
                   (click)="openCreatorJobConfirmationDialog(job.id)"
                 ></i>
-                <i class="pi pi-exclamation-triangle" style="color: orange"></i>
               </span>
             </td>
           </tr>
@@ -114,7 +108,6 @@
             <th>Id Job</th>
             <th>Titlu</th>
             <th>Descriere</th>
-            <th>Creator</th>
             <th>Data Creare</th>
             <th>Ultima Actualizare</th>
             <th>Termen Limita de Rezolvare</th>
@@ -128,15 +121,12 @@
             <td>{{ job.id }}</td>
             <td>{{ job.title }}</td>
             <td>{{ job.description }}</td>
-            <td>{{ job.createdByUser }}</td>
-            <td>{{ job.creationDate }}</td>
-            <td>{{ job.lastUpdated }}</td>
-            <td>{{ job.dueDate }}</td>
+            <td>{{ job.creationDate | date : "dd-MM-yyyy" }}</td>
+            <td>{{ job.lastUpdated | date : "dd-MM-yyyy" }}</td>
+            <td>{{ job.dueDate | date : "dd-MM-yyyy" }}</td>
             <td>
               {{ job.currentWorkflowStep }}
-              <span class="workflow-info">
-                <i class="pi pi-info-circle" style="color: gray"></i
-              ></span>
+              <span class="workflow-info"> </span>
             </td>
             <td>
               <span class="workflow-actions">
@@ -182,7 +172,6 @@
             <th>Id Job</th>
             <th>Titlu</th>
             <th>Descriere</th>
-            <th>Creator</th>
             <th>Data Creare</th>
             <th>Ultima Actualizare</th>
             <th>Termen Limita de Rezolvare</th>
@@ -196,25 +185,20 @@
             <td>{{ job.id }}</td>
             <td>{{ job.title }}</td>
             <td>{{ job.description }}</td>
-            <td>{{ job.createdByUser }}</td>
-            <td>{{ job.creationDate }}</td>
-            <td>{{ job.lastUpdated }}</td>
-            <td>{{ job.dueDate }}</td>
+            <td>{{ job.creationDate | date : "dd-MM-yyyy" }}</td>
+            <td>{{ job.lastUpdated | date : "dd-MM-yyyy" }}</td>
+            <td>{{ job.dueDate | date : "dd-MM-yyyy" }}</td>
             <td>
               {{ job.currentWorkflowStep }}
-              <span class="workflow-info">
-                <i class="pi pi-info-circle" style="color: gray"></i
-              ></span>
+              <span class="workflow-info"> </span>
             </td>
             <td>
               <span class="workflow-actions">
-                <i class="pi pi-check" style="color: green"></i>
                 <i
                   class="pi pi-times"
                   style="color: red"
                   (click)="openCreatorJobConfirmationDialog(job.id)"
                 ></i>
-                <i class="pi pi-exclamation-triangle" style="color: orange"></i>
               </span>
             </td>
           </tr>
@@ -250,13 +234,13 @@
             <th>Id Licitatie</th>
             <th>Titlu</th>
             <th>Descriere</th>
-            <th>Creator</th>
             <th>Data Creare</th>
             <th>Ultima Actualizare</th>
             <th>Termen Limita de Rezolvare</th>
             <th>Status Job</th>
             <th>Ultima Oferta</th>
             <th>Status Licitatie</th>
+            <th>Valoare Licitatie</th>
             <th>Actiune</th>
           </tr>
         </ng-template>
@@ -266,23 +250,19 @@
             <td>{{ item.job.id }}</td>
             <td>{{ item.job.title }}</td>
             <td>{{ item.job.description }}</td>
-            <td>{{ item.job.createdByUser }}</td>
-            <td>{{ item.job.creationDate }}</td>
-            <td>{{ item.job.lastUpdated }}</td>
-            <td>{{ item.job.dueDate }}</td>
+            <td>{{ item.job.creationDate | date : "dd-MM-yyyy" }}</td>
+            <td>{{ item.job.lastUpdated | date : "dd-MM-yyyy" }}</td>
+            <td>{{ item.job.dueDate | date : "dd-MM-yyyy" }}</td>
             <td>
               {{ item.job.currentWorkflowStep }}
-              <span class="workflow-info">
-                <i class="pi pi-info-circle" style="color: gray"></i
-              ></span>
+              <span class="workflow-info"> </span>
             </td>
             <td>{{ item.bid.updatedAt }}</td>
             <td>
               {{ item.bid.status }}
-              <span class="workflow-info">
-                <i class="pi pi-info-circle" style="color: gray"></i
-              ></span>
+              <span class="workflow-info"> </span>
             </td>
+            <td>{{ item.bid.amount }}</td>
             <td>
               <span class="workflow-actions">
                 <i
@@ -327,7 +307,6 @@
             <th>Id Job</th>
             <th>Titlu</th>
             <th>Descriere</th>
-            <th>Creator</th>
             <th>Data Creare</th>
             <th>Ultima Actualizare</th>
             <th>Termen Limita de Rezolvare</th>
@@ -341,25 +320,20 @@
             <td>{{ rowData.job.id }}</td>
             <td>{{ rowData.job.title }}</td>
             <td>{{ rowData.job.description }}</td>
-            <td>{{ rowData.job.createdByUser }}</td>
-            <td>{{ rowData.job.creationDate }}</td>
-            <td>{{ rowData.job.lastUpdated }}</td>
-            <td>{{ rowData.job.dueDate }}</td>
+            <td>{{ rowData.job.creationDate | date : "dd-MM-yyyy" }}</td>
+            <td>{{ rowData.job.lastUpdated | date : "dd-MM-yyyy" }}</td>
+            <td>{{ rowData.job.dueDate | date : "dd-MM-yyyy" }}</td>
             <td>
               {{ rowData.job.currentWorkflowStep }}
-              <span class="workflow-info">
-                <i class="pi pi-info-circle" style="color: gray"></i>
-              </span>
+              <span class="workflow-info"> </span>
             </td>
             <td>
               <span class="workflow-actions">
-                <i class="pi pi-check" style="color: green"></i>
                 <i
                   class="pi pi-times"
                   style="color: red"
                   (click)="openCreatorJobConfirmationDialog(rowData.job.id)"
                 ></i>
-                <i class="pi pi-exclamation-triangle" style="color: orange"></i>
               </span>
             </td>
           </tr>

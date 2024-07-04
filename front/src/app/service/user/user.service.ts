@@ -49,6 +49,13 @@ export class UserService {
       .pipe(map((user: User) => user));
   }
 
+  updateCredit(userId: number, credit: number): Observable<any> {
+    return this.http.put(
+      `${BACKEND_API_URL}${userEndpoint}/updateCredit/${userId}`,
+      { credit: credit.toString() }
+    );
+  }
+
   getUserFirstNameLastName(id: any): Observable<User> {
     return this.http
       .get<User>(BACKEND_API_URL + userEndpoint + getById + id)
@@ -72,13 +79,6 @@ export class UserService {
     );
   }
 
-  updateCredit(userId: number, credit: number): Observable<any> {
-    return this.http.put(
-      `${BACKEND_API_URL}${userEndpoint}/updateCredit/${userId}`,
-      { credit: credit.toString() }
-    );
-  }
-
   updateUser(user: User): Observable<User> {
     return this.http.put<User>(
       `${BACKEND_API_URL}/user/update/${user.id}`,
@@ -89,6 +89,13 @@ export class UserService {
   addCredit(userId: number, credit: number): Observable<any> {
     return this.http.put(
       `${BACKEND_API_URL}${userEndpoint}/addCredit/${userId}`,
+      { credit: credit.toString() },
+      this.httpOptions
+    );
+  }
+  addCreditSpecialist(specialistId: number, credit: number): Observable<any> {
+    return this.http.put(
+      `${BACKEND_API_URL}${userEndpoint}/addCreditSpecialist/${specialistId}`,
       { credit: credit.toString() },
       this.httpOptions
     );

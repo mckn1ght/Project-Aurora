@@ -163,6 +163,17 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @PutMapping(path = "/addCreditSpecialist/{id}", consumes = "application/json")
+  @Transactional
+  public ResponseEntity<Void> addCreditSpecialist(
+    @PathVariable int id,
+    @RequestBody Map<String, String> creditMap
+  ) {
+    String credit = creditMap.get("credit");
+    System.out.println("Received credit to add: " + credit);
+    userServiceImpl.addCreditSpecialist(id, Double.parseDouble(credit));
+    return ResponseEntity.ok().build();
+  }
   @PutMapping(path = "/subtractCredit/{id}", consumes = "application/json")
   @Transactional
   public ResponseEntity<Void> subtractCredit(

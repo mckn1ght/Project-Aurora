@@ -71,7 +71,7 @@ public interface JobRepository extends JpaRepository<Job, Long> {
   @Query("SELECT COUNT(j) FROM Job j WHERE j.createdByUser = :userId AND j.currentWorkflowStep IN ('Canceled')")
   int countJobsCanceledByUser(@Param("userId") Long userId);
 
-  @Query("SELECT COUNT(j) FROM Job j WHERE j.assignedToSpecialist = :specialistId AND j.currentWorkflowStep IN ('Preluat')")
+  @Query("SELECT COUNT(j) FROM Job j WHERE j.assignedToSpecialist = :specialistId AND j.currentWorkflowStep IN ('Preluat', 'Waiting for validation')")
   int countActiveJobsInWorkBySpecialist(@Param("specialistId") Long specialistId);
 
   List<Job> findByExpertiseAreasId(int expertiseAreaId);
